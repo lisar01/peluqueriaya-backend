@@ -4,6 +4,9 @@ jdk:
 dist: trusty
 sudo:
   required
+cache:
+  directories:
+    - $HOME/.m2
 
 before_script:
   - psql -c "create database peluqueriayadb;" -U postgres
