@@ -3,6 +3,7 @@ package ar.edu.unq.peluqueriayabackend.controller
 import ar.edu.unq.peluqueriayabackend.service.PeluqueroService
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.web.bind.annotation.CrossOrigin
+import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 
@@ -10,4 +11,7 @@ import org.springframework.web.bind.annotation.RestController
 @RestController
 @RequestMapping("/peluquero")
 class PeluqueroController(@Autowired val peluqueroService: PeluqueroService) {
+
+    @GetMapping("/test")
+    fun test() = "soy un peluquero"
 }
