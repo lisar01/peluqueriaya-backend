@@ -19,7 +19,6 @@ class GeoDistanceServiceImplTest {
                 ,0.0)
 
         //Misma distancia si cambio el orden
-        
         Assertions.assertEquals(geoDistance.distanciaCoordEnKM(-34.706566,-58.277687,-34.706566,-58.277687)
                 ,0.0)
 
