@@ -1,8 +1,8 @@
 package ar.edu.unq.peluqueriayabackend.service.geodistance.impl
 
+import ar.edu.unq.peluqueriayabackend.model.Ubicacion
 import ar.edu.unq.peluqueriayabackend.service.geodistance.GeoDistanceServiceApi
 import kotlin.math.roundToInt
-import kotlin.math.roundToLong
 
 class GeoDistanceServiceImpl : GeoDistanceServiceApi {
     override fun distanciaCoordEnKM(lat1: Double, lng1: Double, lat2: Double, lng2: Double): Double {
@@ -44,4 +44,12 @@ class GeoDistanceServiceImpl : GeoDistanceServiceApi {
 
         return (resultadoCompleto * scale).roundToInt() / scale
     }
+
+    override fun distanciaUbicacionesEnKM(ubicacion1: Ubicacion, ubicacion2: Ubicacion): Double =
+            distanciaCoordEnKM(ubicacion1.getLatitudeAsDouble(),ubicacion1.getLongitudeAsDouble(),
+                    ubicacion2.getLatitudeAsDouble(),ubicacion2.getLongitudeAsDouble())
+
+    override fun distanciaUbicacionesEnMillas(ubicacion1: Ubicacion, ubicacion2: Ubicacion): Double =
+            distanciaCoordEnMillas(ubicacion1.getLatitudeAsDouble(),ubicacion1.getLongitudeAsDouble(),
+                    ubicacion2.getLatitudeAsDouble(),ubicacion2.getLongitudeAsDouble())
 }
