@@ -1,6 +1,8 @@
 package ar.edu.unq.peluqueriayabackend.service.geodistance.impl
 
 import ar.edu.unq.peluqueriayabackend.service.geodistance.GeoDistanceServiceApi
+import kotlin.math.roundToInt
+import kotlin.math.roundToLong
 
 class GeoDistanceServiceImpl : GeoDistanceServiceApi {
     override fun distanciaCoordEnKM(lat1: Double, lng1: Double, lat2: Double, lng2: Double): Double {
@@ -15,7 +17,13 @@ class GeoDistanceServiceImpl : GeoDistanceServiceApi {
                 * Math.cos(Math.toRadians(lat1)) * Math.cos(Math.toRadians(lat2)))
         val va2 = 2 * Math.atan2(Math.sqrt(va1), Math.sqrt(1 - va1))
 
-        return radioTierra * va2
+        val resultadoCompleto = radioTierra * va2
+
+        //Redondear valor con X decimales
+        // val scale = Math.pow(10.0, X)
+        val scale = Math.pow(10.0, 2.0)
+
+        return (resultadoCompleto * scale).roundToInt() / scale
     }
 
     override fun distanciaCoordEnMillas(lat1: Double, lng1: Double, lat2: Double, lng2: Double): Double {
@@ -28,6 +36,12 @@ class GeoDistanceServiceImpl : GeoDistanceServiceApi {
                 * Math.cos(Math.toRadians(lat1)) * Math.cos(Math.toRadians(lat2)))
         val va2 = 2 * Math.atan2(Math.sqrt(va1), Math.sqrt(1 - va1))
 
-        return radioTierra * va2
+        val resultadoCompleto = radioTierra * va2
+
+        //Redondear valor con X decimales
+        // val scale = Math.pow(10.0, X)
+        val scale = Math.pow(10.0, 2.0)
+
+        return (resultadoCompleto * scale).roundToInt() / scale
     }
 }
