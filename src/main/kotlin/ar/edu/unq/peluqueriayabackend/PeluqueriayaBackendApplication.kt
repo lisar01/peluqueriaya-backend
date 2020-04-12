@@ -74,20 +74,50 @@ class PeluqueriayaBackendApplication : WebMvcConfigurer{
 				withEstado(PeluqueroState.OCUPADO).
 				build()
 
+		val peluquero4MDQ = Peluquero.Builder().
+				withNombre("El barba de mardel").
+				withCorteMin(BigDecimal(100)).
+				withDistanciaMax(BigDecimal(10)).
+				withEmail("barbamdq@mdq.com").
+				withUbicacion(Ubicacion("-38.005004","-57.542606")).
+				withEstado(PeluqueroState.DISPONIBLE).
+				build()
+
+		//Guardando peluqueros creados
+
 		peluqueroRepository.save(peluquero1)
 		peluquero2 = peluqueroRepository.save(peluquero2)
 		peluquero3 = peluqueroRepository.save(peluquero3)
+		peluqueroRepository.save(peluquero4MDQ)
 
+		//Creando servicios a peluqueros
+		crearServiciosDePeluqueros(servicioRepository,peluquero2,peluquero3)
+
+		println("|**!!INFO!!**| Metodo de crear datos falsos finalizado!")
+	}
+
+	private fun crearServiciosDePeluqueros(servicioRepository: ServicioRepository, peluquero2: Peluquero, peluquero3: Peluquero) {
 		val service1 = Servicio.Builder().
 				withNombre("Barba").
 				withPrecio(BigDecimal(100)).
 				withPeluquero(peluquero3).
 				build()
 
+		val service2 = Servicio.Builder().
+				withNombre("Teñir").
+				withPrecio(BigDecimal(800)).
+				withPeluquero(peluquero3).
+				build()
+
+		val servicioUña = Servicio.Builder().
+				withNombre("Hacer uñas").
+				withPrecio(BigDecimal(200)).
+				withPeluquero(peluquero2).
+				build()
+
 		servicioRepository.save(service1)
-
-
-
+		servicioRepository.save(service2)
+		servicioRepository.save(servicioUña)
 	}
 
 }

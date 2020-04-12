@@ -1,5 +1,6 @@
 package ar.edu.unq.peluqueriayabackend.model
 
+import com.fasterxml.jackson.annotation.JsonIgnore
 import java.math.BigDecimal
 import javax.persistence.*
 
@@ -7,6 +8,7 @@ import javax.persistence.*
 @Table(name = "servicios")
 class Servicio(var nombre:String,
                var precio:BigDecimal,
+               @JsonIgnore
                @ManyToOne(fetch = FetchType.LAZY, optional = false)
                var peluquero:Peluquero) {
 
@@ -14,6 +16,7 @@ class Servicio(var nombre:String,
     @GeneratedValue(strategy = GenerationType.AUTO)
     var id: Int = 0
 
+    fun getPeluqueroId():Int = peluquero.id
 
     data class Builder(
             var nombre:String = "",
