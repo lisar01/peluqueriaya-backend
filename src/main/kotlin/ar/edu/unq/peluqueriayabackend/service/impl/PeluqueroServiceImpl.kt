@@ -7,6 +7,7 @@ import ar.edu.unq.peluqueriayabackend.service.PeluqueroService
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 import java.util.*
+import javax.transaction.Transactional
 
 @Service
 class PeluqueroServiceImpl(@Autowired val peluqueroDAO: PeluqueroDAO): PeluqueroService {
@@ -19,10 +20,12 @@ class PeluqueroServiceImpl(@Autowired val peluqueroDAO: PeluqueroDAO): Peluquero
         return peluqueroDAO.getAll()
     }
 
+    @Transactional
     override fun save(t: Peluquero): Peluquero {
         return peluqueroDAO.save(t)
     }
 
+    @Transactional
     override fun update(t: Peluquero): Peluquero {
         return peluqueroDAO.update(t)
     }

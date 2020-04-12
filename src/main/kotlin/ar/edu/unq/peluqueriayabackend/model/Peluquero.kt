@@ -14,12 +14,16 @@ class Peluquero(
         var ubicacion:Ubicacion,
         var estado: PeluqueroState,
         @OneToMany(cascade = [CascadeType.ALL], fetch = FetchType.LAZY, mappedBy = "peluquero", orphanRemoval = true)
-        var servicios:List<Servicio>
+        var servicios:MutableList<Servicio> = mutableListOf()
                 ) {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     var id: Int = 0
+
+    fun agregarServicio(servicio: Servicio) {
+        servicios.add(servicio)
+    }
 
     data class Builder(
             var logo: String = "",
@@ -29,20 +33,20 @@ class Peluquero(
             var email: String = "",
             var ubicacion:Ubicacion = Ubicacion("",""),
             var estado: PeluqueroState = PeluqueroState.DISPONIBLE,
-            var servicios:List<Servicio> = emptyList()
+            var servicios:MutableList<Servicio> = mutableListOf()
     ){
         fun build():Peluquero {
             return Peluquero(logo,nombre,corteMin,distanciaMax,email,ubicacion,estado,servicios)
         }
 
-        fun withLogo(logo:String) = apply { this.logo }
-        fun withNombre(nombre:String) = apply { this.nombre }
-        fun withCorteMin(corteMin: BigDecimal) = apply { this.corteMin }
-        fun withDistanciaMax(distanciaMax: BigDecimal) = apply { this.distanciaMax }
-        fun withEmail(email: String) = apply { this.email }
-        fun withUbicacion(ubicacion: Ubicacion) = apply { this.ubicacion }
-        fun withEstado(estado: PeluqueroState) = apply { this.estado }
-        fun withServicios(servicios: List<Servicio>) = apply { this.servicios }
+        fun logo(logo:String) = apply { this.logo = logo }
+        fun withNombre(nombre:String) = apply { this.nombre = nombre }
+        fun withCorteMin(corteMin: BigDecimal) = apply { this.corteMin = corteMin }
+        fun withDistanciaMax(distanciaMax: BigDecimal) = apply { this.distanciaMax = distanciaMax}
+        fun withEmail(email: String) = apply { this.email = email }
+        fun withUbicacion(ubicacion: Ubicacion) = apply { this.ubicacion = ubicacion }
+        fun withEstado(estado: PeluqueroState) = apply { this.estado = estado }
+        fun withServicios(servicios: MutableList<Servicio>) = apply { this.servicios = servicios }
 
     }
 }

@@ -7,5 +7,5 @@ interface GenericDAO<T> {
     fun getAll():Collection<T>
     fun save(t:T):T
     fun update(t:T):T
-    fun delete(t:T)
+    fun delete(id:Int)
 }
