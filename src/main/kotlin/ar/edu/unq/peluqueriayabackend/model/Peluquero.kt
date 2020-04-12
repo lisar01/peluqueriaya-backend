@@ -9,10 +9,10 @@ class Peluquero(
         var logo: String,
         var nombre: String,
         var corteMin: BigDecimal,
-        var distanciaMax: Long?,
+        var distanciaMax: BigDecimal,
         var email: String,
         var ubicacion:Ubicacion,
-        var estado: PeluqueroState = PeluqueroState.DISPONIBLE,
+        private var estado: PeluqueroState,
         @OneToMany(cascade = [CascadeType.ALL], fetch = FetchType.LAZY, mappedBy = "peluquero", orphanRemoval = true)
         var servicios:List<Servicio>
                 ) {
