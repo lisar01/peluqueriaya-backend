@@ -31,7 +31,7 @@ class PeluqueriayaBackendApplication : WebMvcConfigurer{
 	@Bean
 	fun demo(peluqueroRepository: PeluqueroRepository, servicioRepository: ServicioRepository): CommandLineRunner? {
 		return CommandLineRunner { args: Array<String?>? ->
-			println("Descomente el metodo: createFakeData(..) en la clase PeluqueriayaBackendApplication, para generar datos falsos")
+			println("|**!!INFO!!**| Descomente el metodo: createFakeData(..) en la clase PeluqueriayaBackendApplication, para generar datos falsos")
 			println("|**!!ADVICE!!**| Una vez ejecutado el metodo createFakeData(..) vuelva a comentarlo o elimine los datos de la Base de Datos, para evitar errores")
 			this.createFakeData(peluqueroRepository,servicioRepository)
 
@@ -43,7 +43,6 @@ class PeluqueriayaBackendApplication : WebMvcConfigurer{
 
 		val peluquero1 = Peluquero.Builder().
 				withNombre("El barba").
-				logo("https://image.shutterstock.com/image-vector/men-barbershop-hairstylist-banner-logo-260nw-1315338812.jpg").
 				withCorteMin(BigDecimal(250)).
 				withDistanciaMax(BigDecimal(5.5)).
 				withEmail("barbamail@pepe.com").
@@ -53,7 +52,7 @@ class PeluqueriayaBackendApplication : WebMvcConfigurer{
 
 		//Sin logo
 		var peluquero2 = Peluquero.Builder().
-				logo("https://i.pinimg.com/236x/3f/50/87/3f50871f2a2f132399894dfb4f9c73cf.jpg").
+				withLogo("https://i.pinimg.com/236x/3f/50/87/3f50871f2a2f132399894dfb4f9c73cf.jpg").
 				withNombre("La pelu").
 				withCorteMin(BigDecimal(250)).
 				withDistanciaMax(BigDecimal(7)).
@@ -65,7 +64,7 @@ class PeluqueriayaBackendApplication : WebMvcConfigurer{
 
 
 		var peluquero3 = Peluquero.Builder().
-				logo("https://image.shutterstock.com/image-vector/barber-shop-logo-260nw-672396868.jpg").
+				withLogo("https://image.shutterstock.com/image-vector/barber-shop-logo-260nw-672396868.jpg").
 				withNombre("Pepe el barbero").
 				withCorteMin(BigDecimal(400)).
 				withDistanciaMax(BigDecimal(3)).
@@ -83,41 +82,64 @@ class PeluqueriayaBackendApplication : WebMvcConfigurer{
 				withEstado(PeluqueroState.DISPONIBLE).
 				build()
 
+		var peluquero5MDQ = Peluquero.Builder().
+				withLogo("https://d1yjjnpx0p53s8.cloudfront.net/styles/logo-thumbnail/s3/0024/5278/brand.gif?itok=pw1PLx5N").
+				withNombre("La pelu de mardel").
+				withCorteMin(BigDecimal(300)).
+				withDistanciaMax(BigDecimal(5)).
+				withEmail("laPelu@mdq.com").
+				withUbicacion(Ubicacion("-38.003655","-57.554497")).
+				withEstado(PeluqueroState.OCUPADO).
+				build()
+
 		//Guardando peluqueros creados
 
 		peluqueroRepository.save(peluquero1)
-		peluquero2 = peluqueroRepository.save(peluquero2)
-		peluquero3 = peluqueroRepository.save(peluquero3)
 		peluqueroRepository.save(peluquero4MDQ)
 
+		peluquero2 = peluqueroRepository.save(peluquero2)
+		peluquero3 = peluqueroRepository.save(peluquero3)
+		peluquero5MDQ = peluqueroRepository.save(peluquero5MDQ)
+
 		//Creando servicios a peluqueros
-		crearServiciosDePeluqueros(servicioRepository,peluquero2,peluquero3)
+		crearServiciosDePeluqueros(servicioRepository,peluquero2,peluquero3,peluquero5MDQ)
 
 		println("|**!!INFO!!**| Metodo de crear datos falsos finalizado!")
 	}
 
-	private fun crearServiciosDePeluqueros(servicioRepository: ServicioRepository, peluquero2: Peluquero, peluquero3: Peluquero) {
-		val service1 = Servicio.Builder().
+	private fun crearServiciosDePeluqueros(servicioRepository: ServicioRepository, peluquero2: Peluquero, peluquero3: Peluquero,
+										   peluquero5MDQ: Peluquero) {
+		val servicioBarba = Servicio.Builder().
 				withNombre("Barba").
 				withPrecio(BigDecimal(100)).
 				withPeluquero(peluquero3).
 				build()
 
-		val service2 = Servicio.Builder().
+		val servicioTenir = Servicio.Builder().
 				withNombre("Teñir").
 				withPrecio(BigDecimal(800)).
 				withPeluquero(peluquero3).
 				build()
 
-		val servicioUña = Servicio.Builder().
+		val servicioUnia = Servicio.Builder().
 				withNombre("Hacer uñas").
 				withPrecio(BigDecimal(200)).
 				withPeluquero(peluquero2).
 				build()
 
-		servicioRepository.save(service1)
-		servicioRepository.save(service2)
-		servicioRepository.save(servicioUña)
+		servicioRepository.save(servicioBarba)
+		servicioRepository.save(servicioTenir)
+		servicioRepository.save(servicioUnia)
+
+		servicioUnia.peluquero = peluquero5MDQ
+		servicioUnia.id = 0
+		servicioRepository.save(servicioUnia)
+
+		servicioTenir.peluquero = peluquero5MDQ
+		servicioTenir.id = 0
+		servicioTenir.precio = BigDecimal(1200)
+		servicioRepository.save(servicioTenir)
+
 	}
 
 }

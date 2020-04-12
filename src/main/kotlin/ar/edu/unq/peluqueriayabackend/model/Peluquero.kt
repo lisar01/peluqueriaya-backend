@@ -39,7 +39,7 @@ class Peluquero(
             return Peluquero(logo,nombre,corteMin,distanciaMax,email,ubicacion,estado,servicios)
         }
 
-        fun logo(logo:String) = apply { this.logo = logo }
+        fun withLogo(logo:String) = apply { this.logo = logo }
         fun withNombre(nombre:String) = apply { this.nombre = nombre }
         fun withCorteMin(corteMin: BigDecimal) = apply { this.corteMin = corteMin }
         fun withDistanciaMax(distanciaMax: BigDecimal) = apply { this.distanciaMax = distanciaMax}
