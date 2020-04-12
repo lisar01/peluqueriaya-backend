@@ -29,7 +29,7 @@ class PeluqueroDAORepository(@Autowired val peluqueroRepository: PeluqueroReposi
         return save(t)
     }
 
-    override fun delete(t: Peluquero) {
+    override fun delete(id: Int) {
         //TODO PONER UN FLAG DE SI EL PELUQUERO SE ELIMINO O NO
     }
 
