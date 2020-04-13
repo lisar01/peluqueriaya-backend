@@ -1,16 +1,20 @@
 package ar.edu.unq.peluqueriayabackend
 
+import ar.edu.unq.peluqueriayabackend.config.AppProperties
 import org.springframework.boot.autoconfigure.SpringBootApplication
+import org.springframework.boot.context.properties.EnableConfigurationProperties
 import org.springframework.boot.runApplication
 import org.springframework.context.annotation.Import
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer
 
+
 @SpringBootApplication
 @EnableJpaAuditing
 @Import(SwaggerConfiguration::class)
-class PeluqueriayaBackendApplication : WebMvcConfigurer{
+@EnableConfigurationProperties(AppProperties::class)
+class PeluqueriayaBackendApplication : WebMvcConfigurer {
 
 	// Go to "http://localhost:8080/swagger-ui.html" for use swagger ui
 
@@ -18,6 +22,7 @@ class PeluqueriayaBackendApplication : WebMvcConfigurer{
 		registry.addResourceHandler("swagger-ui.html")
 				.addResourceLocations("classpath:/META-INF/resources/")
 	}
+
 
 }
 
