@@ -1,5 +1,6 @@
 package ar.edu.unq.peluqueriayabackend
 
+import ar.edu.unq.peluqueriayabackend.config.AppProperties
 import ar.edu.unq.peluqueriayabackend.model.Peluquero
 import ar.edu.unq.peluqueriayabackend.model.PeluqueroState
 import ar.edu.unq.peluqueriayabackend.model.Servicio
@@ -8,6 +9,7 @@ import ar.edu.unq.peluqueriayabackend.persistence.impl.repositories.PeluqueroRep
 import ar.edu.unq.peluqueriayabackend.persistence.impl.repositories.ServicioRepository
 import org.springframework.boot.CommandLineRunner
 import org.springframework.boot.autoconfigure.SpringBootApplication
+import org.springframework.boot.context.properties.EnableConfigurationProperties
 import org.springframework.boot.runApplication
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Import
@@ -16,10 +18,12 @@ import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer
 import java.math.BigDecimal
 
+
 @SpringBootApplication
 @EnableJpaAuditing
 @Import(SwaggerConfiguration::class)
-class PeluqueriayaBackendApplication : WebMvcConfigurer{
+@EnableConfigurationProperties(AppProperties::class)
+class PeluqueriayaBackendApplication : WebMvcConfigurer {
 
 	// Go to "http://localhost:8080/swagger-ui.html" for use swagger ui
 
@@ -141,6 +145,7 @@ class PeluqueriayaBackendApplication : WebMvcConfigurer{
 		servicioRepository.save(servicioTenir)
 
 	}
+
 
 }
 
