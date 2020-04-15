@@ -1,3 +1,8 @@
 package ar.edu.unq.peluqueriayabackend.service
 
-interface PeluqueroService
+import ar.edu.unq.peluqueriayabackend.model.Peluquero
+import ar.edu.unq.peluqueriayabackend.model.Ubicacion
+
+interface PeluqueroService:GenericService<Peluquero> {
+    fun buscarPeluquerosCercanos(ubicacion: Ubicacion): List<Peluquero>
+}
