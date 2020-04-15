@@ -10,9 +10,8 @@ import reactor.core.publisher.Mono
 class MapsController(val mapsService: MapsService) {
 
     @GetMapping("/autocomplete/coords")
-    fun getLocationByCoords(@RequestParam latitude: String, @RequestParam longitude: String): Mono<String> {
+    fun getLocationByCoords(@RequestParam latitude: String, @RequestParam longitude: String): Mono<Items> {
         val coords = "$latitude,$longitude"
-        println(coords)
         return mapsService.getLocationByCoords(coords)
     }
 
