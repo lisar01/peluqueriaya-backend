@@ -145,7 +145,6 @@ class PeluqueriayaBackendApplication : WebMvcConfigurer {
 
 	}
 
-
 }
 
 fun main(args: Array<String>) {
