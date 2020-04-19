@@ -13,6 +13,7 @@ import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Import
 import org.springframework.context.annotation.PropertySource
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing
+import org.springframework.web.servlet.config.annotation.CorsRegistry
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer
 import java.math.BigDecimal
@@ -29,6 +30,11 @@ class PeluqueriayaBackendApplication : WebMvcConfigurer {
 	override fun addResourceHandlers(registry: ResourceHandlerRegistry) {
 		registry.addResourceHandler("swagger-ui.html")
 				.addResourceLocations("classpath:/META-INF/resources/")
+	}
+
+	override fun addCorsMappings(registry: CorsRegistry) {
+		registry.addMapping("/**")
+				.allowedOrigins("http://localhost:3000")
 	}
 
 	@Bean
