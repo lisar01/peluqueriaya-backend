@@ -1,9 +1,6 @@
 package ar.edu.unq.peluqueriayabackend
 
-import ar.edu.unq.peluqueriayabackend.model.Peluquero
-import ar.edu.unq.peluqueriayabackend.model.PeluqueroState
-import ar.edu.unq.peluqueriayabackend.model.Servicio
-import ar.edu.unq.peluqueriayabackend.model.Ubicacion
+import ar.edu.unq.peluqueriayabackend.model.*
 import ar.edu.unq.peluqueriayabackend.persistence.impl.repositories.PeluqueroRepository
 import ar.edu.unq.peluqueriayabackend.persistence.impl.repositories.ServicioRepository
 import org.springframework.boot.CommandLineRunner
@@ -52,6 +49,8 @@ class PeluqueriayaBackendApplication : WebMvcConfigurer {
 
 		val peluquero1 = Peluquero.Builder().
 				withNombre("El barba").
+				withDescripcion("El mejor barbero de zona sur!").
+				withTipos(mutableSetOf(PeluqueroType.HOMBRE)).
 				withCorteMin(BigDecimal(250)).
 				withDistanciaMax(BigDecimal(5.5)).
 				withEmail("barbamail@pepe.com").
@@ -63,6 +62,8 @@ class PeluqueriayaBackendApplication : WebMvcConfigurer {
 		var peluquero2 = Peluquero.Builder().
 				withLogo("https://i.pinimg.com/236x/3f/50/87/3f50871f2a2f132399894dfb4f9c73cf.jpg").
 				withNombre("La pelu").
+				withDescripcion("La mejor peluquera de zona sur!").
+				withTipos(mutableSetOf(PeluqueroType.MUJER,PeluqueroType.HOMBRE,PeluqueroType.CHICOS)).
 				withCorteMin(BigDecimal(250)).
 				withDistanciaMax(BigDecimal(7)).
 				withEmail("lapelu@gmail.com").
@@ -70,11 +71,11 @@ class PeluqueriayaBackendApplication : WebMvcConfigurer {
 				withEstado(PeluqueroState.DISPONIBLE).
 				build()
 
-
-
 		var peluquero3 = Peluquero.Builder().
 				withLogo("https://image.shutterstock.com/image-vector/barber-shop-logo-260nw-672396868.jpg").
 				withNombre("Pepe el barbero").
+				withDescripcion("Soy pepe grillo el mejor barbero!").
+				withTipos(mutableSetOf(PeluqueroType.HOMBRE,PeluqueroType.CHICOS)).
 				withCorteMin(BigDecimal(400)).
 				withDistanciaMax(BigDecimal(3)).
 				withEmail("pepe@yahoo.com").
@@ -84,6 +85,8 @@ class PeluqueriayaBackendApplication : WebMvcConfigurer {
 
 		val peluquero4MDQ = Peluquero.Builder().
 				withNombre("El barba de mardel").
+				withDescripcion("Soy el mejor barbero de Mar del Plata, despues de la playa cortate conmigo!").
+				withTipos(mutableSetOf(PeluqueroType.HOMBRE,PeluqueroType.CHICOS)).
 				withCorteMin(BigDecimal(100)).
 				withDistanciaMax(BigDecimal(10)).
 				withEmail("barbamdq@mdq.com").
@@ -94,6 +97,8 @@ class PeluqueriayaBackendApplication : WebMvcConfigurer {
 		var peluquero5MDQ = Peluquero.Builder().
 				withLogo("https://d1yjjnpx0p53s8.cloudfront.net/styles/logo-thumbnail/s3/0024/5278/brand.gif?itok=pw1PLx5N").
 				withNombre("La pelu de mardel").
+				withDescripcion("La mejor pelu de mar del plata, el mejor alisado... despreocupate!").
+				withTipos(mutableSetOf(PeluqueroType.MUJER)).
 				withCorteMin(BigDecimal(300)).
 				withDistanciaMax(BigDecimal(5)).
 				withEmail("laPelu@mdq.com").
