@@ -5,5 +5,5 @@ import ar.edu.unq.peluqueriayabackend.model.Ubicacion
 
 interface PeluqueroDAO:GenericDAO<Peluquero> {
 
-    fun buscarPeluquerosEnUbicacionDentroDelRadioEnKm(ubicacion: Ubicacion, distanciaEnKm: Double): List<Peluquero>
+    fun buscarPeluquerosEnUbicacionDentroDelRadioEnKm(distanciaEnKm: Double,latitude:Double, longitude:Double): List<Peluquero>
 }

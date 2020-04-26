@@ -1,12 +1,14 @@
 package ar.edu.unq.peluqueriayabackend.persistence.impl
 
 import ar.edu.unq.peluqueriayabackend.model.Peluquero
+import ar.edu.unq.peluqueriayabackend.model.PeluqueroState
 import ar.edu.unq.peluqueriayabackend.model.Ubicacion
 import ar.edu.unq.peluqueriayabackend.persistence.PeluqueroDAO
 import ar.edu.unq.peluqueriayabackend.persistence.impl.repositories.PeluqueroRepository
 import ar.edu.unq.peluqueriayabackend.service.geodistance.GeoDistanceServiceApi
 import ar.edu.unq.peluqueriayabackend.service.geodistance.impl.GeoDistanceServiceImpl
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.data.domain.Pageable
 import org.springframework.stereotype.Service
 import java.util.*
 
@@ -29,14 +31,15 @@ class PeluqueroDAORepository(@Autowired val peluqueroRepository: PeluqueroReposi
         return save(t)
     }
 
+    // Solo setea el estado en deshabilitado (No borra nada)
     override fun delete(id: Int) {
-        //TODO PONER UN FLAG DE SI EL PELUQUERO SE ELIMINO O NO
+        val peluqueroDeshabilitado = get(id).get()
+        peluqueroDeshabilitado.estado = PeluqueroState.DESHABILITADO
+        save(peluqueroDeshabilitado)
     }
 
-    override fun buscarPeluquerosEnUbicacionDentroDelRadioEnKm(ubicacion: Ubicacion, distanciaEnKm: Double): List<Peluquero> {
-
-        val geoDistance:GeoDistanceServiceApi = GeoDistanceServiceImpl()
-
-        return peluqueroRepository.findAll().filter { p -> geoDistance.distanciaUbicacionesEnKM(ubicacion,p.ubicacion) <= distanciaEnKm }
+    override fun buscarPeluquerosEnUbicacionDentroDelRadioEnKm(distanciaEnKm: Double,latitude:Double, longitude:Double): List<Peluquero> {
+        //SIN PAGINAR AUN
+        return peluqueroRepository.findAllInRangeAtCoordinates(distanciaEnKm,latitude,longitude, Pageable.unpaged()).toList()
     }
 }

@@ -31,6 +31,9 @@ class PeluqueroServiceImpl(@Autowired val peluqueroDAO: PeluqueroDAO): Peluquero
     }
 
     override fun buscarPeluquerosCercanos(ubicacion: Ubicacion): List<Peluquero> {
-        return peluqueroDAO.buscarPeluquerosEnUbicacionDentroDelRadioEnKm(ubicacion,5.0)
+        return peluqueroDAO.buscarPeluquerosEnUbicacionDentroDelRadioEnKm(
+                5.3,
+                ubicacion.getLatitudeAsDouble(),
+                ubicacion.getLongitudeAsDouble())
     }
 }
