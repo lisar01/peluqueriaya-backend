@@ -8,6 +8,7 @@ import ar.edu.unq.peluqueriayabackend.persistence.impl.repositories.PeluqueroRep
 import ar.edu.unq.peluqueriayabackend.service.geodistance.GeoDistanceServiceApi
 import ar.edu.unq.peluqueriayabackend.service.geodistance.impl.GeoDistanceServiceImpl
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
 import org.springframework.stereotype.Service
 import java.util.*
@@ -38,8 +39,22 @@ class PeluqueroDAORepository(@Autowired val peluqueroRepository: PeluqueroReposi
         save(peluqueroDeshabilitado)
     }
 
-    override fun buscarPeluquerosEnUbicacionDentroDelRadioEnKm(distanciaEnKm: Double,latitude:Double, longitude:Double): List<Peluquero> {
-        //SIN PAGINAR AUN
-        return peluqueroRepository.findAllInRangeAtCoordinates(distanciaEnKm,latitude,longitude, Pageable.unpaged()).toList()
+    override fun buscarPeluquerosEnUbicacionDentroDelRadioEnKm(distanciaEnKm: Double,latitude:Double, longitude:Double,pageable:Pageable): Page<Peluquero> {
+        return peluqueroRepository.findAllInRangeAtCoordinates(
+                distanciaEnKm,
+                latitude,
+                longitude,
+                pageable)
+    }
+
+    override fun buscarPeluquerosConNombreOTipoYQueEstenDentroDelRadioEnKmDeLaUbicacion(nombre:String, tipo:String, distanciaEnKm: Double,latitude: Double,longitude: Double,pageable: Pageable): Page<Peluquero> {
+        return peluqueroRepository.findAllInRangeAtCoordinatesAndLikeNameOrWithTipos(
+                distanciaEnKm,
+                latitude,
+                longitude,
+                nombre,
+                tipo,
+                pageable
+        )
     }
 }

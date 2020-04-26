@@ -5,6 +5,8 @@ import ar.edu.unq.peluqueriayabackend.model.Ubicacion
 import ar.edu.unq.peluqueriayabackend.persistence.PeluqueroDAO
 import ar.edu.unq.peluqueriayabackend.service.PeluqueroService
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.data.domain.Page
+import org.springframework.data.domain.Pageable
 import org.springframework.stereotype.Service
 import java.util.*
 import javax.transaction.Transactional
@@ -30,10 +32,20 @@ class PeluqueroServiceImpl(@Autowired val peluqueroDAO: PeluqueroDAO): Peluquero
         return peluqueroDAO.update(t)
     }
 
-    override fun buscarPeluquerosCercanos(ubicacion: Ubicacion): List<Peluquero> {
+    override fun buscarPeluquerosCercanos(ubicacion: Ubicacion, pageable: Pageable): Page<Peluquero> {
         return peluqueroDAO.buscarPeluquerosEnUbicacionDentroDelRadioEnKm(
                 5.3,
                 ubicacion.getLatitudeAsDouble(),
-                ubicacion.getLongitudeAsDouble())
+                ubicacion.getLongitudeAsDouble(), pageable)
+    }
+
+    override fun buscarPeluquerosCercanosPorNombreOTipo(ubicacion: Ubicacion, nombre:String, tipo:String, pageable: Pageable):Page<Peluquero> {
+        return peluqueroDAO.buscarPeluquerosConNombreOTipoYQueEstenDentroDelRadioEnKmDeLaUbicacion(
+                nombre,
+                tipo,
+                5.3,
+                ubicacion.getLatitudeAsDouble(),
+                ubicacion.getLongitudeAsDouble(),
+                pageable)
     }
 }

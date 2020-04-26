@@ -13,6 +13,6 @@ interface PeluqueroRepository : JpaRepository<Peluquero, Int>{
     fun findAllInRangeAtCoordinates(rangoEnKm: Double,lat:Double,lng: Double, pageable: Pageable): Page<Peluquero>
 
     @Query("SELECT p FROM Peluquero p WHERE distance(cast(p.ubicacion.latitude as double),cast(p.ubicacion.longitude as double),?2,?3) <= ?1 AND lower(p.nombre) LIKE lower(concat('%',?4,'%')) OR ?5 member of p.tipos")
-    fun findAllInRangeAtCoordinatesAndLikeNameOrWithTipos(rangoEnKm:Float,lat:Float,lng: Float, nombre: String, tipo: String, pageable: Pageable): Page<Peluquero>
+    fun findAllInRangeAtCoordinatesAndLikeNameOrWithTipos(rangoEnKm:Double,lat:Double,lng:Double, nombre: String, tipo: String, pageable: Pageable): Page<Peluquero>
 
 }

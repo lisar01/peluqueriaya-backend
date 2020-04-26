@@ -3,6 +3,7 @@ package ar.edu.unq.peluqueriayabackend.controller
 import ar.edu.unq.peluqueriayabackend.model.Ubicacion
 import ar.edu.unq.peluqueriayabackend.service.PeluqueroService
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.data.domain.Pageable
 import org.springframework.http.HttpStatus
 import org.springframework.web.bind.annotation.*
 import org.springframework.http.ResponseEntity
@@ -19,7 +20,7 @@ class PeluqueroController(@Autowired val peluqueroService: PeluqueroService) {
        if(! ubicacion.isValid())
            return ResponseEntity("Ubicacion erronea",HttpStatus.BAD_REQUEST)
 
-        return ResponseEntity(peluqueroService.buscarPeluquerosCercanos(ubicacion)
+        return ResponseEntity(peluqueroService.buscarPeluquerosCercanos(ubicacion, Pageable.unpaged()).toList()
                 ,HttpStatus.OK)
     }
 }
