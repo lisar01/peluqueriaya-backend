@@ -3,17 +3,23 @@ package ar.edu.unq.peluqueriayabackend
 import ar.edu.unq.peluqueriayabackend.model.*
 import ar.edu.unq.peluqueriayabackend.persistence.impl.repositories.PeluqueroRepository
 import ar.edu.unq.peluqueriayabackend.persistence.impl.repositories.ServicioRepository
+import org.springframework.beans.factory.annotation.Value
 import org.springframework.boot.CommandLineRunner
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Import
 import org.springframework.context.annotation.PropertySource
+import org.springframework.core.io.Resource
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing
+import org.springframework.jdbc.datasource.init.DataSourceInitializer
+import org.springframework.jdbc.datasource.init.DatabasePopulator
+import org.springframework.jdbc.datasource.init.ResourceDatabasePopulator
 import org.springframework.web.servlet.config.annotation.CorsRegistry
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer
 import java.math.BigDecimal
+import javax.sql.DataSource
 
 
 @SpringBootApplication
@@ -28,11 +34,30 @@ class PeluqueriayaBackendApplication : WebMvcConfigurer {
 		registry.addResourceHandler("swagger-ui.html")
 				.addResourceLocations("classpath:/META-INF/resources/")
 	}
-
 	override fun addCorsMappings(registry: CorsRegistry) {
 		registry.addMapping("/**")
 				.allowedOrigins("http://localhost:3000")
 	}
+
+	// Corre el script .sql para crear la funcion del calculo de distancia
+	@Value("classpath:createDistanceFunction.sql")
+	lateinit var dataScript: Resource
+
+	@Bean
+	fun createFunctionDB(dataSource: DataSource):DataSourceInitializer {
+		val initializer = DataSourceInitializer()
+		initializer.setDataSource(dataSource)
+		initializer.setDatabasePopulator(databasePopulator());
+		return initializer
+	}
+
+	private fun databasePopulator(): DatabasePopulator {
+
+		val populator = ResourceDatabasePopulator()
+		populator.addScript(dataScript)
+		return populator
+	}
+
 
 	@Bean
 	fun demo(peluqueroRepository: PeluqueroRepository, servicioRepository: ServicioRepository): CommandLineRunner? {
