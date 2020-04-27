@@ -12,6 +12,6 @@ interface PeluqueroDAO:GenericDAO<Peluquero> {
             : Page<Peluquero>
 
     fun buscarPeluquerosConNombreOTipoYQueEstenDentroDelRadioEnKmDeLaUbicacion(
-            nombre:String, tipo:String, distanciaEnKm: Double,latitude: Double,longitude: Double,pageable: Pageable)
+            nombreOTipo:String, distanciaEnKm: Double,latitude: Double,longitude: Double,pageable: Pageable)
             : Page<Peluquero>
 }

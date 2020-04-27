@@ -8,5 +8,5 @@ import org.springframework.data.domain.Pageable
 interface PeluqueroService:GenericService<Peluquero> {
     fun buscarPeluquerosCercanos(ubicacion: Ubicacion, pageable: Pageable): Page<Peluquero>
 
-    fun buscarPeluquerosCercanosPorNombreOTipo(ubicacion: Ubicacion, nombre:String, tipo:String, pageable: Pageable):Page<Peluquero>
+    fun buscarPeluquerosCercanosPorNombreOTipo(ubicacion: Ubicacion, nombreOTipo:String, pageable: Pageable):Page<Peluquero>
 }

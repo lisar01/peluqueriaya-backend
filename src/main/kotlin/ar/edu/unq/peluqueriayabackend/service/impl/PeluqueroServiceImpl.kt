@@ -39,10 +39,9 @@ class PeluqueroServiceImpl(@Autowired val peluqueroDAO: PeluqueroDAO): Peluquero
                 ubicacion.getLongitudeAsDouble(), pageable)
     }
 
-    override fun buscarPeluquerosCercanosPorNombreOTipo(ubicacion: Ubicacion, nombre:String, tipo:String, pageable: Pageable):Page<Peluquero> {
+    override fun buscarPeluquerosCercanosPorNombreOTipo(ubicacion: Ubicacion, nombreOTipo:String, pageable: Pageable):Page<Peluquero> {
         return peluqueroDAO.buscarPeluquerosConNombreOTipoYQueEstenDentroDelRadioEnKmDeLaUbicacion(
-                nombre,
-                tipo,
+                nombreOTipo,
                 5.3,
                 ubicacion.getLatitudeAsDouble(),
                 ubicacion.getLongitudeAsDouble(),
