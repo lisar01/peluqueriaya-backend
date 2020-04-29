@@ -11,9 +11,9 @@ import javax.validation.ConstraintViolationException
 class ControllerExceptionHandler {
 
     @ExceptionHandler(ConstraintViolationException::class)
-    @ResponseStatus(HttpStatus.BAD_REQUEST, reason = "Campos invalidos")
-    fun handleGenericNotFoundException(e: ConstraintViolationException): List<String> {
-        return e.constraintViolations.map { it.message }
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    fun handleGenericConstraintViolationException(e: ConstraintViolationException): Map<String, List<String>> {
+        return  mapOf("message" to e.constraintViolations.map { it.message })
     }
 
 }
