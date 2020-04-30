@@ -30,10 +30,12 @@ class MapasServiceImpl(
                 .uri{it.queryParam("apiKey", apiKey)
                         .queryParam("q", direccion)
                         .queryParam("in", "countryCode:ARG")
+                        .queryParam("limit", 6)
                         .build()
                 }
                 .retrieve()
-                .bodyToMono()
+                .bodyToMono<Items>()
+                .map { it -> Items(it.items.filter { it.resultType == "houseNumber" })}
     }
 
 }
