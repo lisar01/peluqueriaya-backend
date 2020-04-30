@@ -70,18 +70,34 @@ class PeluqueriayaBackendApplication : WebMvcConfigurer {
 
     private fun crearServiciosDePeluqueros(servicioRepository: ServicioRepository, peluquero2: Peluquero, peluquero3: Peluquero,
                                            peluquero5MDQ: Peluquero) {
-        val servicioBarba = Servicio.Builder().withNombre("Barba").withPrecio(BigDecimal(100)).withPeluquero(peluquero3).build()
+        val servicioBarba = Servicio.Builder()
+                .withDescripcion("Corte de barba prolijo")
+                .withTipos(mutableSetOf(ServicioType.CORTE, ServicioType.BARBA))
+                .withPrecio(BigDecimal(120)).withPeluquero(peluquero3).build()
 
-        val servicioTenir = Servicio.Builder().withNombre("Teñir").withPrecio(BigDecimal(800)).withPeluquero(peluquero3).build()
+        val servicioTenir = Servicio.Builder()
+                .withDescripcion("Teñido con los mejores productos")
+                .withTipos(mutableSetOf(ServicioType.TENIDO))
+                .withPrecio(BigDecimal(800))
+                .withPeluquero(peluquero3).build()
 
-        val servicioTratamientoCapilar = Servicio.Builder().withNombre("Tratamiento Capilar").withPrecio(BigDecimal(2000)).withPeluquero(peluquero5MDQ).build()
+        val servicioTratamientoCapilar = Servicio.Builder()
+                .withDescripcion("Tratamiento capilar que resuelve problemas de caspa")
+                .withTipos(mutableSetOf(ServicioType.TRATAMIENTO))
+                .withPrecio(BigDecimal(2000)).withPeluquero(peluquero5MDQ).build()
 
-        val servicioPeinadoDeFiesta = Servicio.Builder().withNombre("Peinado De Fiesta").withPrecio(BigDecimal(1000)).withPeluquero(peluquero5MDQ).build()
+        val servicioPeinadoDeFiesta = Servicio.Builder()
+                .withDescripcion("Peinado de fiesta siguiendo últimas tendencias")
+                .withTipos(mutableSetOf(ServicioType.PEINADO, ServicioType.RECOGIDO))
+                .withPrecio(BigDecimal(1000)).withPeluquero(peluquero5MDQ).build()
 
-        val servicioUnia = Servicio.Builder().withNombre("Hacer uñas").withPrecio(BigDecimal(200)).withPeluquero(peluquero2).build()
+        val servicioUnia = Servicio.Builder()
+                .withDescripcion("Pintado de uñas con los colores de la temporada")
+                .withTipos(mutableSetOf(ServicioType.UNAS))
+                .withPrecio(BigDecimal(200)).withPeluquero(peluquero2).build()
 
         servicioRepository.saveAll(listOf(servicioBarba, servicioTenir, servicioTratamientoCapilar,
-                        servicioPeinadoDeFiesta, servicioUnia))
+                servicioPeinadoDeFiesta, servicioUnia))
     }
 
 }
