@@ -10,13 +10,8 @@ class Servicio(var nombre:String,
                var precio:BigDecimal,
                @JsonIgnore
                @ManyToOne(fetch = FetchType.LAZY, optional = false)
-               var peluquero:Peluquero) {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    var id: Int = 0
-
-    fun getPeluqueroId():Int = peluquero.id
+               var peluquero:Peluquero,
+               @Id @GeneratedValue var id: Long? = null) {
 
     data class Builder(
             var nombre:String = "",

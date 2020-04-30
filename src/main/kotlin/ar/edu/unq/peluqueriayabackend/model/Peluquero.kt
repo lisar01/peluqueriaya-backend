@@ -17,12 +17,9 @@ class Peluquero(
         @ElementCollection
         var tipos: MutableSet<PeluqueroType> = mutableSetOf(),
         @OneToMany(cascade = [CascadeType.ALL], fetch = FetchType.LAZY, mappedBy = "peluquero", orphanRemoval = true)
-        var servicios:MutableList<Servicio> = mutableListOf()
+        var servicios:MutableList<Servicio> = mutableListOf(),
+        @Id @GeneratedValue var id: Long? = null
                 ) {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    var id: Int = 0
 
     fun agregarServicio(servicio: Servicio) {
         servicios.add(servicio)
