@@ -22,8 +22,6 @@ import java.math.BigDecimal
 @PropertySource("classpath:heremaps.properties")
 class PeluqueriayaBackendApplication : WebMvcConfigurer {
 
-	// Go to "http://localhost:8080/swagger-ui.html" for use swagger ui
-
 	override fun addResourceHandlers(registry: ResourceHandlerRegistry) {
 		registry.addResourceHandler("swagger-ui.html")
 				.addResourceLocations("classpath:/META-INF/resources/")
@@ -36,11 +34,10 @@ class PeluqueriayaBackendApplication : WebMvcConfigurer {
 
 	@Bean
 	fun demo(peluqueroRepository: PeluqueroRepository, servicioRepository: ServicioRepository): CommandLineRunner? {
-		return CommandLineRunner { args: Array<String?>? ->
+		return CommandLineRunner {
 			println("|**!!INFO!!**| Descomente el metodo: createFakeData(..) en la clase PeluqueriayaBackendApplication, para generar datos falsos")
 			println("|**!!ADVICE!!**| Una vez ejecutado el metodo createFakeData(..) vuelva a comentarlo o elimine los datos de la Base de Datos, para evitar errores")
 			this.createFakeData(peluqueroRepository,servicioRepository)
-
 		}
 	}
 

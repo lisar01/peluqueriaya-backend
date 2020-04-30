@@ -1,25 +1,27 @@
 package ar.edu.unq.peluqueriayabackend.controller
 
+import ar.edu.unq.peluqueriayabackend.model.Peluquero
 import ar.edu.unq.peluqueriayabackend.model.Ubicacion
 import ar.edu.unq.peluqueriayabackend.service.PeluqueroService
 import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.http.HttpStatus
 import org.springframework.web.bind.annotation.*
-import org.springframework.http.ResponseEntity
+import org.springframework.validation.annotation.Validated
+import javax.validation.constraints.Pattern
 
 @RestController
 @RequestMapping("/peluquero")
+@Validated
 class PeluqueroController(@Autowired val peluqueroService: PeluqueroService) {
 
     @GetMapping("/search")
-    fun buscarPeluqueros(@RequestParam latitude : String,@RequestParam longitude:String): ResponseEntity<Any> {
-
+    fun buscarPeluqueros(@RequestParam
+                         @Pattern(regexp = "-?[1-9][0-9]*(\\.[0-9]+)?", message="{latitud.invalida}")
+                         latitude : String,
+                         @RequestParam
+                         @Pattern(regexp = "-?[1-9][0-9]*(\\.[0-9]+)?", message="{latitud.invalida}")
+                         longitude:String): List<Peluquero> {
         val ubicacion = Ubicacion(latitude,longitude)
-
-       if(! ubicacion.isValid())
-           return ResponseEntity("Ubicacion erronea",HttpStatus.BAD_REQUEST)
-
-        return ResponseEntity(peluqueroService.buscarPeluquerosCercanos(ubicacion)
-                ,HttpStatus.OK)
+        return peluqueroService.buscarPeluquerosCercanos(ubicacion)
     }
+
 }
