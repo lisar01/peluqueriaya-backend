@@ -8,6 +8,7 @@ import org.springframework.data.domain.Pageable
 import org.springframework.validation.annotation.Validated
 import org.springframework.web.bind.annotation.*
 import javax.validation.constraints.Pattern
+import javax.validation.constraints.Size
 
 @RestController
 @RequestMapping("/peluquero")
@@ -28,7 +29,10 @@ class PeluqueroController(@Autowired val peluqueroService: PeluqueroService) {
                                        @Pattern(regexp = "-?[1-9][0-9]*(\\.[0-9]+)?", message="{latitud.invalida}")
                                        latitude : String,
                                        @RequestParam
-                                       @Pattern(regexp = "-?[1-9][0-9]*(\\.[0-9]+)?", message="{latitud.invalida}") longitude:String,
-                                       @RequestParam nombreOTipo:String):List<Peluquero> =
+                                       @Pattern(regexp = "-?[1-9][0-9]*(\\.[0-9]+)?", message="{latitud.invalida}")
+                                       longitude:String,
+                                       @RequestParam
+                                       @Size(max = 25, message = "{input.muyLargo}")
+                                       nombreOTipo:String):List<Peluquero> =
         peluqueroService.buscarPeluquerosCercanosPorNombreOTipo(Ubicacion(latitude,longitude),nombreOTipo,Pageable.unpaged()).toList()
 }

@@ -52,7 +52,7 @@ class PeluqueroDAORepository(@Autowired val peluqueroRepository: PeluqueroReposi
         // Si el argumento nombreOTipo no matchea con un enum existente, solo se busca por nombre
         val tipo: PeluqueroType
         try{
-            tipo = PeluqueroType.valueOf(nombreOTipo.toUpperCase())
+            tipo = encontrarTipo(nombreOTipo)
         }catch (e: Exception){
             return peluqueroRepository.findAllInRangeAtCoordinatesAndLikeName(
                     distanciaEnKm,
@@ -71,5 +71,21 @@ class PeluqueroDAORepository(@Autowired val peluqueroRepository: PeluqueroReposi
                 tipo,
                 pageable
         )
+    }
+
+    private fun encontrarTipo(input:String):PeluqueroType{
+        val tipo = input.trim().toUpperCase()
+
+        if(tipo.contains("MUJER"))
+            return PeluqueroType.MUJER
+
+        if(tipo.contains("HOMBRE"))
+            return PeluqueroType.HOMBRE
+
+        if(tipo.contains("CHICO").or(tipo.contains("NENE")).or(tipo.contains("NENA")).
+                or(tipo.contains("CHIQUE")))
+            return PeluqueroType.CHICOS
+
+        return PeluqueroType.valueOf(tipo)
     }
 }
