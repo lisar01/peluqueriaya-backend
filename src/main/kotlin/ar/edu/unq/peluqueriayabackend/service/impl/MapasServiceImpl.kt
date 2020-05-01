@@ -34,8 +34,7 @@ class MapasServiceImpl(
                         .build()
                 }
                 .retrieve()
-                .bodyToMono<Items>()
-                .map { it -> Items(it.items.filter { it.resultType == "houseNumber" })}
+                .bodyToMono()
     }
 
 }
