@@ -6,7 +6,7 @@ import javax.persistence.*
 
 @Entity
 @Table(name = "servicios")
-class Servicio(var descripcion: String,
+class Servicio(var nombre: String,
                @ElementCollection
                var tipos: MutableSet<ServicioType>,
                var precio: BigDecimal,
@@ -16,16 +16,16 @@ class Servicio(var descripcion: String,
                @Id @GeneratedValue var id: Long? = null) {
 
     data class Builder(
-            var descripcion: String = "",
+            var nombre: String = "",
             var tipos: MutableSet<ServicioType> = mutableSetOf(),
             var precio: BigDecimal = BigDecimal(0),
             var peluquero: Peluquero = Peluquero.Builder().build()
     ) {
         fun build(): Servicio {
-            return Servicio(descripcion, tipos, precio, peluquero)
+            return Servicio(nombre, tipos, precio, peluquero)
         }
 
-        fun withDescripcion(descripcion: String) = apply { this.descripcion = descripcion }
+        fun withNombre(nombre: String) = apply { this.nombre = nombre }
         fun withTipos(tipos: MutableSet<ServicioType>) = apply { this.tipos = tipos }
         fun withPrecio(precio: BigDecimal) = apply { this.precio = precio }
         fun withPeluquero(peluquero: Peluquero) = apply { this.peluquero = peluquero }

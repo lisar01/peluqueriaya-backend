@@ -71,28 +71,28 @@ class PeluqueriayaBackendApplication : WebMvcConfigurer {
     private fun crearServiciosDePeluqueros(servicioRepository: ServicioRepository, peluquero2: Peluquero, peluquero3: Peluquero,
                                            peluquero5MDQ: Peluquero) {
         val servicioBarba = Servicio.Builder()
-                .withDescripcion("Corte de barba prolijo")
+                .withNombre("Corte de barba prolijo")
                 .withTipos(mutableSetOf(ServicioType.CORTE, ServicioType.BARBERIA))
                 .withPrecio(BigDecimal(120)).withPeluquero(peluquero3).build()
 
         val servicioTenir = Servicio.Builder()
-                .withDescripcion("Teñido con los mejores productos")
+                .withNombre("Teñido con los mejores productos")
                 .withTipos(mutableSetOf(ServicioType.TENIDO))
                 .withPrecio(BigDecimal(800))
                 .withPeluquero(peluquero3).build()
 
         val servicioTratamientoCapilar = Servicio.Builder()
-                .withDescripcion("Tratamiento capilar que resuelve problemas de caspa")
+                .withNombre("Tratamiento capilar que resuelve problemas de caspa")
                 .withTipos(mutableSetOf(ServicioType.TRATAMIENTO))
                 .withPrecio(BigDecimal(2000)).withPeluquero(peluquero5MDQ).build()
 
         val servicioPeinadoDeFiesta = Servicio.Builder()
-                .withDescripcion("Peinado de fiesta siguiendo últimas tendencias")
+                .withNombre("Peinado de fiesta siguiendo últimas tendencias")
                 .withTipos(mutableSetOf(ServicioType.PEINADO, ServicioType.RECOGIDO))
                 .withPrecio(BigDecimal(1000)).withPeluquero(peluquero5MDQ).build()
 
         val servicioUnia = Servicio.Builder()
-                .withDescripcion("Pintado de uñas con los colores de la temporada")
+                .withNombre("Pintado de uñas con los colores de la temporada")
                 .withTipos(mutableSetOf(ServicioType.UNAS))
                 .withPrecio(BigDecimal(200)).withPeluquero(peluquero2).build()
 
