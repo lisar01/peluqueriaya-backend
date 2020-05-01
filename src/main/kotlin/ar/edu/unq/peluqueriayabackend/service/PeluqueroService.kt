@@ -5,6 +5,7 @@ import ar.edu.unq.peluqueriayabackend.model.Ubicacion
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
 
+
 interface PeluqueroService:GenericService<Peluquero> {
     fun buscarPeluquerosCercanos(ubicacion: Ubicacion, pageable: Pageable): Page<Peluquero>
 

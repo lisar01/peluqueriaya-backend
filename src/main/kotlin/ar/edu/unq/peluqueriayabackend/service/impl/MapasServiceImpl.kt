@@ -5,9 +5,7 @@ import ar.edu.unq.peluqueriayabackend.service.MapasService
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.stereotype.Service
 import org.springframework.web.reactive.function.client.WebClient
-import org.springframework.web.reactive.function.client.bodyToFlux
 import org.springframework.web.reactive.function.client.bodyToMono
-import reactor.core.publisher.Flux
 import reactor.core.publisher.Mono
 
 @Service
@@ -32,10 +30,12 @@ class MapasServiceImpl(
                 .uri{it.queryParam("apiKey", apiKey)
                         .queryParam("q", direccion)
                         .queryParam("in", "countryCode:ARG")
+                        .queryParam("limit", 6)
                         .build()
                 }
                 .retrieve()
-                .bodyToMono()
+                .bodyToMono<Items>()
+                .map { it -> Items(it.items.filter { it.resultType == "houseNumber" })}
     }
 
 }
