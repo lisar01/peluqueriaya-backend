@@ -1,11 +1,9 @@
 package ar.edu.unq.peluqueriayabackend.persistence.impl
 
-import ar.edu.unq.peluqueriayabackend.model.Peluquero
-import ar.edu.unq.peluqueriayabackend.model.PeluqueroState
-import ar.edu.unq.peluqueriayabackend.model.PeluqueroType
-import ar.edu.unq.peluqueriayabackend.model.Ubicacion
+import ar.edu.unq.peluqueriayabackend.model.*
 import ar.edu.unq.peluqueriayabackend.persistence.PeluqueroDAO
 import ar.edu.unq.peluqueriayabackend.persistence.impl.repositories.PeluqueroRepository
+import ar.edu.unq.peluqueriayabackend.persistence.impl.repositories.ServicioRepository
 import ar.edu.unq.peluqueriayabackend.service.geodistance.GeoDistanceServiceApi
 import ar.edu.unq.peluqueriayabackend.service.geodistance.impl.GeoDistanceServiceImpl
 import org.springframework.beans.factory.annotation.Autowired
@@ -40,15 +38,15 @@ class PeluqueroDAORepository(@Autowired val peluqueroRepository: PeluqueroReposi
         save(peluqueroDeshabilitado)
     }
 
-    override fun buscarPeluquerosEnUbicacionDentroDelRadioEnKm(distanciaEnKm: Double,latitude:Double, longitude:Double,pageable:Pageable): Page<Peluquero> {
+    override fun buscarPeluquerosEnUbicacionDentroDelRadioEnKm(distanciaEnKm: Double,ubicacion: Ubicacion,pageable:Pageable): Page<Peluquero> {
         return peluqueroRepository.findAllInRangeAtCoordinates(
                 distanciaEnKm,
-                latitude,
-                longitude,
+                ubicacion.getLatitudeAsDouble(),
+                ubicacion.getLongitudeAsDouble(),
                 pageable)
     }
 
-    override fun buscarPeluquerosConNombreOTipoYQueEstenDentroDelRadioEnKmDeLaUbicacion(nombreOTipo:String, distanciaEnKm: Double,latitude: Double,longitude: Double,pageable: Pageable): Page<Peluquero> {
+    override fun buscarPeluquerosConNombreOTipoYQueEstenDentroDelRadioEnKmDeLaUbicacion(nombreOTipo:String, distanciaEnKm: Double,ubicacion:Ubicacion,pageable: Pageable): Page<Peluquero> {
         // Si el argumento nombreOTipo no matchea con un enum existente, solo se busca por nombre
         val tipo: PeluqueroType
         try{
@@ -56,8 +54,8 @@ class PeluqueroDAORepository(@Autowired val peluqueroRepository: PeluqueroReposi
         }catch (e: Exception){
             return peluqueroRepository.findAllInRangeAtCoordinatesAndLikeName(
                     distanciaEnKm,
-                    latitude,
-                    longitude,
+                    ubicacion.getLatitudeAsDouble(),
+                    ubicacion.getLongitudeAsDouble(),
                     nombreOTipo,
                     pageable
                     )
@@ -65,12 +63,21 @@ class PeluqueroDAORepository(@Autowired val peluqueroRepository: PeluqueroReposi
 
         return peluqueroRepository.findAllInRangeAtCoordinatesAndLikeNameOrWithTipos(
                 distanciaEnKm,
-                latitude,
-                longitude,
+                ubicacion.getLatitudeAsDouble(),
+                ubicacion.getLongitudeAsDouble(),
                 nombreOTipo,
                 tipo,
                 pageable
         )
+    }
+
+    override fun buscarPeluquerosPorTipoDeServicioYQueEstenDentroDelRadioEnKmDeLaUbicacion(tipoDeServicio: ServicioType, distanciaEnKm: Double, ubicacion:Ubicacion, pageable: Pageable): Page<Peluquero> {
+        return peluqueroRepository.findAllPeluquerosInRangeAtCoordinatesAndWithTipoDeServicio(
+                distanciaEnKm,
+                ubicacion.getLatitudeAsDouble(),
+                ubicacion.getLongitudeAsDouble(),
+                tipoDeServicio,
+                pageable)
     }
 
     private fun encontrarTipo(input:String):PeluqueroType{

@@ -34,22 +34,16 @@ class PeluqueroServiceImpl(@Autowired val peluqueroDAO: PeluqueroDAO): Peluquero
     }
 
     override fun buscarPeluquerosCercanos(ubicacion: Ubicacion, pageable: Pageable): Page<Peluquero> {
-        return peluqueroDAO.buscarPeluquerosEnUbicacionDentroDelRadioEnKm(
-                5.3,
-                ubicacion.getLatitudeAsDouble(),
-                ubicacion.getLongitudeAsDouble(), pageable)
+        return peluqueroDAO.buscarPeluquerosEnUbicacionDentroDelRadioEnKm(5.3, ubicacion, pageable)
     }
 
     override fun buscarPeluquerosCercanosPorNombreOTipo(ubicacion: Ubicacion, nombreOTipo:String, pageable: Pageable):Page<Peluquero> {
         return peluqueroDAO.buscarPeluquerosConNombreOTipoYQueEstenDentroDelRadioEnKmDeLaUbicacion(
-                nombreOTipo,
-                5.3,
-                ubicacion.getLatitudeAsDouble(),
-                ubicacion.getLongitudeAsDouble(),
-                pageable)
+                nombreOTipo, 5.3, ubicacion, pageable)
     }
 
-    override fun buscarPeluquerosCercanosPorTipoDeServicio(ubicacion: Ubicacion, tipoDeServicio: ServicioType): List<Peluquero> {
-        return buscarPeluquerosCercanos(ubicacion, Pageable.unpaged()).toList().filter { it.contieneServicioConTipo(tipoDeServicio) }
+    override fun buscarPeluquerosCercanosPorTipoDeServicio(ubicacion: Ubicacion, tipoDeServicio: ServicioType, pageable: Pageable): Page<Peluquero> {
+        return peluqueroDAO.buscarPeluquerosPorTipoDeServicioYQueEstenDentroDelRadioEnKmDeLaUbicacion(
+                tipoDeServicio,5.3, ubicacion, pageable)
     }
 }

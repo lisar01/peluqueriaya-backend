@@ -45,9 +45,7 @@ class PeluqueroController(@Autowired val peluqueroService: PeluqueroService) {
                                            @Pattern(regexp = "-?[1-9][0-9]*(\\.[0-9]+)?", message = "{latitud.invalida}")
                                            longitude: String,
                                            @RequestParam
-                                           tipoDeServicio: ServicioType): List<Peluquero> {
-        val ubicacion = Ubicacion(latitude, longitude)
-        return peluqueroService.buscarPeluquerosCercanosPorTipoDeServicio(ubicacion, tipoDeServicio)
-    }
+                                           tipoDeServicio: ServicioType): List<Peluquero> =
+        peluqueroService.buscarPeluquerosCercanosPorTipoDeServicio(Ubicacion(latitude, longitude), tipoDeServicio, Pageable.unpaged()).toList()
 
 }
