@@ -27,6 +27,10 @@ class Peluquero(
 
     fun isUnisex():Boolean = tipos.containsAll(setOf(PeluqueroType.HOMBRE,PeluqueroType.MUJER))
 
+    fun contieneServicioConTipo(tipoDeServicio: ServicioType): Boolean {
+        return servicios.any { it.tipos.contains(tipoDeServicio)}
+    }
+
     data class Builder(
             var logo: String = "",
             var nombre: String = "",

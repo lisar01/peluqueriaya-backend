@@ -72,7 +72,7 @@ class PeluqueriayaBackendApplication : WebMvcConfigurer {
                                            peluquero5MDQ: Peluquero) {
         val servicioBarba = Servicio.Builder()
                 .withDescripcion("Corte de barba prolijo")
-                .withTipos(mutableSetOf(ServicioType.CORTE, ServicioType.BARBA))
+                .withTipos(mutableSetOf(ServicioType.CORTE, ServicioType.BARBERIA))
                 .withPrecio(BigDecimal(120)).withPeluquero(peluquero3).build()
 
         val servicioTenir = Servicio.Builder()
