@@ -1,6 +1,7 @@
 package ar.edu.unq.peluqueriayabackend.service.impl
 
 import ar.edu.unq.peluqueriayabackend.model.Peluquero
+import ar.edu.unq.peluqueriayabackend.model.ServicioType
 import ar.edu.unq.peluqueriayabackend.model.Ubicacion
 import ar.edu.unq.peluqueriayabackend.persistence.PeluqueroDAO
 import ar.edu.unq.peluqueriayabackend.service.PeluqueroService
@@ -46,5 +47,9 @@ class PeluqueroServiceImpl(@Autowired val peluqueroDAO: PeluqueroDAO): Peluquero
                 ubicacion.getLatitudeAsDouble(),
                 ubicacion.getLongitudeAsDouble(),
                 pageable)
+    }
+
+    override fun buscarPeluquerosCercanosPorTipoDeServicio(ubicacion: Ubicacion, tipoDeServicio: ServicioType): List<Peluquero> {
+        return buscarPeluquerosCercanos(ubicacion, Pageable.unpaged()).toList().filter { it.contieneServicioConTipo(tipoDeServicio) }
     }
 }

@@ -17,18 +17,19 @@ class Peluquero(
         @ElementCollection
         var tipos: MutableSet<PeluqueroType> = mutableSetOf(),
         @OneToMany(cascade = [CascadeType.ALL], fetch = FetchType.LAZY, mappedBy = "peluquero", orphanRemoval = true)
-        var servicios:MutableList<Servicio> = mutableListOf()
+        var servicios:MutableList<Servicio> = mutableListOf(),
+        @Id @GeneratedValue var id: Long? = null
                 ) {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    var id: Int = 0
 
     fun agregarServicio(servicio: Servicio) {
         servicios.add(servicio)
     }
 
     fun isUnisex():Boolean = tipos.containsAll(setOf(PeluqueroType.HOMBRE,PeluqueroType.MUJER))
+
+    fun contieneServicioConTipo(tipoDeServicio: ServicioType): Boolean {
+        return servicios.any { it.tipos.contains(tipoDeServicio)}
+    }
 
     data class Builder(
             var logo: String = "",
