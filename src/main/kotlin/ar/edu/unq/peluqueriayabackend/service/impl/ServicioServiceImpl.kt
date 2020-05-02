@@ -4,12 +4,12 @@ import ar.edu.unq.peluqueriayabackend.model.Peluquero
 import ar.edu.unq.peluqueriayabackend.model.Servicio
 import ar.edu.unq.peluqueriayabackend.persistence.ServicioDAO
 import ar.edu.unq.peluqueriayabackend.service.ServicioService
-import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.stereotype.Service
 import java.util.*
 import javax.transaction.Transactional
 
-class ServicioServiceImpl(@Autowired val servicioDAO:ServicioDAO):ServicioService {
-
+@Service
+class ServicioServiceImpl(val servicioDAO:ServicioDAO):ServicioService {
 
     override fun get(id: Int): Optional<Servicio> {
         return servicioDAO.get(id)

@@ -13,16 +13,22 @@ class Peluquero(
         var email: String,
         var ubicacion:Ubicacion,
         var estado: PeluqueroState,
+        var descripcion: String,
+        @ElementCollection
+        var tipos: MutableSet<PeluqueroType> = mutableSetOf(),
         @OneToMany(cascade = [CascadeType.ALL], fetch = FetchType.LAZY, mappedBy = "peluquero", orphanRemoval = true)
-        var servicios:MutableList<Servicio> = mutableListOf()
+        var servicios:MutableList<Servicio> = mutableListOf(),
+        @Id @GeneratedValue var id: Long? = null
                 ) {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    var id: Int = 0
 
     fun agregarServicio(servicio: Servicio) {
         servicios.add(servicio)
+    }
+
+    fun isUnisex():Boolean = tipos.containsAll(setOf(PeluqueroType.HOMBRE,PeluqueroType.MUJER))
+
+    fun contieneServicioConTipo(tipoDeServicio: ServicioType): Boolean {
+        return servicios.any { it.tipos.contains(tipoDeServicio)}
     }
 
     data class Builder(
@@ -33,10 +39,12 @@ class Peluquero(
             var email: String = "",
             var ubicacion:Ubicacion = Ubicacion("",""),
             var estado: PeluqueroState = PeluqueroState.DISPONIBLE,
+            var descripcion: String = "",
+            var tipos: MutableSet<PeluqueroType> = mutableSetOf(),
             var servicios:MutableList<Servicio> = mutableListOf()
     ){
         fun build():Peluquero {
-            return Peluquero(logo,nombre,corteMin,distanciaMax,email,ubicacion,estado,servicios)
+            return Peluquero(logo,nombre,corteMin,distanciaMax,email,ubicacion,estado,descripcion,tipos,servicios)
         }
 
         fun withLogo(logo:String) = apply { this.logo = logo }
@@ -46,6 +54,8 @@ class Peluquero(
         fun withEmail(email: String) = apply { this.email = email }
         fun withUbicacion(ubicacion: Ubicacion) = apply { this.ubicacion = ubicacion }
         fun withEstado(estado: PeluqueroState) = apply { this.estado = estado }
+        fun withDescripcion(descripcion: String) = apply { this.descripcion = descripcion }
+        fun withTipos(tipos: MutableSet<PeluqueroType>) = apply { this.tipos = tipos }
         fun withServicios(servicios: MutableList<Servicio>) = apply { this.servicios = servicios }
 
     }
