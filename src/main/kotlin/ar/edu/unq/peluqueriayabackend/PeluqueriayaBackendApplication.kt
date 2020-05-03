@@ -123,10 +123,76 @@ class PeluqueriayaBackendApplication : WebMvcConfigurer {
 				withEstado(PeluqueroState.OCUPADO).
 				build()
 
+		//Sin logo
+		val peluquero6 = Peluquero.Builder().
+		withNombre("Lo pibitos barberia").
+		withDescripcion("La barberia esencial para cualquier pibito").
+		withTipos(mutableSetOf(PeluqueroType.HOMBRE, PeluqueroType.CHICOS)).
+		withCorteMin(BigDecimal(200)).
+		withDistanciaMax(BigDecimal(5)).
+		withEmail("lopibito@gmail.com").
+		withUbicacion(Ubicacion("-34.722486", "-58.256462")).
+		withEstado(PeluqueroState.DISPONIBLE).
+		build()
+
+		val peluquero7 = Peluquero.Builder().
+		withLogo("https://www.bue360.com/media/com_jbusinessdirectory/pictures/companies/9603/SizoGerard-1492191444.jpg").
+		withNombre("Ziso").
+		withDescripcion("Peluqueria Unisex, lo que quieras lo tenes!").
+		withTipos(mutableSetOf(PeluqueroType.HOMBRE, PeluqueroType.CHICOS, PeluqueroType.MUJER)).
+		withCorteMin(BigDecimal(9000)).
+		withDistanciaMax(BigDecimal(7.2)).
+		withEmail("zisoooo@gmail.com").
+		withUbicacion(Ubicacion("-34.722486", "-58.256462")).
+		withEstado(PeluqueroState.DISPONIBLE).
+		build()
+
+		val peluquero8 = Peluquero.Builder().
+		withLogo("https://image.freepik.com/free-vector/gentleman-barber-shop-logo_96485-97.jpg").
+		withNombre("El rapador").
+		withDescripcion("Promo por rapado!").
+		withTipos(mutableSetOf(PeluqueroType.HOMBRE, PeluqueroType.CHICOS, PeluqueroType.MUJER)).
+		withCorteMin(BigDecimal(80.5)).
+		withDistanciaMax(BigDecimal(4.2)).
+		withEmail("el-rapador777@gmail.com").
+		withUbicacion(Ubicacion("-34.722486", "-58.256462")).
+		withEstado(PeluqueroState.OCUPADO).
+		build()
+
+		val peluquero9 = Peluquero.Builder().
+		withLogo("https://www.onlinelogomaker.com/blog/wp-content/uploads/2017/08/barber-shop-logo.jpg").
+		withNombre("Pilot").
+		withDescripcion("Probando 1..2..3!").
+		withTipos(mutableSetOf(PeluqueroType.HOMBRE)).
+		withCorteMin(BigDecimal(150.50)).
+		withDistanciaMax(BigDecimal(5.2)).
+		withEmail("pilot213123213@gmail.com").
+		withUbicacion(Ubicacion("-34.722486", "-58.256462")).
+		withEstado(PeluqueroState.OCUPADO).
+		build()
+
+		val peluquero10 = Peluquero.Builder().
+		withLogo("https://i.pinimg.com/originals/d4/67/6f/d4676f6f2ff10d7499b150cb74374ca1.jpg").
+		withNombre("Manos de tijeras").
+		withDescripcion("El mejor con la tijera!").
+		withTipos(mutableSetOf(PeluqueroType.HOMBRE, PeluqueroType.CHICOS, PeluqueroType.MUJER)).
+		withCorteMin(BigDecimal(250)).
+		withDistanciaMax(BigDecimal(4.5)).
+		withEmail("manopla-de-tijera889@gmail.com").
+		withUbicacion(Ubicacion("-34.722486", "-58.256462")).
+		withEstado(PeluqueroState.DISPONIBLE).
+		build()
+
         //Guardando peluqueros creados
 
         peluqueroRepository.save(peluquero1)
         peluqueroRepository.save(peluquero4MDQ)
+
+		peluqueroRepository.save(peluquero6)
+		peluqueroRepository.save(peluquero7)
+		peluqueroRepository.save(peluquero8)
+		peluqueroRepository.save(peluquero9)
+		peluqueroRepository.save(peluquero10)
 
         peluquero2 = peluqueroRepository.save(peluquero2)
         peluquero3 = peluqueroRepository.save(peluquero3)
