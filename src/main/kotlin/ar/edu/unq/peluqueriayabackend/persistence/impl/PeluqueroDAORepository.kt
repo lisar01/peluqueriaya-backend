@@ -92,7 +92,7 @@ class PeluqueroDAORepository(@Autowired val peluqueroRepository: PeluqueroReposi
 
         if(tipo.contains("CHICO").or(tipo.contains("NENE")).or(tipo.contains("NENA")).
                 or(tipo.contains("CHIQUE")))
-            return PeluqueroType.CHICOS
+            return PeluqueroType.KIDS
 
         return PeluqueroType.valueOf(tipo)
     }

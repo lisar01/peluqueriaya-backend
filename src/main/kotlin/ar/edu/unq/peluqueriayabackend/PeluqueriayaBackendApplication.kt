@@ -82,7 +82,7 @@ class PeluqueriayaBackendApplication : WebMvcConfigurer {
 				withLogo("https://i.pinimg.com/236x/3f/50/87/3f50871f2a2f132399894dfb4f9c73cf.jpg").
 				withNombre("La pelu").
 				withDescripcion("La mejor peluquera de zona sur!").
-				withTipos(mutableSetOf(PeluqueroType.MUJER, PeluqueroType.CHICOS)).
+				withTipos(mutableSetOf(PeluqueroType.MUJER, PeluqueroType.KIDS)).
 				withCorteMin(BigDecimal(250)).withDistanciaMax(BigDecimal(7)).
 				withEmail("lapelu@gmail.com").
 				withUbicacion(Ubicacion("-34.725524", "-58.244012")).
@@ -93,7 +93,7 @@ class PeluqueriayaBackendApplication : WebMvcConfigurer {
 				withLogo("https://image.shutterstock.com/image-vector/barber-shop-logo-260nw-672396868.jpg").
 				withNombre("Pepe el barbero").
 				withDescripcion("Soy pepe grillo el peluquero con los mejores cortes!").
-				withTipos(mutableSetOf(PeluqueroType.MUJER, PeluqueroType.CHICOS)).
+				withTipos(mutableSetOf(PeluqueroType.MUJER, PeluqueroType.KIDS)).
 				withCorteMin(BigDecimal(400)).
 				withDistanciaMax(BigDecimal(3)).
 				withEmail("pepe@yahoo.com").
@@ -104,7 +104,7 @@ class PeluqueriayaBackendApplication : WebMvcConfigurer {
         val peluquero4MDQ = Peluquero.Builder().
 				withNombre("El barba de mardel").
 				withDescripcion("Soy el mejor barbero de Mar del Plata, despues de la playa cortate conmigo!").
-				withTipos(mutableSetOf(PeluqueroType.HOMBRE, PeluqueroType.CHICOS)).
+				withTipos(mutableSetOf(PeluqueroType.HOMBRE, PeluqueroType.KIDS)).
 				withCorteMin(BigDecimal(100)).
 				withDistanciaMax(BigDecimal(10)).
 				withEmail("barbamdq@mdq.com").
@@ -127,7 +127,7 @@ class PeluqueriayaBackendApplication : WebMvcConfigurer {
 		val peluquero6 = Peluquero.Builder().
 		withNombre("Lo pibitos barberia").
 		withDescripcion("La barberia esencial para cualquier pibito").
-		withTipos(mutableSetOf(PeluqueroType.HOMBRE, PeluqueroType.CHICOS)).
+		withTipos(mutableSetOf(PeluqueroType.HOMBRE, PeluqueroType.KIDS)).
 		withCorteMin(BigDecimal(200)).
 		withDistanciaMax(BigDecimal(5)).
 		withEmail("lopibito@gmail.com").
@@ -139,7 +139,7 @@ class PeluqueriayaBackendApplication : WebMvcConfigurer {
 		withLogo("https://www.bue360.com/media/com_jbusinessdirectory/pictures/companies/9603/SizoGerard-1492191444.jpg").
 		withNombre("Ziso").
 		withDescripcion("Peluqueria Unisex, lo que quieras lo tenes!").
-		withTipos(mutableSetOf(PeluqueroType.HOMBRE, PeluqueroType.MUJER)).
+		withTipos(mutableSetOf(PeluqueroType.UNISEX)).
 		withCorteMin(BigDecimal(9000)).
 		withDistanciaMax(BigDecimal(7.2)).
 		withEmail("zisoooo@gmail.com").
@@ -151,7 +151,7 @@ class PeluqueriayaBackendApplication : WebMvcConfigurer {
 		withLogo("https://image.freepik.com/free-vector/gentleman-barber-shop-logo_96485-97.jpg").
 		withNombre("El rapador").
 		withDescripcion("Promo por rapado!").
-		withTipos(mutableSetOf(PeluqueroType.HOMBRE, PeluqueroType.CHICOS, PeluqueroType.MUJER)).
+		withTipos(mutableSetOf(PeluqueroType.UNISEX, PeluqueroType.KIDS)).
 		withCorteMin(BigDecimal(80.5)).
 		withDistanciaMax(BigDecimal(4.2)).
 		withEmail("el-rapador777@gmail.com").
@@ -175,7 +175,7 @@ class PeluqueriayaBackendApplication : WebMvcConfigurer {
 		withLogo("https://i.pinimg.com/originals/d4/67/6f/d4676f6f2ff10d7499b150cb74374ca1.jpg").
 		withNombre("Manos de tijeras").
 		withDescripcion("El mejor con la tijera!").
-		withTipos(mutableSetOf(PeluqueroType.HOMBRE, PeluqueroType.CHICOS, PeluqueroType.MUJER)).
+		withTipos(mutableSetOf(PeluqueroType.UNISEX, PeluqueroType.KIDS)).
 		withCorteMin(BigDecimal(250)).
 		withDistanciaMax(BigDecimal(4.5)).
 		withEmail("manopla-de-tijera889@gmail.com").
