@@ -21,6 +21,6 @@ interface PeluqueroDAO:GenericDAO<Peluquero> {
             tipoDeServicio: ServicioType, distanciaEnKm: Double, ubicacion: Ubicacion, pageable: Pageable)
             : Page<Peluquero>
 
-    fun findAllByUbicacionCercanaAndNombreLikeAndContainsTipoAndContainsTipoDeServicion(distanciaMaxima: Double, longitud: Double, latitud: Double, nombre: String?, tipo: PeluqueroType?, tipoDeServicio: ServicioType?, pageable: Pageable): Page<Peluquero>
+    fun findAllByUbicacionCercanaAndNombreLikeAndContainsTipoAndContainsTipoDeServicion(distanciaMaxima: Double, longitud: Double, latitud: Double, nombre: String?, tipos: List<PeluqueroType>?, tipoDeServicio: ServicioType?, pageable: Pageable): Page<Peluquero>
 
 }

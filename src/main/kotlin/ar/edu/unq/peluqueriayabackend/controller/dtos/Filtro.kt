@@ -7,5 +7,5 @@ import javax.validation.constraints.Size
 class Filtro(
         @field:Size(min = 4, max = 20, message = "{nombre.tamanio}")
         val nombre: String?,
-        val tipo: PeluqueroType?,
+        val tipos: List<PeluqueroType>?,
         val tipoDeServicio: ServicioType?)

@@ -77,8 +77,8 @@ class PeluqueroDAORepository(@Autowired val peluqueroRepository: PeluqueroReposi
                 pageable)
     }
 
-    override fun findAllByUbicacionCercanaAndNombreLikeAndContainsTipoAndContainsTipoDeServicion(distanciaMaxima: Double, longitud: Double, latitud: Double, nombre: String?, tipo: PeluqueroType?, tipoDeServicio: ServicioType?, pageable: Pageable): Page<Peluquero> {
-        return peluqueroRepository.findAllByUbicacionCercanaAndNombreLikeAndContainsTipoAndContainsTipoDeServicion(distanciaMaxima, longitud, latitud, nombre, tipo, tipoDeServicio, pageable)
+    override fun findAllByUbicacionCercanaAndNombreLikeAndContainsTipoAndContainsTipoDeServicion(distanciaMaxima: Double, longitud: Double, latitud: Double, nombre: String?, tipos: List<PeluqueroType>?, tipoDeServicio: ServicioType?, pageable: Pageable): Page<Peluquero> {
+        return peluqueroRepository.findAllByUbicacionCercanaAndNombreLikeAndContainsTipoAndContainsTipoDeServicion(distanciaMaxima, longitud, latitud, nombre, tipos, tipoDeServicio, pageable)
     }
 
     private fun encontrarTipo(input:String):PeluqueroType{

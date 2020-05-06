@@ -139,7 +139,7 @@ class PeluqueriayaBackendApplication : WebMvcConfigurer {
 		withLogo("https://www.bue360.com/media/com_jbusinessdirectory/pictures/companies/9603/SizoGerard-1492191444.jpg").
 		withNombre("Ziso").
 		withDescripcion("Peluqueria Unisex, lo que quieras lo tenes!").
-		withTipos(mutableSetOf(PeluqueroType.UNISEX)).
+		withTipos(mutableSetOf(PeluqueroType.HOMBRE, PeluqueroType.MUJER)).
 		withCorteMin(BigDecimal(9000)).
 		withDistanciaMax(BigDecimal(7.2)).
 		withEmail("zisoooo@gmail.com").
@@ -151,7 +151,7 @@ class PeluqueriayaBackendApplication : WebMvcConfigurer {
 		withLogo("https://image.freepik.com/free-vector/gentleman-barber-shop-logo_96485-97.jpg").
 		withNombre("El rapador").
 		withDescripcion("Promo por rapado!").
-		withTipos(mutableSetOf(PeluqueroType.UNISEX, PeluqueroType.KIDS)).
+		withTipos(mutableSetOf(PeluqueroType.HOMBRE, PeluqueroType.KIDS, PeluqueroType.MUJER)).
 		withCorteMin(BigDecimal(80.5)).
 		withDistanciaMax(BigDecimal(4.2)).
 		withEmail("el-rapador777@gmail.com").
@@ -175,7 +175,7 @@ class PeluqueriayaBackendApplication : WebMvcConfigurer {
 		withLogo("https://i.pinimg.com/originals/d4/67/6f/d4676f6f2ff10d7499b150cb74374ca1.jpg").
 		withNombre("Manos de tijeras").
 		withDescripcion("El mejor con la tijera!").
-		withTipos(mutableSetOf(PeluqueroType.UNISEX, PeluqueroType.KIDS)).
+		withTipos(mutableSetOf(PeluqueroType.HOMBRE, PeluqueroType.KIDS, PeluqueroType.MUJER)).
 		withCorteMin(BigDecimal(250)).
 		withDistanciaMax(BigDecimal(4.5)).
 		withEmail("manopla-de-tijera889@gmail.com").

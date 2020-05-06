@@ -11,9 +11,10 @@ import org.springframework.data.repository.query.Param
 import org.springframework.stereotype.Repository
 
 const val esPeluqueroCercano = "distance(cast(p.ubicacion.latitude as double),cast(p.ubicacion.longitude as double), :latitud, :longitud) <= :distanciaMaxima"
-const val contieneTipo = "(:tipo is null OR :tipo member of p.tipos)"
+const val contieneTipo = "((:tipos) is null OR tipos in (:tipos))"
 const val tieneNombre = "(:nombre is null OR UPPER(p.nombre) LIKE UPPER(concat('%',cast(:nombre as string),'%')))"
 const val contieneAlgunServicioConTipo = "(:tipoDeServicio is null OR :tipoDeServicio member of s.tipos)"
+
 
 @Repository
 interface PeluqueroRepository : JpaRepository<Peluquero, Int> {
@@ -30,14 +31,13 @@ interface PeluqueroRepository : JpaRepository<Peluquero, Int> {
     @Query("SELECT p FROM Peluquero p inner join p.servicios s WHERE distance(cast(p.ubicacion.latitude as double),cast(p.ubicacion.longitude as double),?2,?3) <= ?1 AND ?4 member of s.tipos")
     fun findAllPeluquerosInRangeAtCoordinatesAndWithTipoDeServicio(distanciaEnKm: Double, latitudeAsDouble: Double, longitudeAsDouble: Double, tipoDeServicio: ServicioType, pageable: Pageable): Page<Peluquero>
 
-    @Query(value= "SELECT p FROM Peluquero p left join fetch p.servicios s WHERE $esPeluqueroCercano AND $tieneNombre AND $contieneTipo AND $contieneAlgunServicioConTipo",
-            countQuery = "SELECT count(p) FROM Peluquero p left join p.servicios s WHERE $esPeluqueroCercano AND $tieneNombre AND $contieneTipo AND $contieneAlgunServicioConTipo")
+    @Query(value= "SELECT DISTINCT p FROM Peluquero p LEFT JOIN p.servicios s LEFT JOIN p.tipos tipos WHERE $esPeluqueroCercano AND $tieneNombre AND $contieneTipo AND $contieneAlgunServicioConTipo")
     fun findAllByUbicacionCercanaAndNombreLikeAndContainsTipoAndContainsTipoDeServicion(
             @Param("distanciaMaxima") distanciaMaxima: Double,
             @Param("longitud") longitud: Double,
             @Param("latitud") latitud: Double,
             @Param("nombre") nombre: String?,
-            @Param("tipo") tipo: PeluqueroType?,
+            @Param("tipos") tipos: List<PeluqueroType>?,
             @Param("tipoDeServicio") tipoDeServicio: ServicioType?,
             pageable: Pageable): Page<Peluquero>
 }

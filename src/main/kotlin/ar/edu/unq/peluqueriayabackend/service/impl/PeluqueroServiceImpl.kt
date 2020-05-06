@@ -51,6 +51,6 @@ class PeluqueroServiceImpl(@Autowired val peluqueroDAO: PeluqueroDAO): Peluquero
     override fun buscar(ubicacion: Ubicacion, filtro: Filtro?, pageable: Pageable): Page<Peluquero> {
                 return peluqueroDAO.findAllByUbicacionCercanaAndNombreLikeAndContainsTipoAndContainsTipoDeServicion(5.3,
                 ubicacion.getLongitudeAsDouble(), ubicacion.getLatitudeAsDouble(),
-                filtro?.nombre, filtro?.tipo, filtro?.tipoDeServicio, pageable)
+                filtro?.nombre, filtro?.tipos, filtro?.tipoDeServicio, pageable)
     }
 }

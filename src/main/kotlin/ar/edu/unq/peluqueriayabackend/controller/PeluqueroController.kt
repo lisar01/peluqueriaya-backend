@@ -24,7 +24,7 @@ class PeluqueroController(@Autowired val peluqueroService: PeluqueroService) {
         return peluqueroService.buscar(ubicacion, filtro, pageable)
     }
 
-    @GetMapping("/search")
+    @GetMapping("/searchh")
     fun buscarPeluqueros(@RequestParam
                          @Pattern(regexp = "-?[1-9][0-9]*(\\.[0-9]+)?", message = "{latitud.invalida}")
                          latitude: String,
