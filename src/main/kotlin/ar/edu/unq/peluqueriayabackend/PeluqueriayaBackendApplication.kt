@@ -43,7 +43,7 @@ class PeluqueriayaBackendApplication : WebMvcConfigurer {
 	fun createFunctionDB(dataSource: DataSource):DataSourceInitializer {
 		val initializer = DataSourceInitializer()
 		initializer.setDataSource(dataSource)
-		initializer.setDatabasePopulator(databasePopulator());
+		initializer.setDatabasePopulator(databasePopulator())
 		return initializer
 	}
 
@@ -82,7 +82,7 @@ class PeluqueriayaBackendApplication : WebMvcConfigurer {
 				withLogo("https://i.pinimg.com/236x/3f/50/87/3f50871f2a2f132399894dfb4f9c73cf.jpg").
 				withNombre("La pelu").
 				withDescripcion("La mejor peluquera de zona sur!").
-				withTipos(mutableSetOf(PeluqueroType.MUJER, PeluqueroType.HOMBRE, PeluqueroType.CHICOS)).
+				withTipos(mutableSetOf(PeluqueroType.MUJER, PeluqueroType.CHICOS)).
 				withCorteMin(BigDecimal(250)).withDistanciaMax(BigDecimal(7)).
 				withEmail("lapelu@gmail.com").
 				withUbicacion(Ubicacion("-34.725524", "-58.244012")).
@@ -92,8 +92,8 @@ class PeluqueriayaBackendApplication : WebMvcConfigurer {
         var peluquero3 = Peluquero.Builder().
 				withLogo("https://image.shutterstock.com/image-vector/barber-shop-logo-260nw-672396868.jpg").
 				withNombre("Pepe el barbero").
-				withDescripcion("Soy pepe grillo el mejor barbero!").
-				withTipos(mutableSetOf(PeluqueroType.HOMBRE, PeluqueroType.CHICOS)).
+				withDescripcion("Soy pepe grillo el peluquero con los mejores cortes!").
+				withTipos(mutableSetOf(PeluqueroType.MUJER, PeluqueroType.CHICOS)).
 				withCorteMin(BigDecimal(400)).
 				withDistanciaMax(BigDecimal(3)).
 				withEmail("pepe@yahoo.com").
@@ -139,7 +139,7 @@ class PeluqueriayaBackendApplication : WebMvcConfigurer {
 		withLogo("https://www.bue360.com/media/com_jbusinessdirectory/pictures/companies/9603/SizoGerard-1492191444.jpg").
 		withNombre("Ziso").
 		withDescripcion("Peluqueria Unisex, lo que quieras lo tenes!").
-		withTipos(mutableSetOf(PeluqueroType.HOMBRE, PeluqueroType.CHICOS, PeluqueroType.MUJER)).
+		withTipos(mutableSetOf(PeluqueroType.HOMBRE, PeluqueroType.MUJER)).
 		withCorteMin(BigDecimal(9000)).
 		withDistanciaMax(BigDecimal(7.2)).
 		withEmail("zisoooo@gmail.com").

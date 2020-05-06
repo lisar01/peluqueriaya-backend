@@ -1,5 +1,6 @@
 package ar.edu.unq.peluqueriayabackend.service
 
+import ar.edu.unq.peluqueriayabackend.controller.dtos.Filtro
 import ar.edu.unq.peluqueriayabackend.model.Peluquero
 import ar.edu.unq.peluqueriayabackend.model.ServicioType
 import ar.edu.unq.peluqueriayabackend.model.Ubicacion
@@ -11,4 +12,5 @@ interface PeluqueroService:GenericService<Peluquero> {
     fun buscarPeluquerosCercanos(ubicacion: Ubicacion, pageable: Pageable): Page<Peluquero>
     fun buscarPeluquerosCercanosPorNombreOTipo(ubicacion: Ubicacion, nombreOTipo:String, pageable: Pageable):Page<Peluquero>
     fun buscarPeluquerosCercanosPorTipoDeServicio(ubicacion: Ubicacion, tipoDeServicio: ServicioType, pageable: Pageable): Page<Peluquero>
+    fun buscar(ubicacion: Ubicacion, filtro: Filtro?, pageable: Pageable): Page<Peluquero>
 }

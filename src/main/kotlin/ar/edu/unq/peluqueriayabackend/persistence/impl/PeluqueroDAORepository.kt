@@ -3,9 +3,6 @@ package ar.edu.unq.peluqueriayabackend.persistence.impl
 import ar.edu.unq.peluqueriayabackend.model.*
 import ar.edu.unq.peluqueriayabackend.persistence.PeluqueroDAO
 import ar.edu.unq.peluqueriayabackend.persistence.impl.repositories.PeluqueroRepository
-import ar.edu.unq.peluqueriayabackend.persistence.impl.repositories.ServicioRepository
-import ar.edu.unq.peluqueriayabackend.service.geodistance.GeoDistanceServiceApi
-import ar.edu.unq.peluqueriayabackend.service.geodistance.impl.GeoDistanceServiceImpl
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
@@ -78,6 +75,10 @@ class PeluqueroDAORepository(@Autowired val peluqueroRepository: PeluqueroReposi
                 ubicacion.getLongitudeAsDouble(),
                 tipoDeServicio,
                 pageable)
+    }
+
+    override fun findAllByUbicacionCercanaAndNombreLikeAndContainsTipoAndContainsTipoDeServicion(distanciaMaxima: Double, longitud: Double, latitud: Double, nombre: String?, tipo: PeluqueroType?, tipoDeServicio: ServicioType?, pageable: Pageable): Page<Peluquero> {
+        return peluqueroRepository.findAllByUbicacionCercanaAndNombreLikeAndContainsTipoAndContainsTipoDeServicion(distanciaMaxima, longitud, latitud, nombre, tipo, tipoDeServicio, pageable)
     }
 
     private fun encontrarTipo(input:String):PeluqueroType{

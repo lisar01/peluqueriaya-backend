@@ -1,6 +1,7 @@
 package ar.edu.unq.peluqueriayabackend.persistence
 
 import ar.edu.unq.peluqueriayabackend.model.Peluquero
+import ar.edu.unq.peluqueriayabackend.model.PeluqueroType
 import ar.edu.unq.peluqueriayabackend.model.ServicioType
 import ar.edu.unq.peluqueriayabackend.model.Ubicacion
 import org.springframework.data.domain.Page
@@ -19,4 +20,7 @@ interface PeluqueroDAO:GenericDAO<Peluquero> {
     fun buscarPeluquerosPorTipoDeServicioYQueEstenDentroDelRadioEnKmDeLaUbicacion(
             tipoDeServicio: ServicioType, distanciaEnKm: Double, ubicacion: Ubicacion, pageable: Pageable)
             : Page<Peluquero>
+
+    fun findAllByUbicacionCercanaAndNombreLikeAndContainsTipoAndContainsTipoDeServicion(distanciaMaxima: Double, longitud: Double, latitud: Double, nombre: String?, tipo: PeluqueroType?, tipoDeServicio: ServicioType?, pageable: Pageable): Page<Peluquero>
+
 }
