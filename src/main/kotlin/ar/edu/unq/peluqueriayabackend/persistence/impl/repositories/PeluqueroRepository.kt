@@ -19,18 +19,6 @@ const val contieneAlgunServicioConTipo = "(:tipoDeServicio is null OR :tipoDeSer
 @Repository
 interface PeluqueroRepository : JpaRepository<Peluquero, Int> {
 
-    @Query("SELECT p FROM Peluquero p WHERE distance(cast(p.ubicacion.latitude as double),cast(p.ubicacion.longitude as double),?2,?3) <= ?1")
-    fun findAllInRangeAtCoordinates(rangoEnKm: Double, lat: Double, lng: Double, pageable: Pageable): Page<Peluquero>
-
-    @Query("SELECT p FROM Peluquero p WHERE distance(cast(p.ubicacion.latitude as double),cast(p.ubicacion.longitude as double),?2,?3) <= ?1 AND (lower(p.nombre) LIKE lower(concat('%',?4,'%')) OR ?5 member of p.tipos)")
-    fun findAllInRangeAtCoordinatesAndLikeNameOrWithTipos(rangoEnKm: Double, lat: Double, lng: Double, nombre: String, tipo: PeluqueroType, pageable: Pageable): Page<Peluquero>
-
-    @Query("SELECT p FROM Peluquero p WHERE distance(cast(p.ubicacion.latitude as double),cast(p.ubicacion.longitude as double),?2,?3) <= ?1 AND lower(p.nombre) LIKE lower(concat('%',?4,'%'))")
-    fun findAllInRangeAtCoordinatesAndLikeName(rangoEnKm: Double, latitude: Double, longitude: Double, nombre: String, pageable: Pageable): Page<Peluquero>
-
-    @Query("SELECT p FROM Peluquero p inner join p.servicios s WHERE distance(cast(p.ubicacion.latitude as double),cast(p.ubicacion.longitude as double),?2,?3) <= ?1 AND ?4 member of s.tipos")
-    fun findAllPeluquerosInRangeAtCoordinatesAndWithTipoDeServicio(distanciaEnKm: Double, latitudeAsDouble: Double, longitudeAsDouble: Double, tipoDeServicio: ServicioType, pageable: Pageable): Page<Peluquero>
-
     @Query(value= "SELECT DISTINCT p FROM Peluquero p LEFT JOIN p.servicios s LEFT JOIN p.tipos tipos WHERE $esPeluqueroCercano AND $tieneNombre AND $contieneTipo AND $contieneAlgunServicioConTipo")
     fun findAllByUbicacionCercanaAndNombreLikeAndContainsTipoAndContainsTipoDeServicion(
             @Param("distanciaMaxima") distanciaMaxima: Double,
