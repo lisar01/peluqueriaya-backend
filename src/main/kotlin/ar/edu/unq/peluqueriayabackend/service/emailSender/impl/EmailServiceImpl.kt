@@ -2,19 +2,19 @@ package ar.edu.unq.peluqueriayabackend.service.emailSender.impl
 
 import ar.edu.unq.peluqueriayabackend.service.emailSender.EmailServiceAPI
 import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.beans.factory.annotation.Qualifier
 import org.springframework.core.io.FileSystemResource
 import org.springframework.mail.SimpleMailMessage
 import org.springframework.mail.javamail.JavaMailSender
 import org.springframework.mail.javamail.MimeMessageHelper
-import org.springframework.stereotype.Component
+import org.springframework.scheduling.annotation.Async
+import org.springframework.stereotype.Service
 import java.io.File
 
-
-@Component
+@Service
 class EmailServiceImpl(@Autowired
-                       private val emailSender:JavaMailSender) : EmailServiceAPI {
+                       private val emailSender:JavaMailSender):EmailServiceAPI {
 
+    @Async("threadPoolTaskExecutor")
     override fun sendEmail(to: String, subject: String, text: String) {
         val message = SimpleMailMessage()
         message.setTo(to)
@@ -23,6 +23,7 @@ class EmailServiceImpl(@Autowired
         emailSender.send(message)
     }
 
+    @Async("threadPoolTaskExecutor")
     override fun sendMessageWithAttachment(to: String, subject: String, text: String, pathToAttachment: String) {
         val message = emailSender.createMimeMessage()
 
