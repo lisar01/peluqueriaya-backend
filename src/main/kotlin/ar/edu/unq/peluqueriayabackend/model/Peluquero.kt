@@ -3,6 +3,7 @@ package ar.edu.unq.peluqueriayabackend.model
 import java.math.BigDecimal
 import javax.persistence.*
 
+@Suppress("JpaDataSourceORMInspection")
 @Entity
 @Table(name = "peluqueros")
 class Peluquero(
@@ -20,16 +21,6 @@ class Peluquero(
         var servicios:MutableList<Servicio> = mutableListOf(),
         @Id @GeneratedValue var id: Long? = null
                 ) {
-
-    fun agregarServicio(servicio: Servicio) {
-        servicios.add(servicio)
-    }
-
-    fun isUnisex():Boolean = tipos.containsAll(setOf(PeluqueroType.HOMBRE,PeluqueroType.MUJER))
-
-    fun contieneServicioConTipo(tipoDeServicio: ServicioType): Boolean {
-        return servicios.any { it.tipos.contains(tipoDeServicio)}
-    }
 
     data class Builder(
             var logo: String = "",
