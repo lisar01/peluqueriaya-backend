@@ -7,7 +7,7 @@ import java.time.LocalDateTime
 import javax.persistence.*
 
 @Entity
-@Table(name = "clientes")
+@Table(name = "turnos")
 class Turno (
         @ManyToOne(fetch = FetchType.LAZY, optional = false)
         @JoinColumn(name = "peluquero_id")
@@ -29,11 +29,19 @@ class Turno (
         @Id @GeneratedValue var id: Long? = null
 ) {
 
-    fun precioTotal() : BigDecimal = serviciosSolicitadosInfo.fold(BigDecimal.ZERO) { r, sv -> r + sv.precio }
+    fun precioTotal() : BigDecimal {
+        return if(serviciosSolicitadosInfo.isEmpty()){
+            corteMinInfo
+        }else{
+            serviciosSolicitadosInfo.fold(BigDecimal.ZERO) { r, sv -> r + sv.precio }
+        }
+    }
 
     fun getPeluqueroId():Long? = peluquero.id
 
     fun getClienteId():Long? = cliente.id
+
+    fun getUbicacionCliente():Ubicacion = cliente.ubicacion
 
     fun puntuar(valor: Int) {
         if(valor !in 1..5)

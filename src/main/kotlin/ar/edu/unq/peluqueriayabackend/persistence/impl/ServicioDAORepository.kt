@@ -10,7 +10,7 @@ import java.util.*
 @Service
 class ServicioDAORepository(val servicioRepository: ServicioRepository) : ServicioDAO{
 
-    override fun get(id: Int): Optional<Servicio> {
+    override fun get(id: Long): Optional<Servicio> {
         return servicioRepository.findById(id)
     }
 
@@ -26,7 +26,7 @@ class ServicioDAORepository(val servicioRepository: ServicioRepository) : Servic
         return servicioRepository.save(t)
     }
 
-    override fun delete(id: Int) {
+    override fun delete(id: Long) {
         return servicioRepository.deleteById(id)
     }
 

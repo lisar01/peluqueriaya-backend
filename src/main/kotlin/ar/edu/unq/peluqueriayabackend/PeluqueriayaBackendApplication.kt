@@ -1,6 +1,7 @@
 package ar.edu.unq.peluqueriayabackend
 
 import ar.edu.unq.peluqueriayabackend.model.*
+import ar.edu.unq.peluqueriayabackend.persistence.impl.repositories.ClienteRepository
 import ar.edu.unq.peluqueriayabackend.persistence.impl.repositories.PeluqueroRepository
 import ar.edu.unq.peluqueriayabackend.persistence.impl.repositories.ServicioRepository
 import org.springframework.beans.factory.annotation.Value
@@ -55,16 +56,27 @@ class PeluqueriayaBackendApplication : WebMvcConfigurer {
 	}
 
     @Bean
-    fun demo(peluqueroRepository: PeluqueroRepository, servicioRepository: ServicioRepository): CommandLineRunner? {
+    fun demo(peluqueroRepository: PeluqueroRepository, servicioRepository: ServicioRepository, clienteRepository: ClienteRepository): CommandLineRunner? {
         return CommandLineRunner {
             println("|**!!INFO!!**| Descomente el metodo: createFakeData(..) en la clase PeluqueriayaBackendApplication, para generar datos falsos")
             println("|**!!ADVICE!!**| Una vez ejecutado el metodo createFakeData(..) vuelva a comentarlo o elimine los datos de la Base de Datos, para evitar errores")
-            this.createFakeData(peluqueroRepository, servicioRepository)
+            this.createFakeData(peluqueroRepository, servicioRepository, clienteRepository)
         }
     }
 
-    fun createFakeData(peluqueroRepository: PeluqueroRepository, servicioRepository: ServicioRepository) {
+    fun createFakeData(peluqueroRepository: PeluqueroRepository, servicioRepository: ServicioRepository, clienteRepository: ClienteRepository) {
         println("|**!!WARNING!!**| Metodo createFakeData(..) en clase PeluqueriayaBackendApplication no comentado. Esto puede generar errores si los datos ya existen")
+
+		val clientePepe = Cliente.Builder().
+							withNombre("Pepe").
+							withApellido("Grillo").
+							withEmail("cassanojoseluis@gmail.com").
+							withImgPerfil("https://vignette.wikia.nocookie.net/disney/images/f/f0/Profile_-_Jiminy_Cricket.jpeg/revision/latest?cb=20190312063605").
+							withUbicacion(Ubicacion("-34.721999", "-58.250447")).
+							withNroTelefono("1100001111").
+							build()
+
+		clienteRepository.save(clientePepe)
 
         val peluquero1 = Peluquero.Builder().
 				withNombre("El barba").

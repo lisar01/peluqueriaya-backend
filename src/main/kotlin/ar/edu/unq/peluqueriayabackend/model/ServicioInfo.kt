@@ -9,11 +9,11 @@ import javax.persistence.*
 @Entity
 @Table(name = "servicios_info")
 class ServicioInfo(
-        val nombre:String,
-        val precio:BigDecimal,
+        var nombre:String,
+        var precio:BigDecimal,
         @JsonIgnore
         @ManyToOne(fetch = FetchType.LAZY, optional = false)
-        val turno: Turno,
+        var turno: Turno,
         @Id @GeneratedValue var id: Long? = null
 ){
 

@@ -13,7 +13,8 @@ class Cliente(
         var apellido:String,
         var email:String,
         var nroTelefono:String,
-        var ubicacion: Ubicacion?,
+        var ubicacion: Ubicacion,
+        var estado: ClienteState = ClienteState.ACTIVO,
         @Id @GeneratedValue var id: Long? = null
 ) {
 
@@ -25,10 +26,11 @@ class Cliente(
             var apellido:String = "",
             var email:String = "",
             var nroTelefono:String = "",
-            var ubicacion: Ubicacion? = null
+            var ubicacion: Ubicacion = Ubicacion("0","0"),
+            var estado: ClienteState = ClienteState.ACTIVO
     ){
         fun build():Cliente {
-            return Cliente(imgPerfil,nombre,apellido,email,nroTelefono, ubicacion)
+            return Cliente(imgPerfil,nombre,apellido,email,nroTelefono, ubicacion, estado)
         }
 
         fun withImgPerfil(imgPerfil: String) = apply { this.imgPerfil = imgPerfil }
@@ -37,6 +39,7 @@ class Cliente(
         fun withEmail(email: String) = apply { this.email = email }
         fun withNroTelefono(nroTelefono: String) = apply { this.nroTelefono = nroTelefono }
         fun withUbicacion(ubicacion: Ubicacion) = apply { this.ubicacion = ubicacion }
+        fun withEstado(estado: ClienteState) = apply { this.estado = estado }
 
     }
 

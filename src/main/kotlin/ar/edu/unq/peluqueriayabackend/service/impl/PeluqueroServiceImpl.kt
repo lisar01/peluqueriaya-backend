@@ -15,7 +15,7 @@ import javax.transaction.Transactional
 @Service
 class PeluqueroServiceImpl(@Autowired val peluqueroDAO: PeluqueroDAO): PeluqueroService {
 
-    override fun get(id: Int): Optional<Peluquero> {
+    override fun get(id: Long): Optional<Peluquero> {
         return peluqueroDAO.get(id)
     }
 
@@ -33,7 +33,7 @@ class PeluqueroServiceImpl(@Autowired val peluqueroDAO: PeluqueroDAO): Peluquero
         return peluqueroDAO.update(t)
     }
 
-    @Transactional
+    //No va con @transactional porque no persiste nada, solo consulta datos
     override fun buscar(ubicacion: Ubicacion, filtro: Filtro?, pageable: Pageable): Page<Peluquero> {
                 return peluqueroDAO.findAllByUbicacionCercanaAndNombreLikeAndContainsTipoAndContainsTipoDeServicion(5.3,
                 ubicacion.getLongitudeAsDouble(), ubicacion.getLatitudeAsDouble(),

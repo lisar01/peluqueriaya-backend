@@ -13,11 +13,12 @@ import java.time.LocalDateTime
 class TurnoTest {
 
     @Test
-    fun testUnTurnoSinServiciosPedidosSuPrecioTotalEs0(){
+    fun testUnTurnoSinServiciosPedidosSuPrecioTotalEsElPrecioCorteMinInfoEnEsteCasoEs150(){
         val serviciosPedidos = mutableListOf<ServicioInfo>()
-        val turno1 = Turno.Builder().withServiciosSolicitadosInfo(serviciosPedidos).build()
+        val turno1 = Turno.Builder().withServiciosSolicitadosInfo(serviciosPedidos).
+                                    withCorteMinInfo(BigDecimal(150)).build()
 
-        assertEquals(turno1.precioTotal(),BigDecimal(0))
+        assertEquals(turno1.precioTotal(),BigDecimal(150))
     }
 
     @Test
