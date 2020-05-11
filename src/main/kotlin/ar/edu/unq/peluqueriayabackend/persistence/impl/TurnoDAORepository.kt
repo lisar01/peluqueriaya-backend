@@ -36,4 +36,8 @@ class TurnoDAORepository(@Autowired val turnoRepository: TurnoRepository) : Turn
     override fun peluqueroPoseeCantidadDeTurnosPendientesOConfirmadosMayorOIgualA(peluquero: Peluquero, valor: Long): Boolean {
         return turnoRepository.peluqueroPoseeCantidadDeTurnosPendientesOConfirmadosMayorOIgualA(peluquero, valor)
     }
+
+    override fun peluqueroPoseeAlgunTurnoConfirmado(peluquero: Peluquero): Boolean {
+        return turnoRepository.peluqueroPoseeAlgunTurnoConfirmado(peluquero)
+    }
 }

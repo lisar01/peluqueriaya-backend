@@ -56,8 +56,24 @@ class TurnoServiceImpl(
     @Transactional
     override fun confirmarTurno(turno: Turno): Turno {
         turno.confirmarTurno()
+
+        //Cada vez que confirma un turno se vuelve a setear el estado del peluquero en OCUPADO
+        turno.peluquero.estado = PeluqueroState.OCUPADO
+
         val turnoUpdated = turnoDAO.update(turno)
         peluqueriaYaEmailSender.enviarMailDeConfirmacion(turno)
         return turnoUpdated
+    }
+
+    @Transactional
+    override fun finalizarTurno(turno: Turno): Turno {
+        turno.finalizarTurno()
+
+        //Si el peluquero ya no posee turnos confirmados, su estado debe ser DISPONIBLE
+        if(! turnoDAO.peluqueroPoseeAlgunTurnoConfirmado(turno.peluquero)){
+            turno.peluquero.estado = PeluqueroState.DISPONIBLE
+        }
+
+        return turnoDAO.update(turno)
     }
 }

@@ -1,6 +1,6 @@
 package ar.edu.unq.peluqueriayabackend.controller
 
-import ar.edu.unq.peluqueriayabackend.controller.dtos.ConfirmarTurnoDTO
+import ar.edu.unq.peluqueriayabackend.controller.dtos.TurnoDTO
 import ar.edu.unq.peluqueriayabackend.controller.dtos.SolicitudTurnoDTO
 import ar.edu.unq.peluqueriayabackend.exception.ClienteNoExisteException
 import ar.edu.unq.peluqueriayabackend.exception.PeluqueroNoExisteException
@@ -59,19 +59,28 @@ class TurnoController(
     }
 
     @PostMapping("/confirmar")
-    fun confirmarTurno(@Valid confirmarTurnoDTO: ConfirmarTurnoDTO):Turno {
+    fun confirmarTurno(@Valid turnoDTO: TurnoDTO):Turno {
 
-        val maybePeluquero = peluqueroService.get(confirmarTurnoDTO.peluqueroId)
+        return turnoService.confirmarTurno(validateTurnoDTO(turnoDTO))
+    }
+
+    @PostMapping("/finalizar")
+    fun finalizarTurno(@Valid turnoDTO: TurnoDTO):Turno {
+        return turnoService.finalizarTurno(validateTurnoDTO(turnoDTO))
+    }
+
+    private fun validateTurnoDTO(turnoDTO:TurnoDTO) : Turno{
+        val maybePeluquero = peluqueroService.get(turnoDTO.peluqueroId)
         if(! maybePeluquero.isPresent)
-            throw PeluqueroNoExisteException(confirmarTurnoDTO.peluqueroId)
+            throw PeluqueroNoExisteException(turnoDTO.peluqueroId)
 
-        val maybeTurno = turnoService.get(confirmarTurnoDTO.turnoId)
+        val maybeTurno = turnoService.get(turnoDTO.turnoId)
         if(! maybeTurno.isPresent)
-            throw TurnoNoExisteException(confirmarTurnoDTO.turnoId)
+            throw TurnoNoExisteException(turnoDTO.turnoId)
 
-        if(maybeTurno.get().getPeluqueroId()!! != confirmarTurnoDTO.peluqueroId)
+        if(maybeTurno.get().getPeluqueroId()!! != turnoDTO.peluqueroId)
             throw Unauthorized("No tiene acceso a este recurso")
 
-        return turnoService.confirmarTurno(maybeTurno.get())
+        return maybeTurno.get()
     }
 }
