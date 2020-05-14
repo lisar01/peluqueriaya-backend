@@ -14,6 +14,7 @@ import ar.edu.unq.peluqueriayabackend.service.TurnoService
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.validation.annotation.Validated
 import org.springframework.web.bind.annotation.PostMapping
+import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 import javax.validation.Valid
@@ -28,7 +29,7 @@ class TurnoController(
 {
 
     @PostMapping("/pedir")
-    fun pedirTurno(@Valid solicitudTurnoDTO: SolicitudTurnoDTO) : Turno {
+    fun pedirTurno(@Valid @RequestBody solicitudTurnoDTO: SolicitudTurnoDTO) : Turno {
 
         val mayBeClient = clienteService.get(solicitudTurnoDTO.idCliente)
 
@@ -59,13 +60,13 @@ class TurnoController(
     }
 
     @PostMapping("/confirmar")
-    fun confirmarTurno(@Valid turnoDTO: TurnoDTO):Turno {
+    fun confirmarTurno(@Valid @RequestBody turnoDTO: TurnoDTO):Turno {
 
         return turnoService.confirmarTurno(validateTurnoDTO(turnoDTO))
     }
 
     @PostMapping("/finalizar")
-    fun finalizarTurno(@Valid turnoDTO: TurnoDTO):Turno {
+    fun finalizarTurno(@Valid @RequestBody turnoDTO: TurnoDTO):Turno {
         return turnoService.finalizarTurno(validateTurnoDTO(turnoDTO))
     }
 

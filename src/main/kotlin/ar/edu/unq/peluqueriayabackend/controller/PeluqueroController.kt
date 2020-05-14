@@ -23,7 +23,7 @@ class PeluqueroController(@Autowired val peluqueroService: PeluqueroService) {
     }
 
     @GetMapping("/{id}")
-    fun getPeluquero(@PathVariable("id") idPeluquero : Long): Peluquero {
+    fun getPeluquero(@PathVariable("id") @Valid idPeluquero : Long): Peluquero {
         val maybePeluquero = peluqueroService.get(idPeluquero)
         if(!maybePeluquero.isPresent)
             throw PeluqueroNoExisteException(idPeluquero)
