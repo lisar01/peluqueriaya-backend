@@ -33,7 +33,7 @@ class Turno (
         return if(serviciosSolicitadosInfo.isEmpty()){
             corteMinInfo
         }else{
-            serviciosSolicitadosInfo.fold(BigDecimal.ZERO) { r, sv -> r + sv.precio }
+            serviciosSolicitadosInfo.fold(corteMinInfo) { r, sv -> r + sv.precio }
         }
     }
 

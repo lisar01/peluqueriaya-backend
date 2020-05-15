@@ -22,7 +22,7 @@ class TurnoTest {
     }
 
     @Test
-    fun testUnTurnoConServicio1ConPrecio250YServicio2ConPrecio550ElPrecioTotalDeEseTurnoEs800(){
+    fun testUnTurnoConCorteMinInfo150YConServicio1ConPrecio250YServicio2ConPrecio550ElPrecioTotalDeEseTurnoEs950(){
 
 
         val serviciosSolicitadosInfo = mutableListOf<ServicioInfo>()
@@ -32,13 +32,14 @@ class TurnoTest {
         serviciosSolicitadosInfo.add(servicio1)
         serviciosSolicitadosInfo.add(servicio2)
 
-        val turno1 = Turno.Builder().withServiciosSolicitadosInfo(serviciosSolicitadosInfo).build()
+        val turno1 = Turno.Builder().withServiciosSolicitadosInfo(serviciosSolicitadosInfo).
+                                        withCorteMinInfo(BigDecimal(150)).build()
 
-        assertEquals(turno1.precioTotal(),BigDecimal(800))
+        assertEquals(turno1.precioTotal(),BigDecimal(950))
     }
 
     @Test
-    fun testUnTurnoConServicio1ConPrecio250YServicio2ConPrecio550YServicio3ConPrecio50Punto50ElPrecioTotalDeEseTurnoEs850Punto50(){
+    fun testUnTurnoConCorteMinInfo150YConServicio1ConPrecio250YServicio2ConPrecio550YServicio3ConPrecio50Punto50ElPrecioTotalDeEseTurnoEs1000Punto50(){
 
         val serviciosSolicitadosInfo = mutableListOf<ServicioInfo>()
         val servicio1 = ServicioInfo.Builder().withPrecio(BigDecimal(250)).build()
@@ -50,9 +51,10 @@ class TurnoTest {
         serviciosSolicitados.add(servicio2)
         serviciosSolicitados.add(servicio3)
 
-        val turno1 = Turno.Builder().withServiciosSolicitadosInfo(serviciosSolicitados).build()
+        val turno1 = Turno.Builder().withServiciosSolicitadosInfo(serviciosSolicitados).
+                                    withCorteMinInfo(BigDecimal(150)).build()
 
-        assertEquals(turno1.precioTotal(),BigDecimal(850.50))
+        assertEquals(turno1.precioTotal(),BigDecimal(1000.50))
     }
 
     @Test
