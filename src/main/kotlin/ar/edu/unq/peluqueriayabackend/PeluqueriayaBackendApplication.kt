@@ -1,6 +1,7 @@
 package ar.edu.unq.peluqueriayabackend
 
 import ar.edu.unq.peluqueriayabackend.model.*
+import ar.edu.unq.peluqueriayabackend.persistence.impl.repositories.ClienteRepository
 import ar.edu.unq.peluqueriayabackend.persistence.impl.repositories.PeluqueroRepository
 import ar.edu.unq.peluqueriayabackend.persistence.impl.repositories.ServicioRepository
 import org.springframework.beans.factory.annotation.Value
@@ -43,7 +44,7 @@ class PeluqueriayaBackendApplication : WebMvcConfigurer {
 	fun createFunctionDB(dataSource: DataSource):DataSourceInitializer {
 		val initializer = DataSourceInitializer()
 		initializer.setDataSource(dataSource)
-		initializer.setDatabasePopulator(databasePopulator());
+		initializer.setDatabasePopulator(databasePopulator())
 		return initializer
 	}
 
@@ -55,16 +56,27 @@ class PeluqueriayaBackendApplication : WebMvcConfigurer {
 	}
 
     @Bean
-    fun demo(peluqueroRepository: PeluqueroRepository, servicioRepository: ServicioRepository): CommandLineRunner? {
+    fun demo(peluqueroRepository: PeluqueroRepository, servicioRepository: ServicioRepository, clienteRepository: ClienteRepository): CommandLineRunner? {
         return CommandLineRunner {
             println("|**!!INFO!!**| Descomente el metodo: createFakeData(..) en la clase PeluqueriayaBackendApplication, para generar datos falsos")
             println("|**!!ADVICE!!**| Una vez ejecutado el metodo createFakeData(..) vuelva a comentarlo o elimine los datos de la Base de Datos, para evitar errores")
-            this.createFakeData(peluqueroRepository, servicioRepository)
+            this.createFakeData(peluqueroRepository, servicioRepository, clienteRepository)
         }
     }
 
-    fun createFakeData(peluqueroRepository: PeluqueroRepository, servicioRepository: ServicioRepository) {
+    fun createFakeData(peluqueroRepository: PeluqueroRepository, servicioRepository: ServicioRepository, clienteRepository: ClienteRepository) {
         println("|**!!WARNING!!**| Metodo createFakeData(..) en clase PeluqueriayaBackendApplication no comentado. Esto puede generar errores si los datos ya existen")
+
+		val clientePepe = Cliente.Builder().
+							withNombre("Pepe").
+							withApellido("Grillo").
+							withEmail("cassanojoseluis@gmail.com").
+							withImgPerfil("https://vignette.wikia.nocookie.net/disney/images/f/f0/Profile_-_Jiminy_Cricket.jpeg/revision/latest?cb=20190312063605").
+							withUbicacion(Ubicacion("-34.721999", "-58.250447")).
+							withNroTelefono("1100001111").
+							build()
+
+		clienteRepository.save(clientePepe)
 
         val peluquero1 = Peluquero.Builder().
 				withNombre("El barba").
@@ -82,7 +94,7 @@ class PeluqueriayaBackendApplication : WebMvcConfigurer {
 				withLogo("https://i.pinimg.com/236x/3f/50/87/3f50871f2a2f132399894dfb4f9c73cf.jpg").
 				withNombre("La pelu").
 				withDescripcion("La mejor peluquera de zona sur!").
-				withTipos(mutableSetOf(PeluqueroType.MUJER, PeluqueroType.HOMBRE, PeluqueroType.CHICOS)).
+				withTipos(mutableSetOf(PeluqueroType.MUJER, PeluqueroType.KIDS)).
 				withCorteMin(BigDecimal(250)).withDistanciaMax(BigDecimal(7)).
 				withEmail("lapelu@gmail.com").
 				withUbicacion(Ubicacion("-34.725524", "-58.244012")).
@@ -92,8 +104,8 @@ class PeluqueriayaBackendApplication : WebMvcConfigurer {
         var peluquero3 = Peluquero.Builder().
 				withLogo("https://image.shutterstock.com/image-vector/barber-shop-logo-260nw-672396868.jpg").
 				withNombre("Pepe el barbero").
-				withDescripcion("Soy pepe grillo el mejor barbero!").
-				withTipos(mutableSetOf(PeluqueroType.HOMBRE, PeluqueroType.CHICOS)).
+				withDescripcion("Soy pepe grillo el peluquero con los mejores cortes!").
+				withTipos(mutableSetOf(PeluqueroType.MUJER, PeluqueroType.KIDS)).
 				withCorteMin(BigDecimal(400)).
 				withDistanciaMax(BigDecimal(3)).
 				withEmail("pepe@yahoo.com").
@@ -104,7 +116,7 @@ class PeluqueriayaBackendApplication : WebMvcConfigurer {
         val peluquero4MDQ = Peluquero.Builder().
 				withNombre("El barba de mardel").
 				withDescripcion("Soy el mejor barbero de Mar del Plata, despues de la playa cortate conmigo!").
-				withTipos(mutableSetOf(PeluqueroType.HOMBRE, PeluqueroType.CHICOS)).
+				withTipos(mutableSetOf(PeluqueroType.HOMBRE, PeluqueroType.KIDS)).
 				withCorteMin(BigDecimal(100)).
 				withDistanciaMax(BigDecimal(10)).
 				withEmail("barbamdq@mdq.com").
@@ -123,10 +135,76 @@ class PeluqueriayaBackendApplication : WebMvcConfigurer {
 				withEstado(PeluqueroState.OCUPADO).
 				build()
 
+		//Sin logo
+		val peluquero6 = Peluquero.Builder().
+		withNombre("Lo pibitos barberia").
+		withDescripcion("La barberia esencial para cualquier pibito").
+		withTipos(mutableSetOf(PeluqueroType.HOMBRE, PeluqueroType.KIDS)).
+		withCorteMin(BigDecimal(200)).
+		withDistanciaMax(BigDecimal(5)).
+		withEmail("lopibito@gmail.com").
+		withUbicacion(Ubicacion("-34.722486", "-58.256462")).
+		withEstado(PeluqueroState.DISPONIBLE).
+		build()
+
+		val peluquero7 = Peluquero.Builder().
+		withLogo("https://www.bue360.com/media/com_jbusinessdirectory/pictures/companies/9603/SizoGerard-1492191444.jpg").
+		withNombre("Ziso").
+		withDescripcion("Peluqueria Unisex, lo que quieras lo tenes!").
+		withTipos(mutableSetOf(PeluqueroType.HOMBRE, PeluqueroType.MUJER)).
+		withCorteMin(BigDecimal(9000)).
+		withDistanciaMax(BigDecimal(7.2)).
+		withEmail("zisoooo@gmail.com").
+		withUbicacion(Ubicacion("-34.722486", "-58.256462")).
+		withEstado(PeluqueroState.DISPONIBLE).
+		build()
+
+		val peluquero8 = Peluquero.Builder().
+		withLogo("https://image.freepik.com/free-vector/gentleman-barber-shop-logo_96485-97.jpg").
+		withNombre("El rapador").
+		withDescripcion("Promo por rapado!").
+		withTipos(mutableSetOf(PeluqueroType.HOMBRE, PeluqueroType.KIDS, PeluqueroType.MUJER)).
+		withCorteMin(BigDecimal(80.5)).
+		withDistanciaMax(BigDecimal(4.2)).
+		withEmail("el-rapador777@gmail.com").
+		withUbicacion(Ubicacion("-34.722486", "-58.256462")).
+		withEstado(PeluqueroState.OCUPADO).
+		build()
+
+		val peluquero9 = Peluquero.Builder().
+		withLogo("https://www.onlinelogomaker.com/blog/wp-content/uploads/2017/08/barber-shop-logo.jpg").
+		withNombre("Pilot").
+		withDescripcion("Probando 1..2..3!").
+		withTipos(mutableSetOf(PeluqueroType.HOMBRE)).
+		withCorteMin(BigDecimal(150.50)).
+		withDistanciaMax(BigDecimal(5.2)).
+		withEmail("pilot213123213@gmail.com").
+		withUbicacion(Ubicacion("-34.722486", "-58.256462")).
+		withEstado(PeluqueroState.OCUPADO).
+		build()
+
+		val peluquero10 = Peluquero.Builder().
+		withLogo("https://i.pinimg.com/originals/d4/67/6f/d4676f6f2ff10d7499b150cb74374ca1.jpg").
+		withNombre("Manos de tijeras").
+		withDescripcion("El mejor con la tijera!").
+		withTipos(mutableSetOf(PeluqueroType.HOMBRE, PeluqueroType.KIDS, PeluqueroType.MUJER)).
+		withCorteMin(BigDecimal(250)).
+		withDistanciaMax(BigDecimal(4.5)).
+		withEmail("manopla-de-tijera889@gmail.com").
+		withUbicacion(Ubicacion("-34.722486", "-58.256462")).
+		withEstado(PeluqueroState.DISPONIBLE).
+		build()
+
         //Guardando peluqueros creados
 
         peluqueroRepository.save(peluquero1)
         peluqueroRepository.save(peluquero4MDQ)
+
+		peluqueroRepository.save(peluquero6)
+		peluqueroRepository.save(peluquero7)
+		peluqueroRepository.save(peluquero8)
+		peluqueroRepository.save(peluquero9)
+		peluqueroRepository.save(peluquero10)
 
         peluquero2 = peluqueroRepository.save(peluquero2)
         peluquero3 = peluqueroRepository.save(peluquero3)

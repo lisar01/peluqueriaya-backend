@@ -11,7 +11,7 @@ import javax.transaction.Transactional
 @Service
 class ServicioServiceImpl(val servicioDAO:ServicioDAO):ServicioService {
 
-    override fun get(id: Int): Optional<Servicio> {
+    override fun get(id: Long): Optional<Servicio> {
         return servicioDAO.get(id)
     }
 
