@@ -17,3 +17,21 @@
 
 ## Instalación de Peluqueria Ya
 
+### Prerrequisitos
+  
+  - java 8
+  - maven
+  - postgresql
+  - API key de heremaps
+
+### Instalación y ejecución
+
+1. Clonar el repositorio en el directorio deseado.
+
+2. Ingresar a la carpeta clonada "/peluqueriaya-backend".
+
+3. Ejecutar el comando "mvn install" en el directorio "/peluqueriaya-backend".
+
+4. Agregar la API key de heremaps en el archivo "resources/heremaps.properties" en el campo "apiKey".
+
+5. Ejecutar el comando "mvn spring-boot:run" en el directorio "/peluqueriaya-backend".

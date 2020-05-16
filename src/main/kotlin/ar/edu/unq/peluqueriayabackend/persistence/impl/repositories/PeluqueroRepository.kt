@@ -17,7 +17,7 @@ const val contieneAlgunServicioConTipo = "(:tipoDeServicio is null OR :tipoDeSer
 
 
 @Repository
-interface PeluqueroRepository : JpaRepository<Peluquero, Int> {
+interface PeluqueroRepository : JpaRepository<Peluquero, Long> {
 
     @Query(value= "SELECT DISTINCT p FROM Peluquero p LEFT JOIN p.servicios s LEFT JOIN p.tipos tipos WHERE $esPeluqueroCercano AND $tieneNombre AND $contieneTipo AND $contieneAlgunServicioConTipo")
     fun findAllByUbicacionCercanaAndNombreLikeAndContainsTipoAndContainsTipoDeServicion(

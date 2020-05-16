@@ -1,6 +1,7 @@
 package ar.edu.unq.peluqueriayabackend.controller
 
 import ar.edu.unq.peluqueriayabackend.controller.dtos.Filtro
+import ar.edu.unq.peluqueriayabackend.exception.PeluqueroNoExisteException
 import ar.edu.unq.peluqueriayabackend.model.Peluquero
 import ar.edu.unq.peluqueriayabackend.model.Ubicacion
 import ar.edu.unq.peluqueriayabackend.service.PeluqueroService
@@ -19,5 +20,14 @@ class PeluqueroController(@Autowired val peluqueroService: PeluqueroService) {
     @GetMapping("/search")
     fun buscar(@Valid ubicacion: Ubicacion, @Valid filtro: Filtro?, pageable: Pageable): Page<Peluquero> {
         return peluqueroService.buscar(ubicacion, filtro, pageable)
+    }
+
+    @GetMapping("/{id}")
+    fun getPeluquero(@PathVariable("id") @Valid idPeluquero : Long): Peluquero {
+        val maybePeluquero = peluqueroService.get(idPeluquero)
+        if(!maybePeluquero.isPresent)
+            throw PeluqueroNoExisteException(idPeluquero)
+
+        return maybePeluquero.get()
     }
 }

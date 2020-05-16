@@ -12,7 +12,7 @@ import java.util.*
 @Service
 class PeluqueroDAORepository(@Autowired val peluqueroRepository: PeluqueroRepository):PeluqueroDAO{
 
-    override fun get(id: Int): Optional<Peluquero> {
+    override fun get(id: Long): Optional<Peluquero> {
         return peluqueroRepository.findById(id)
     }
 
@@ -29,7 +29,7 @@ class PeluqueroDAORepository(@Autowired val peluqueroRepository: PeluqueroReposi
     }
 
     // Solo setea el estado en deshabilitado (No borra nada)
-    override fun delete(id: Int) {
+    override fun delete(id: Long) {
         val peluqueroDeshabilitado = get(id).get()
         peluqueroDeshabilitado.estado = PeluqueroState.DESHABILITADO
         save(peluqueroDeshabilitado)
@@ -38,5 +38,4 @@ class PeluqueroDAORepository(@Autowired val peluqueroRepository: PeluqueroReposi
     override fun findAllByUbicacionCercanaAndNombreLikeAndContainsTipoAndContainsTipoDeServicion(distanciaMaxima: Double, longitud: Double, latitud: Double, nombre: String?, tipos: List<PeluqueroType>?, tipoDeServicio: ServicioType?, pageable: Pageable): Page<Peluquero> {
         return peluqueroRepository.findAllByUbicacionCercanaAndNombreLikeAndContainsTipoAndContainsTipoDeServicion(distanciaMaxima, longitud, latitud, nombre, tipos, tipoDeServicio, pageable)
     }
-
 }
