@@ -18,14 +18,14 @@ class ControllerExceptionHandler {
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     fun handleConstraintViolationException(e: ConstraintViolationException): APIError {
         val subErrors = e.constraintViolations.map { it.message }
-        return APIError(e.localizedMessage, HttpStatus.BAD_REQUEST, "", subErrors)
+        return APIError("Los datos no son validos", HttpStatus.BAD_REQUEST, "", subErrors)
     }
 
     @ExceptionHandler(BindException::class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     fun handleBindException(e: BindException): APIError {
         val subErrors = e.fieldErrors.map { it.defaultMessage }
-        return APIError(e.localizedMessage, HttpStatus.BAD_REQUEST, e.nestedPath, subErrors)
+        return APIError("${e.objectName} no es valido/a", HttpStatus.BAD_REQUEST, e.nestedPath, subErrors)
     }
 
     @ExceptionHandler(NoHandlerFoundException::class)
