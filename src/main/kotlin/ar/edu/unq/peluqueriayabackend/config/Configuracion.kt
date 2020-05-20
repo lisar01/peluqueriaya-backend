@@ -57,8 +57,9 @@ class Configuracion {
     @Bean
     fun messageSource(): MessageSource? {
         val messageSource = ReloadableResourceBundleMessageSource()
-        messageSource.setBasename("classpath:mensajes")
-        messageSource.setDefaultEncoding("ISO-8859-1")
+        messageSource.setBasename("classpath:messages")
+        messageSource.setDefaultEncoding("UTF-8")
+        messageSource.setUseCodeAsDefaultMessage(false)
         return messageSource
     }
 
