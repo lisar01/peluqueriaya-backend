@@ -17,7 +17,7 @@ class ControllerExceptionHandler {
     @ExceptionHandler(ConstraintViolationException::class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     fun handleConstraintViolationException(e: ConstraintViolationException): APIError {
-        val subErrors = e.constraintViolations.map { it.message }
+        val subErrors : List<String> = e.constraintViolations.map { it.message }
         return APIError("Los datos no son validos", HttpStatus.BAD_REQUEST, "", subErrors)
     }
 
