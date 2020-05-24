@@ -1,12 +1,10 @@
 package ar.edu.unq.peluqueriayabackend.service
 
-import ar.edu.unq.peluqueriayabackend.model.Cliente
-import ar.edu.unq.peluqueriayabackend.model.Peluquero
-import ar.edu.unq.peluqueriayabackend.model.ServicioInfo
-import ar.edu.unq.peluqueriayabackend.model.Turno
+import ar.edu.unq.peluqueriayabackend.model.*
 
 interface TurnoService : GenericService<Turno> {
-    fun pedirTurno(cliente: Cliente, peluquero: Peluquero, serviciosSolicitadosInfo: List<ServicioInfo>):Turno
+    fun pedirTurno(cliente: Cliente, peluquero: Peluquero, serviciosSolicitadosInfo: List<ServicioInfo>, ubicacion: Ubicacion):Turno
     fun confirmarTurno(turno: Turno): Turno
     fun finalizarTurno(turno: Turno): Turno
+    fun cancelarTurno(turno: Turno) : Turno
 }

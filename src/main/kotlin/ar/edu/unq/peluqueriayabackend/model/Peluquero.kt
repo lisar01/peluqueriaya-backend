@@ -1,6 +1,7 @@
 package ar.edu.unq.peluqueriayabackend.model
 
 import java.math.BigDecimal
+import java.time.LocalDateTime
 import javax.persistence.*
 
 @Suppress("JpaDataSourceORMInspection")
@@ -10,7 +11,7 @@ class Peluquero(
         var logo: String,
         var nombre: String,
         var corteMin: BigDecimal,
-        var distanciaMax: BigDecimal,
+        var distanciaMax: BigDecimal = BigDecimal(0),
         var email: String,
         var ubicacion:Ubicacion,
         var estado: PeluqueroState,
@@ -19,8 +20,53 @@ class Peluquero(
         var tipos: MutableSet<PeluqueroType> = mutableSetOf(),
         @OneToMany(cascade = [CascadeType.ALL], fetch = FetchType.LAZY, mappedBy = "peluquero", orphanRemoval = true)
         var servicios:MutableList<Servicio> = mutableListOf(),
+        var ultimoLogin: LocalDateTime = LocalDateTime.now(),
+        var vecesDeshabilitado: Int = 0,
+        var fechaDeshabilitacion: LocalDateTime?,
         @Id @GeneratedValue var id: Long? = null
                 ) {
+
+    fun desconectar() {
+        estado.desconectar(this)
+    }
+
+    fun conectar() {
+        estado.conectar(this)
+    }
+
+    fun ocupar() {
+        estado.ocupar(this)
+    }
+
+    fun desocupar() {
+        estado.desocupar(this)
+    }
+
+    fun deshabilitar() {
+        estado.deshabilitar(this)
+    }
+
+    fun habilitar() {
+        estado.habilitar(this)
+    }
+
+    fun noPoseeMasTurnos() {
+        estado.noPoseeMasTurnos(this)
+    }
+
+    fun poseeTurnos() {
+        estado.poseeTurnos(this)
+    }
+
+    fun tieneTurnosEnEspera() : Boolean = estado.tieneTurnosEnEspera()
+
+    fun estaDisponible() : Boolean = estado.estaDisponible()
+
+    fun estaOcupado() : Boolean = estado.estaOcupado()
+
+    fun estaDesconectado() : Boolean = estado.estaDesconectado()
+
+    fun estaDeshabilitado() : Boolean = estado.estaDeshabilitado()
 
     data class Builder(
             var logo: String = "",
@@ -32,10 +78,13 @@ class Peluquero(
             var estado: PeluqueroState = PeluqueroState.DISPONIBLE,
             var descripcion: String = "",
             var tipos: MutableSet<PeluqueroType> = mutableSetOf(),
-            var servicios:MutableList<Servicio> = mutableListOf()
+            var servicios:MutableList<Servicio> = mutableListOf(),
+            var ultimoLogin: LocalDateTime = LocalDateTime.now(),
+            var vecesDeshabilitado: Int = 0,
+            var fechaDeshabilitacion: LocalDateTime? = null
     ){
         fun build():Peluquero {
-            return Peluquero(logo,nombre,corteMin,distanciaMax,email,ubicacion,estado,descripcion,tipos,servicios)
+            return Peluquero(logo,nombre,corteMin,distanciaMax,email,ubicacion,estado,descripcion,tipos,servicios,ultimoLogin, vecesDeshabilitado, fechaDeshabilitacion)
         }
 
         fun withLogo(logo:String) = apply { this.logo = logo }
@@ -48,6 +97,9 @@ class Peluquero(
         fun withDescripcion(descripcion: String) = apply { this.descripcion = descripcion }
         fun withTipos(tipos: MutableSet<PeluqueroType>) = apply { this.tipos = tipos }
         fun withServicios(servicios: MutableList<Servicio>) = apply { this.servicios = servicios }
+        fun withUltimoLogin(ultimoLogin: LocalDateTime) = apply { this.ultimoLogin = ultimoLogin }
+        fun withVecesDeshabilitado(vecesDeshabilitado: Int) = apply { this.vecesDeshabilitado = vecesDeshabilitado }
+        fun withFechaDeshabilitacion(fechaDeshabilitacion: LocalDateTime) = apply { this.fechaDeshabilitacion = fechaDeshabilitacion }
 
     }
 }

@@ -83,7 +83,7 @@ class PeluqueriayaBackendApplication : WebMvcConfigurer {
 				withDescripcion("El mejor barbero de zona sur!").
 				withTipos(mutableSetOf(PeluqueroType.HOMBRE)).
 				withCorteMin(BigDecimal(250)).
-				withDistanciaMax(BigDecimal(5.5)).
+				withDistanciaMax(BigDecimal(6)).
 				withEmail("barbamail@pepe.com").
 				withUbicacion(Ubicacion("-34.706416", "-58.278559")).
 				withEstado(PeluqueroState.DISPONIBLE).
@@ -107,10 +107,10 @@ class PeluqueriayaBackendApplication : WebMvcConfigurer {
 				withDescripcion("Soy pepe grillo el peluquero con los mejores cortes!").
 				withTipos(mutableSetOf(PeluqueroType.MUJER, PeluqueroType.KIDS)).
 				withCorteMin(BigDecimal(400)).
-				withDistanciaMax(BigDecimal(3)).
+				withDistanciaMax(BigDecimal(6)).
 				withEmail("pepe@yahoo.com").
 				withUbicacion(Ubicacion("-34.722186", "-58.256462")).
-				withEstado(PeluqueroState.OCUPADO).
+				withEstado(PeluqueroState.DISPONIBLE).
 				build()
 
         val peluquero4MDQ = Peluquero.Builder().
@@ -129,10 +129,10 @@ class PeluqueriayaBackendApplication : WebMvcConfigurer {
 				withNombre("La pelu de mardel").
 				withDescripcion("La mejor pelu de mar del plata, el mejor alisado... despreocupate!").
 				withTipos(mutableSetOf(PeluqueroType.MUJER)).withCorteMin(BigDecimal(300)).
-				withDistanciaMax(BigDecimal(5)).
+				withDistanciaMax(BigDecimal(6)).
 				withEmail("laPelu@mdq.com").
 				withUbicacion(Ubicacion("-38.003655", "-57.554497")).
-				withEstado(PeluqueroState.OCUPADO).
+				withEstado(PeluqueroState.DISPONIBLE).
 				build()
 
 		//Sin logo
@@ -141,7 +141,7 @@ class PeluqueriayaBackendApplication : WebMvcConfigurer {
 		withDescripcion("La barberia esencial para cualquier pibito").
 		withTipos(mutableSetOf(PeluqueroType.HOMBRE, PeluqueroType.KIDS)).
 		withCorteMin(BigDecimal(200)).
-		withDistanciaMax(BigDecimal(5)).
+		withDistanciaMax(BigDecimal(6)).
 		withEmail("lopibito@gmail.com").
 		withUbicacion(Ubicacion("-34.722486", "-58.256462")).
 		withEstado(PeluqueroState.DISPONIBLE).
@@ -165,10 +165,10 @@ class PeluqueriayaBackendApplication : WebMvcConfigurer {
 		withDescripcion("Promo por rapado!").
 		withTipos(mutableSetOf(PeluqueroType.HOMBRE, PeluqueroType.KIDS, PeluqueroType.MUJER)).
 		withCorteMin(BigDecimal(80.5)).
-		withDistanciaMax(BigDecimal(4.2)).
+		withDistanciaMax(BigDecimal(6)).
 		withEmail("el-rapador777@gmail.com").
 		withUbicacion(Ubicacion("-34.722486", "-58.256462")).
-		withEstado(PeluqueroState.OCUPADO).
+		withEstado(PeluqueroState.DISPONIBLE).
 		build()
 
 		val peluquero9 = Peluquero.Builder().
@@ -177,10 +177,10 @@ class PeluqueriayaBackendApplication : WebMvcConfigurer {
 		withDescripcion("Probando 1..2..3!").
 		withTipos(mutableSetOf(PeluqueroType.HOMBRE)).
 		withCorteMin(BigDecimal(150.50)).
-		withDistanciaMax(BigDecimal(5.2)).
+		withDistanciaMax(BigDecimal(6)).
 		withEmail("pilot213123213@gmail.com").
 		withUbicacion(Ubicacion("-34.722486", "-58.256462")).
-		withEstado(PeluqueroState.OCUPADO).
+		withEstado(PeluqueroState.DISPONIBLE).
 		build()
 
 		val peluquero10 = Peluquero.Builder().
@@ -189,7 +189,7 @@ class PeluqueriayaBackendApplication : WebMvcConfigurer {
 		withDescripcion("El mejor con la tijera!").
 		withTipos(mutableSetOf(PeluqueroType.HOMBRE, PeluqueroType.KIDS, PeluqueroType.MUJER)).
 		withCorteMin(BigDecimal(250)).
-		withDistanciaMax(BigDecimal(4.5)).
+		withDistanciaMax(BigDecimal(7)).
 		withEmail("manopla-de-tijera889@gmail.com").
 		withUbicacion(Ubicacion("-34.722486", "-58.256462")).
 		withEstado(PeluqueroState.DISPONIBLE).

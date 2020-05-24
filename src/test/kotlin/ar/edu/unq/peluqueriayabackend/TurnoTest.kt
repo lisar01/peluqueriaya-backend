@@ -128,7 +128,7 @@ class TurnoTest {
                 .withFechaInicio(fechaInicio)
                 .build()
 
-        turno1.confirmarTurno()
+        turno1.confirmar()
 
         assertEquals(turno1.estado,TurnoState.CONFIRMADO)
         assertEquals(turno1.fechaInicio,fechaInicio)
@@ -154,8 +154,8 @@ class TurnoTest {
                                     withFechaFin(fechaFin).
                                     build()
 
-        turno1.confirmarTurno()
-        turno2.confirmarTurno()
+        turno1.confirmar()
+        turno2.confirmar()
 
         assertEquals(turno1.estado,TurnoState.CONFIRMADO)
         assertEquals(turno1.fechaInicio,fechaInicio)
@@ -179,8 +179,8 @@ class TurnoTest {
                                     withFechaFin(turno2FechaFin).
                                     build()
 
-        turno1.finalizarTurno()
-        turno2.finalizarTurno()
+        turno1.finalizar()
+        turno2.finalizar()
 
         assertEquals(turno1.estado,TurnoState.PENDIENTE)
         assertNull(turno1.fechaConfirmacion)
@@ -198,7 +198,7 @@ class TurnoTest {
                                     withFechaConfirmacion(LocalDateTime.now().minusHours(1)).
                                     build()
 
-        turno.finalizarTurno()
+        turno.finalizar()
 
         assertEquals(turno.estado,TurnoState.FINALIZADO)
 

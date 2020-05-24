@@ -10,16 +10,16 @@ import org.springframework.data.jpa.repository.Query
 import org.springframework.data.repository.query.Param
 import org.springframework.stereotype.Repository
 
+const val peluqueroTieneEstadoDisponibleOOcupado = "p.estado = 0 OR p.estado = 1"
 const val esPeluqueroCercano = "distance(cast(p.ubicacion.latitude as double),cast(p.ubicacion.longitude as double), :latitud, :longitud) <= :distanciaMaxima"
 const val contieneTipo = "((:tipos) is null OR tipos in (:tipos))"
 const val tieneNombre = "(:nombre is null OR UPPER(p.nombre) LIKE UPPER(concat('%',cast(:nombre as string),'%')))"
 const val contieneAlgunServicioConTipo = "(:tipoDeServicio is null OR :tipoDeServicio member of s.tipos)"
 
-
 @Repository
 interface PeluqueroRepository : JpaRepository<Peluquero, Long> {
 
-    @Query(value= "SELECT DISTINCT p FROM Peluquero p LEFT JOIN p.servicios s LEFT JOIN p.tipos tipos WHERE $esPeluqueroCercano AND $tieneNombre AND $contieneTipo AND $contieneAlgunServicioConTipo")
+    @Query(value= "SELECT DISTINCT p FROM Peluquero p LEFT JOIN p.servicios s LEFT JOIN p.tipos tipos WHERE $peluqueroTieneEstadoDisponibleOOcupado AND $esPeluqueroCercano AND $tieneNombre AND $contieneTipo AND $contieneAlgunServicioConTipo")
     fun findAllByUbicacionCercanaAndNombreLikeAndContainsTipoAndContainsTipoDeServicion(
             @Param("distanciaMaxima") distanciaMaxima: Double,
             @Param("longitud") longitud: Double,

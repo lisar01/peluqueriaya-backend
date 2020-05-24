@@ -1,6 +1,7 @@
 package ar.edu.unq.peluqueriayabackend.controller
 
 import ar.edu.unq.peluqueriayabackend.controller.dtos.Filtro
+import ar.edu.unq.peluqueriayabackend.controller.dtos.PeluqueroSimpleDTO
 import ar.edu.unq.peluqueriayabackend.exception.PeluqueroNoExisteException
 import ar.edu.unq.peluqueriayabackend.model.Peluquero
 import ar.edu.unq.peluqueriayabackend.model.Ubicacion
@@ -30,4 +31,28 @@ class PeluqueroController(@Autowired val peluqueroService: PeluqueroService) {
 
         return maybePeluquero.get()
     }
+
+    //La idea de este desconectar no es el logout del usuario sino que deje de recibir turnos o aparecer en la busqueda de peluqueros
+    @PostMapping("/desconectar")
+    fun desconectarPeluquero(@Valid peluqueroSimpleDTO: PeluqueroSimpleDTO) : Peluquero {
+        val maybePeluquero = peluqueroService.get(peluqueroSimpleDTO.peluqueroId)
+        if(!maybePeluquero.isPresent)
+            throw PeluqueroNoExisteException(peluqueroSimpleDTO.peluqueroId)
+        //TODO
+        // VALIDAR SI EL PELUQUERO AUTENTICADO ES EL MISMO CON EL QUE SE VA A MODIFICAR
+
+        return peluqueroService.desconectar(maybePeluquero.get())
+    }
+
+    //La idea de este conectar no es el login del usuario sino que pueda recibir turnos o aparecer en la busqueda de peluqueros
+    @PostMapping("/conectar")
+    fun conectarPeluquero(@Valid @RequestBody peluqueroSimpleDTO: PeluqueroSimpleDTO):Peluquero {
+        val maybePeluquero = peluqueroService.get(peluqueroSimpleDTO.peluqueroId)
+        if(!maybePeluquero.isPresent)
+            throw PeluqueroNoExisteException(peluqueroSimpleDTO.peluqueroId)
+        //TODO
+        // VALIDAR SI EL PELUQUERO AUTENTICADO ES EL MISMO CON EL QUE SE VA A MODIFICAR
+        return peluqueroService.conectar(maybePeluquero.get())
+    }
+
 }

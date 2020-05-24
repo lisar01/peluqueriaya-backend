@@ -5,6 +5,8 @@ import ar.edu.unq.peluqueriayabackend.model.Turno
 import ar.edu.unq.peluqueriayabackend.persistence.TurnoDAO
 import ar.edu.unq.peluqueriayabackend.persistence.impl.repositories.TurnoRepository
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.data.domain.PageRequest
+import org.springframework.data.domain.Sort
 import org.springframework.stereotype.Service
 import java.util.*
 
@@ -39,5 +41,17 @@ class TurnoDAORepository(@Autowired val turnoRepository: TurnoRepository) : Turn
 
     override fun peluqueroPoseeAlgunTurnoConfirmado(peluquero: Peluquero): Boolean {
         return turnoRepository.peluqueroPoseeAlgunTurnoConfirmado(peluquero)
+    }
+
+    override fun peluqueroPoseeCantidadDeTurnosEnEsperaMayorOIgualA(peluquero: Peluquero, valor: Long): Boolean {
+        return turnoRepository.peluqueroPoseeCantidadDeTurnosEnEsperaMayorOIgualA(peluquero, valor)
+    }
+
+    override fun findTurnoEnEsperaMasAntiguoDelPeluquero(peluquero: Peluquero): Optional<Turno> {
+        return turnoRepository.getPrimerTurnoEnEsperaDelPeluqueroOrdenadoPor(peluquero)
+    }
+
+    override fun findAllByEstadoPendienteOEspera(peluquero: Peluquero): List<Turno> {
+        return turnoRepository.findAllByEstadoPendienteOEspera(peluquero)
     }
 }

@@ -21,11 +21,14 @@ class Turno (
                 mappedBy = "turno", orphanRemoval = true)
         var serviciosSolicitadosInfo: MutableList<ServicioInfo>,
         var fechaInicio: LocalDateTime = LocalDateTime.now(),
+        var fechaCancelacion: LocalDateTime?,
+        var fechaPendiente: LocalDateTime?,
         var fechaConfirmacion: LocalDateTime?,
         var fechaFin: LocalDateTime?,
-        var estado: TurnoState,
+        var estado: TurnoState = TurnoState.ESPERANDO,
         var puntaje: Int = 0,
         var corteMinInfo: BigDecimal,
+        var ubicacionDelTurno: Ubicacion,
         @Id @GeneratedValue var id: Long? = null
 ) {
 
@@ -41,48 +44,70 @@ class Turno (
 
     fun getClienteId():Long? = cliente.id
 
-    fun getUbicacionCliente():Ubicacion = cliente.ubicacion
-
     fun puntuar(valor: Int) {
         if(valor !in 1..5)
             throw ValorDePuntuacionErroneo()
         estado.puntuar(valor,this)
     }
 
-    fun confirmarTurno() {
-        estado.confirmarTurno(this)
+    fun confirmar() {
+        estado.confirmar(this)
     }
 
-    fun finalizarTurno() {
-        estado.finalizarTurno(this)
+    fun finalizar() {
+        estado.finalizar(this)
     }
+
+    fun cancelar() {
+        estado.cancelar(this)
+    }
+
+    fun terminarEsperaTurno() {
+        estado.terminarEsperaTurno(this)
+    }
+
+    fun estaPendiente():Boolean = estado.estaPendiente()
+
+    fun estaConfirmado():Boolean = estado.estaConfirmado()
+
+    fun estaFinalizado():Boolean = estado.estaFinalizado()
+
+    fun estaCancelado():Boolean = estado.estaCancelado()
+
+    fun estaEsperando():Boolean = estado.estaEsperando()
 
     data class Builder(
             var peluquero: Peluquero = Peluquero.Builder().withCorteMin(BigDecimal.ZERO).build(),
             var cliente: Cliente = Cliente.Builder().build(),
             var serviciosSolicitados: MutableList<ServicioInfo> = mutableListOf(),
             var fechaInicio: LocalDateTime = LocalDateTime.now(),
+            var fechaCancelacion: LocalDateTime? = null,
+            var fechaPendiente: LocalDateTime? = null,
             var fechaConfirmacion: LocalDateTime? = null,
             var fechaFin: LocalDateTime? = null,
-            var estado: TurnoState = TurnoState.PENDIENTE,
+            var estado: TurnoState = TurnoState.ESPERANDO,
             var puntaje: Int = 0,
-            var corteMinInfo: BigDecimal = BigDecimal.ZERO
+            var corteMinInfo: BigDecimal = BigDecimal.ZERO,
+            var ubicacionDelTurno: Ubicacion = Ubicacion("","")
     ){
         fun build():Turno {
             return Turno(peluquero,cliente,serviciosSolicitados,
-                    fechaInicio,fechaConfirmacion, fechaFin,estado,
-                    puntaje, corteMinInfo)
+                    fechaInicio,fechaCancelacion, fechaPendiente, fechaConfirmacion, fechaFin,estado,
+                    puntaje, corteMinInfo, ubicacionDelTurno)
         }
 
         fun withPeluquero(peluquero: Peluquero) = apply { this.peluquero = peluquero }
         fun withCliente(cliente:Cliente) = apply { this.cliente = cliente }
         fun withServiciosSolicitadosInfo(servicios:MutableList<ServicioInfo>) = apply { this.serviciosSolicitados = servicios }
         fun withFechaInicio(fechaInicio: LocalDateTime) = apply { this.fechaInicio = fechaInicio }
+        fun withFechaCancelacion(fechaCancelacion: LocalDateTime) = apply { this.fechaCancelacion = fechaCancelacion}
+        fun withFechaPendiente(fechaPendiente: LocalDateTime) = apply { this.fechaPendiente = fechaPendiente }
         fun withFechaConfirmacion(fechaConfirmacion: LocalDateTime) = apply { this.fechaConfirmacion = fechaConfirmacion }
         fun withFechaFin(fechaFin: LocalDateTime) = apply { this.fechaFin = fechaFin }
         fun withEstado(estado:TurnoState) = apply { this.estado = estado }
         fun withPuntaje(puntaje: Int) = apply { this.puntaje = puntaje }
         fun withCorteMinInfo(corteMinInfo: BigDecimal) = apply { this.corteMinInfo = corteMinInfo }
+        fun withUbicacionDelTurno(ubicacionDelTurno: Ubicacion) = apply { this.ubicacionDelTurno = ubicacionDelTurno }
 
     }
 }

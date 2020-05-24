@@ -2,8 +2,10 @@ package ar.edu.unq.peluqueriayabackend.service.geodistance.impl
 
 import ar.edu.unq.peluqueriayabackend.model.Ubicacion
 import ar.edu.unq.peluqueriayabackend.service.geodistance.GeoDistanceServiceApi
+import org.springframework.stereotype.Service
 import kotlin.math.roundToInt
 
+@Service
 class GeoDistanceServiceImpl : GeoDistanceServiceApi {
     override fun distanciaCoordEnKM(lat1: Double, lng1: Double, lat2: Double, lng2: Double): Double {
 
