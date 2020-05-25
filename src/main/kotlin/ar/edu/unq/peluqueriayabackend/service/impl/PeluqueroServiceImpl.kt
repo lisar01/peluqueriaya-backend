@@ -53,7 +53,7 @@ class PeluqueroServiceImpl(
     override fun desconectar(peluquero: Peluquero) : Peluquero {
         peluquero.desconectar()
 
-        if(!peluquero.estaDesconectado())
+        if(!peluquero.getEstaDesconectado())
             throw PeluqueroNoSePuedeDesconectar()
 
         //Cancela todos los turnos en espera y pendientes del peluquero si se desconecto

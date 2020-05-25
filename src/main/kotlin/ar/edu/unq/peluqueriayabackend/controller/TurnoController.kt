@@ -85,7 +85,7 @@ class TurnoController(
         if(maybeTurno.get().getClienteId() != clienteTurnoDTO.clienteId)
             throw Unauthorized("No tiene acceso a este recurso")
 
-        if(! maybeTurno.get().estaEsperando())
+        if(! maybeTurno.get().getEstaEsperando())
             throw TurnoNoPuedeSerCancelado()
 
         return maybeTurno.get()

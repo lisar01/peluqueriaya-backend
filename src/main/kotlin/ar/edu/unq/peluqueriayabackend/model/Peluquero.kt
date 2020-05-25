@@ -58,15 +58,15 @@ class Peluquero(
         estado.poseeTurnos(this)
     }
 
-    fun tieneTurnosEnEspera() : Boolean = estado.tieneTurnosEnEspera()
+    fun getTieneTurnosEnEspera() : Boolean = estado.tieneTurnosEnEspera()
 
-    fun estaDisponible() : Boolean = estado.estaDisponible()
+    fun getEstaDisponible() : Boolean = estado.estaDisponible()
 
-    fun estaOcupado() : Boolean = estado.estaOcupado()
+    fun getEstaOcupado() : Boolean = estado.estaOcupado()
 
-    fun estaDesconectado() : Boolean = estado.estaDesconectado()
+    fun getEstaDesconectado() : Boolean = estado.estaDesconectado()
 
-    fun estaDeshabilitado() : Boolean = estado.estaDeshabilitado()
+    fun getEstaDeshabilitado() : Boolean = estado.estaDeshabilitado()
 
     data class Builder(
             var logo: String = "",

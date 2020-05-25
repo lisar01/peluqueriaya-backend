@@ -2,7 +2,6 @@ package ar.edu.unq.peluqueriayabackend.service.impl
 
 import ar.edu.unq.peluqueriayabackend.exception.*
 import ar.edu.unq.peluqueriayabackend.model.*
-import ar.edu.unq.peluqueriayabackend.persistence.PeluqueroDAO
 import ar.edu.unq.peluqueriayabackend.persistence.TurnoDAO
 import ar.edu.unq.peluqueriayabackend.service.TurnoService
 import ar.edu.unq.peluqueriayabackend.service.emailSender.impl.PeluqueriaYaEmailSender
@@ -43,10 +42,10 @@ class TurnoServiceImpl(
         if(distanciaEnRangoDelPeluqueroEstaExcedida(ubicacion, peluquero))
             throw DistanciaMaximaDelPeluqueroExcedida()
 
-        if(peluquero.estaDesconectado() || peluquero.estaDeshabilitado())
+        if(peluquero.getEstaDesconectado() || peluquero.getEstaDeshabilitado())
             throw PeluqueroDesconectado()
 
-        if(! peluquero.tieneTurnosEnEspera())
+        if(! peluquero.getTieneTurnosEnEspera())
             throw PeluqueroNoPoseeMasTurnos()
 
         val turno = Turno.Builder().
@@ -79,12 +78,12 @@ class TurnoServiceImpl(
     @Transactional
     override fun confirmarTurno(turno: Turno): Turno {
 
-        if(turno.peluquero.estaDeshabilitado() || turno.peluquero.estaDesconectado())
+        if(turno.peluquero.getEstaDeshabilitado() || turno.peluquero.getEstaDesconectado())
             throw PeluqueroDesconectado()
 
         turno.confirmar()
 
-        if(! turno.estaConfirmado())
+        if(! turno.getEstaConfirmado())
             throw TurnoNoSePuedeConfirmar()
 
         turno.peluquero.ocupar()
@@ -98,7 +97,7 @@ class TurnoServiceImpl(
     override fun finalizarTurno(turno: Turno): Turno {
         turno.finalizar()
 
-        if(! turno.estaFinalizado())
+        if(! turno.getEstaFinalizado())
             throw TurnoNoSePuedeFinalizar()
 
         //Si el peluquero ya no posee turnos confirmados, su estado debe ser DISPONIBLE
@@ -129,7 +128,7 @@ class TurnoServiceImpl(
     override fun cancelarTurno(turno: Turno) : Turno {
         turno.cancelar()
 
-        if(! turno.estaCancelado())
+        if(! turno.getEstaCancelado())
             throw TurnoNoPuedeSerCancelado()
 
         turno.peluquero.poseeTurnos()

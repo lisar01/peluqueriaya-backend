@@ -66,15 +66,15 @@ class Turno (
         estado.terminarEsperaTurno(this)
     }
 
-    fun estaPendiente():Boolean = estado.estaPendiente()
+    fun getEstaPendiente():Boolean = estado.estaPendiente()
 
-    fun estaConfirmado():Boolean = estado.estaConfirmado()
+    fun getEstaConfirmado():Boolean = estado.estaConfirmado()
 
-    fun estaFinalizado():Boolean = estado.estaFinalizado()
+    fun getEstaFinalizado():Boolean = estado.estaFinalizado()
 
-    fun estaCancelado():Boolean = estado.estaCancelado()
+    fun getEstaCancelado():Boolean = estado.estaCancelado()
 
-    fun estaEsperando():Boolean = estado.estaEsperando()
+    fun getEstaEsperando():Boolean = estado.estaEsperando()
 
     data class Builder(
             var peluquero: Peluquero = Peluquero.Builder().withCorteMin(BigDecimal.ZERO).build(),
