@@ -60,11 +60,13 @@ class TurnoServiceImpl(
         val limiteDeTurnosSimultaneos: Long = 3
         if(! turnoDAO.peluqueroPoseeCantidadDeTurnosPendientesOConfirmadosMayorOIgualA(peluquero, limiteDeTurnosSimultaneos)){
             turno.terminarEsperaTurno()
+        }else {
+            peluqueriaYaEmailSender.enviarMailAlClienteQueSuTurnoEstaEnEspera(turno)
         }
 
         // Si este turno es el turno #15 en espera, el peluquero no poseera mas turnos y se seteara ese estado
-        val limiteDeTurnosEnEspera : Long = 15
-        if(turnoDAO.peluqueroPoseeCantidadDeTurnosEnEsperaMayorOIgualA(peluquero,limiteDeTurnosEnEspera)){
+        val limiteDeTurnosEnEspera : Long = 5
+        if(turnoDAO.peluqueroPoseeCantidadDeTurnosEnEsperaMayorOIgualA(peluquero,limiteDeTurnosEnEspera - 1)){
            peluquero.noPoseeMasTurnos()
         }
 
@@ -100,8 +102,11 @@ class TurnoServiceImpl(
             throw TurnoNoSePuedeFinalizar()
 
         //Si el peluquero ya no posee turnos confirmados, su estado debe ser DISPONIBLE
+        //O sino debe ponerse como OCUPADO porque ya posee por lo menos 1 turno en espera mas!
         if(! turnoDAO.peluqueroPoseeAlgunTurnoConfirmado(turno.peluquero)){
             turno.peluquero.desocupar()
+        }else {
+            turno.peluquero.poseeTurnos()
         }
 
         val turnoFinalizado = turnoDAO.update(turno)
@@ -123,6 +128,12 @@ class TurnoServiceImpl(
     @Transactional
     override fun cancelarTurno(turno: Turno) : Turno {
         turno.cancelar()
+
+        if(! turno.estaCancelado())
+            throw TurnoNoPuedeSerCancelado()
+
+        turno.peluquero.poseeTurnos()
+
         val turnoCancelado = turnoDAO.update(turno)
         peluqueriaYaEmailSender.enviarMailAlClienteQueSeCanceloElTurno(turno)
         return turnoCancelado

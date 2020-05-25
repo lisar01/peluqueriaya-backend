@@ -27,4 +27,11 @@ class PeluqueriaYaEmailSender(@Autowired val emailServiceAPI: EmailServiceAPI) {
         "El turno fue cancelado lamentablemente :C. " +
                 "Puede pedir otro turno a otro peluquero o volver a intentar con el mismo si este está conectado!")
     }
+
+    fun enviarMailAlClienteQueSuTurnoEstaEnEspera(turno:Turno) {
+        emailServiceAPI.sendEmail(turno.cliente.email,
+        "El turno esta en la cola de espera del peluquero",
+        "Hola, su turno fue ingresado en la cola de espera del peluquero porque este posee completa su casilla de turnos. "+
+        "Es muy probable que su turno demore mucho, si quiere puede cancelar el turno en su perfil de turnos. Saludos! :D")
+    }
 }

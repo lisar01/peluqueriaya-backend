@@ -34,7 +34,7 @@ class PeluqueroController(@Autowired val peluqueroService: PeluqueroService) {
 
     //La idea de este desconectar no es el logout del usuario sino que deje de recibir turnos o aparecer en la busqueda de peluqueros
     @PostMapping("/desconectar")
-    fun desconectarPeluquero(@Valid peluqueroSimpleDTO: PeluqueroSimpleDTO) : Peluquero {
+    fun desconectarPeluquero(@Valid @RequestBody peluqueroSimpleDTO: PeluqueroSimpleDTO) : Peluquero {
         val maybePeluquero = peluqueroService.get(peluqueroSimpleDTO.peluqueroId)
         if(!maybePeluquero.isPresent)
             throw PeluqueroNoExisteException(peluqueroSimpleDTO.peluqueroId)

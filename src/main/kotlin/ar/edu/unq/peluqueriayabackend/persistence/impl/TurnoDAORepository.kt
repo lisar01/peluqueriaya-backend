@@ -6,6 +6,7 @@ import ar.edu.unq.peluqueriayabackend.persistence.TurnoDAO
 import ar.edu.unq.peluqueriayabackend.persistence.impl.repositories.TurnoRepository
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.data.domain.PageRequest
+import org.springframework.data.domain.Pageable
 import org.springframework.data.domain.Sort
 import org.springframework.stereotype.Service
 import java.util.*
@@ -48,7 +49,12 @@ class TurnoDAORepository(@Autowired val turnoRepository: TurnoRepository) : Turn
     }
 
     override fun findTurnoEnEsperaMasAntiguoDelPeluquero(peluquero: Peluquero): Optional<Turno> {
-        return turnoRepository.getPrimerTurnoEnEsperaDelPeluqueroOrdenadoPor(peluquero)
+        val resultList = turnoRepository.findTurnosEnEsperaDelPeluqueroOrdenadoPor(peluquero, PageRequest.of(0,1,Sort.by(Sort.Direction.ASC, "fechaInicio"))).content
+        var result = Optional.empty<Turno>()
+        if(resultList.isNotEmpty()){
+            result = Optional.of(resultList[0])
+        }
+        return result
     }
 
     override fun findAllByEstadoPendienteOEspera(peluquero: Peluquero): List<Turno> {
