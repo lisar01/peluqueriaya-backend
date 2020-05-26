@@ -9,4 +9,6 @@ import org.springframework.data.domain.Pageable
 
 interface PeluqueroService:GenericService<Peluquero> {
     fun buscar(ubicacion: Ubicacion, filtro: Filtro?, pageable: Pageable): Page<Peluquero>
+    fun desconectar(peluquero: Peluquero):Peluquero
+    fun conectar(peluquero: Peluquero): Peluquero
 }
