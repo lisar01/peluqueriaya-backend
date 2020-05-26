@@ -251,8 +251,9 @@ class TurnoTest {
         assertNull(turno1.fechaCancelacion)
         assertNull(turno1.fechaConfirmacion)
         assertNull(turno1.fechaFin)
-        //TODO
-        // Calcular el delta de alguna forma con la fecha actual
+
+
+        assertTrue(estaDentroDelRangoDeFechaActual(turno1.fechaPendiente!!))
         assertTrue(turno1.fechaPendiente!!.isAfter(fechaInicio))
 
     }
@@ -353,8 +354,8 @@ class TurnoTest {
         assertEquals(turno1.fechaPendiente, fechaPendiente)
         assertNull(turno1.fechaConfirmacion)
         assertNull(turno1.fechaFin)
-        //TODO
-        // Calcular el delta de alguna forma con la fecha actual
+
+        assertTrue(estaDentroDelRangoDeFechaActual(turno1.fechaCancelacion!!))
         assertTrue(turno1.fechaCancelacion!!.isAfter(fechaInicio))
         assertTrue(turno1.fechaCancelacion!!.isAfter(fechaPendiente))
 
@@ -369,8 +370,8 @@ class TurnoTest {
         assertNull(turno2.fechaPendiente)
         assertNull(turno2.fechaConfirmacion)
         assertNull(turno2.fechaFin)
-        //TODO
-        // Calcular el delta de alguna forma con la fecha actual
+
+        assertTrue(estaDentroDelRangoDeFechaActual(turno2.fechaCancelacion!!))
         assertTrue(turno2.fechaCancelacion!!.isAfter(fechaInicio))
     }
 
@@ -399,8 +400,9 @@ class TurnoTest {
 
         assertEquals(turno1.fechaInicio, fechaInicio)
         assertEquals(turno1.fechaPendiente, fechaPendiente)
-        //TODO
-        // Calcular el delta de alguna forma con la fecha actual
+
+
+        assertTrue(estaDentroDelRangoDeFechaActual(turno1.fechaConfirmacion!!))
         assertTrue(turno1.fechaConfirmacion!!.isAfter(fechaInicio))
         assertTrue(turno1.fechaConfirmacion!!.isAfter(fechaPendiente))
     }
@@ -575,11 +577,16 @@ class TurnoTest {
 
         assertEquals(turno.estado,TurnoState.FINALIZADO)
 
-        //TODO
-        // BUSCAR COMO HACER UN ASSERT CON DELTA DE FECHA ACTUAL
         assertNotNull(turno.fechaFin)
+        assertTrue(estaDentroDelRangoDeFechaActual(turno.fechaFin!!))
         assertTrue(turno.fechaFin!!.isAfter(turno.fechaInicio))
         assertTrue(turno.fechaFin!!.isAfter(turno.fechaConfirmacion))
+    }
+
+    private fun estaDentroDelRangoDeFechaActual(fecha: LocalDateTime):Boolean {
+        val fechaActualMenosDiezSegundos = LocalDateTime.now().minusSeconds(10)
+        val fechaActualMas1Minutos = LocalDateTime.now().plusMinutes(1)
+        return fecha.isAfter(fechaActualMenosDiezSegundos) && fecha.isBefore(fechaActualMas1Minutos)
     }
 
 }

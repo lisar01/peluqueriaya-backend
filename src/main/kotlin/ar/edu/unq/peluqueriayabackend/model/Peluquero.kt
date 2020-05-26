@@ -68,6 +68,22 @@ class Peluquero(
 
     fun getEstaDeshabilitado() : Boolean = estado.estaDeshabilitado()
 
+    fun agregarServicio(servicio : Servicio) {
+        servicios.add(servicio)
+    }
+
+    fun eliminarServicio(servicio : Servicio) {
+        servicios.remove(servicio)
+    }
+
+    fun agregarTipo(tipo:PeluqueroType) {
+        tipos.add(tipo)
+    }
+
+    fun eliminarTipo(tipo:PeluqueroType) {
+        tipos.remove(tipo)
+    }
+
     data class Builder(
             var logo: String = "",
             var nombre: String = "",

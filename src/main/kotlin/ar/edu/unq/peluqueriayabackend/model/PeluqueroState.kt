@@ -44,7 +44,6 @@ enum class PeluqueroState {
     },
     DESHABILITADO{
         override fun habilitar(peluquero: Peluquero) {
-            peluquero.fechaDeshabilitacion = null
             peluquero.estado = DISPONIBLE
         }
         override fun estaDeshabilitado() : Boolean = true
@@ -55,9 +54,6 @@ enum class PeluqueroState {
         }
         override fun ocupar(peluquero: Peluquero) {
             peluquero.estado = OCUPADO_SIN_TURNO
-        }
-        override fun desocupar(peluquero: Peluquero) {
-            peluquero.estado = DISPONIBLE
         }
         override fun deshabilitar(peluquero: Peluquero) {
             procedimientoDeshabilitar(peluquero)
