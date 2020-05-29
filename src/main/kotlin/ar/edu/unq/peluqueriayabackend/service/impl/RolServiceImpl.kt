@@ -1,5 +1,6 @@
 package ar.edu.unq.peluqueriayabackend.service.impl
 
+import ar.edu.unq.peluqueriayabackend.controller.dtos.RolType
 import ar.edu.unq.peluqueriayabackend.persistence.impl.repositories.ClienteRepository
 import ar.edu.unq.peluqueriayabackend.persistence.impl.repositories.PeluqueroRepository
 import ar.edu.unq.peluqueriayabackend.service.RolService
@@ -15,7 +16,7 @@ class RolServiceImpl(val clienteRepository: ClienteRepository, val peluqueroRepo
 
     override fun getEmail(): String {
         val authentication = SecurityContextHolder.getContext().authentication
-        return (authentication as JwtAuthenticationToken).tokenAttributes.get(NAMESPACE_URI) as String
+        return (authentication as JwtAuthenticationToken).tokenAttributes[NAMESPACE_URI] as String
     }
 
     override fun tieneRolCliente(): Boolean {
@@ -24,6 +25,15 @@ class RolServiceImpl(val clienteRepository: ClienteRepository, val peluqueroRepo
 
     override fun tieneRolPeluquero(): Boolean {
         return peluqueroRepository.existsByEmail(getEmail())
+    }
+
+    override fun getRolesByEmail(email: String): RolType {
+        val tieneRolCliente = tieneRolCliente()
+        val tieneRolPeluquero =  tieneRolPeluquero()
+        if (tieneRolCliente && tieneRolPeluquero) return RolType.DUAL
+        if (tieneRolCliente) return RolType.CLIENTE
+        if (tieneRolPeluquero) return RolType.PELUQUERO
+        return RolType.PENDIENTE_REGISTRO
     }
 
 }

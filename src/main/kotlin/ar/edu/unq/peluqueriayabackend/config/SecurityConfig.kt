@@ -35,6 +35,7 @@ class SecurityConfig(
         http.authorizeRequests()
                 .mvcMatchers("/api/public").permitAll()
                 .mvcMatchers("/api/private").authenticated()
+                .mvcMatchers("/roles").authenticated()
                 .mvcMatchers("/api/private-cliente").access(tieneRolCliente)
                 .mvcMatchers("/api/private-peluquero").access(tieneRolPeluquero)
                 .anyRequest().permitAll()
