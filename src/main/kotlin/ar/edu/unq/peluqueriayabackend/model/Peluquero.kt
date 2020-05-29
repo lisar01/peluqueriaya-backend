@@ -1,5 +1,6 @@
 package ar.edu.unq.peluqueriayabackend.model
 
+import org.hibernate.annotations.NaturalId
 import java.math.BigDecimal
 import java.time.LocalDateTime
 import javax.persistence.*
@@ -12,7 +13,9 @@ class Peluquero(
         var nombre: String,
         var corteMin: BigDecimal,
         var distanciaMax: BigDecimal = BigDecimal(0),
+        @NaturalId
         var email: String,
+        var emailOpcional:String,
         var ubicacion:Ubicacion,
         var estado: PeluqueroState,
         var descripcion: String,
@@ -90,6 +93,7 @@ class Peluquero(
             var corteMin: BigDecimal = BigDecimal(0),
             var distanciaMax: BigDecimal = BigDecimal(0),
             var email: String = "",
+            var emailOpcional:String= "",
             var ubicacion:Ubicacion = Ubicacion("",""),
             var estado: PeluqueroState = PeluqueroState.DISPONIBLE,
             var descripcion: String = "",
@@ -100,14 +104,18 @@ class Peluquero(
             var fechaDeshabilitacion: LocalDateTime? = null
     ){
         fun build():Peluquero {
-            return Peluquero(logo,nombre,corteMin,distanciaMax,email,ubicacion,estado,descripcion,tipos,servicios,ultimoLogin, vecesDeshabilitado, fechaDeshabilitacion)
+            return Peluquero(logo,nombre,corteMin,distanciaMax,email,emailOpcional,ubicacion,estado,descripcion,tipos,servicios,ultimoLogin, vecesDeshabilitado, fechaDeshabilitacion)
         }
 
         fun withLogo(logo:String) = apply { this.logo = logo }
         fun withNombre(nombre:String) = apply { this.nombre = nombre }
         fun withCorteMin(corteMin: BigDecimal) = apply { this.corteMin = corteMin }
         fun withDistanciaMax(distanciaMax: BigDecimal) = apply { this.distanciaMax = distanciaMax}
-        fun withEmail(email: String) = apply { this.email = email }
+        fun withEmail(email: String) = apply {
+            this.email = email
+            this.emailOpcional = email
+        }
+        fun withEmailOpcional(emailOpcional: String) = apply { this.emailOpcional = emailOpcional }
         fun withUbicacion(ubicacion: Ubicacion) = apply { this.ubicacion = ubicacion }
         fun withEstado(estado: PeluqueroState) = apply { this.estado = estado }
         fun withDescripcion(descripcion: String) = apply { this.descripcion = descripcion }
