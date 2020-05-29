@@ -2,6 +2,7 @@ package ar.edu.unq.peluqueriayabackend.config
 
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.context.annotation.Bean
+import org.springframework.security.config.Customizer.withDefaults
 import org.springframework.security.config.annotation.web.builders.HttpSecurity
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter
@@ -32,7 +33,7 @@ class SecurityConfig(
         val tieneRolCliente = "authenticated and @rolServiceImpl.tieneRolCliente()"
         val tieneRolPeluquero = "authenticated and @rolServiceImpl.tieneRolPeluquero()"
 
-        http.authorizeRequests()
+        http.cors(withDefaults()).authorizeRequests()
                 .mvcMatchers("/api/public").permitAll()
                 .mvcMatchers("/api/private").authenticated()
                 .mvcMatchers("/roles").authenticated()

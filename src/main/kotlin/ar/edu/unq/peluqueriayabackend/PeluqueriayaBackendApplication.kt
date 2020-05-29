@@ -34,6 +34,7 @@ class PeluqueriayaBackendApplication : WebMvcConfigurer {
 	override fun addCorsMappings(registry: CorsRegistry) {
 		registry.addMapping("/**")
 				.allowedOrigins("http://localhost:3000")
+				.allowCredentials(true)
 	}
 
 	// Corre el script .sql para crear la funcion del calculo de distancia
