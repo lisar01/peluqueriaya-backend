@@ -7,6 +7,8 @@ import ar.edu.unq.peluqueriayabackend.service.TurnoService
 import ar.edu.unq.peluqueriayabackend.service.emailSender.impl.PeluqueriaYaEmailSender
 import ar.edu.unq.peluqueriayabackend.service.geodistance.GeoDistanceServiceApi
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.data.domain.Page
+import org.springframework.data.domain.Pageable
 import org.springframework.stereotype.Service
 import java.math.BigDecimal
 import java.util.*
@@ -136,6 +138,18 @@ class TurnoServiceImpl(
         val turnoCancelado = turnoDAO.update(turno)
         peluqueriaYaEmailSender.enviarMailAlClienteQueSeCanceloElTurno(turno)
         return turnoCancelado
+    }
+
+    override fun obtenerTodosLosTurnosDelPeluquero(peluquero: Peluquero, pageable: Pageable): Page<Turno> {
+        return turnoDAO.findAllConPeluquero(peluquero,pageable)
+    }
+
+    override fun obtenerTurnosHistoricosDelPeluquero(peluquero: Peluquero, pageable: Pageable): Page<Turno> {
+        return turnoDAO.findAllConPeluqueroYEstadoFinalizado(peluquero,pageable)
+    }
+
+    override fun obtenerTurnosPendientesOConfirmadosDelPeluquero(peluquero: Peluquero, pageable: Pageable): Page<Turno> {
+        return turnoDAO.findALlConPeluqueroYEstadoPendientesOConfirmados(peluquero,pageable)
     }
 
     private fun distanciaEnRangoDelPeluqueroEstaExcedida(ubicacion: Ubicacion, peluquero:Peluquero):Boolean {

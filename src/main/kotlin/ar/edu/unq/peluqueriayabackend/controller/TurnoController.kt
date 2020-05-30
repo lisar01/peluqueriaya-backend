@@ -10,11 +10,10 @@ import ar.edu.unq.peluqueriayabackend.service.ClienteService
 import ar.edu.unq.peluqueriayabackend.service.PeluqueroService
 import ar.edu.unq.peluqueriayabackend.service.TurnoService
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.data.domain.Page
+import org.springframework.data.domain.Pageable
 import org.springframework.validation.annotation.Validated
-import org.springframework.web.bind.annotation.PostMapping
-import org.springframework.web.bind.annotation.RequestBody
-import org.springframework.web.bind.annotation.RequestMapping
-import org.springframework.web.bind.annotation.RestController
+import org.springframework.web.bind.annotation.*
 import javax.validation.Valid
 
 @RestController
@@ -25,6 +24,23 @@ class TurnoController(
         @Autowired val clienteService: ClienteService,
         @Autowired val peluqueroService: PeluqueroService)
 {
+
+    @GetMapping("/peluquero/{id}")
+    fun turnosDelPeluquero(@Valid @PathVariable("id") idPeluquero:Long, esHistorico: Boolean, pageable: Pageable) : Page<Turno> {
+        //TODO
+        // VALIDAR SI POSEE PERMISOS PARA ACCEDER A LOS TURNOS DEL PELUQUERO
+
+        val maybePeluquero = peluqueroService.get(idPeluquero)
+        if(! maybePeluquero.isPresent)
+            throw PeluqueroNoExisteException(idPeluquero)
+
+        //Si esHistorico retorna los turnos FINALIZADOS sino los turnos PENDIENTES o CONFIRMADOS
+        return if(esHistorico){
+            turnoService.obtenerTurnosHistoricosDelPeluquero(maybePeluquero.get(),pageable)
+        }else{
+            turnoService.obtenerTurnosPendientesOConfirmadosDelPeluquero(maybePeluquero.get(),pageable)
+        }
+    }
 
     @PostMapping("/pedir")
     fun pedirTurno(@Valid @RequestBody solicitudTurnoDTO: SolicitudTurnoDTO) : Turno {

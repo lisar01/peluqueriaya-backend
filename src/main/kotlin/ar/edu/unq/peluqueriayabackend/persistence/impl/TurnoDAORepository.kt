@@ -1,10 +1,13 @@
 package ar.edu.unq.peluqueriayabackend.persistence.impl
 
 import ar.edu.unq.peluqueriayabackend.model.Peluquero
+import ar.edu.unq.peluqueriayabackend.model.PeluqueroState
 import ar.edu.unq.peluqueriayabackend.model.Turno
+import ar.edu.unq.peluqueriayabackend.model.TurnoState
 import ar.edu.unq.peluqueriayabackend.persistence.TurnoDAO
 import ar.edu.unq.peluqueriayabackend.persistence.impl.repositories.TurnoRepository
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.data.domain.Page
 import org.springframework.data.domain.PageRequest
 import org.springframework.data.domain.Pageable
 import org.springframework.data.domain.Sort
@@ -59,5 +62,17 @@ class TurnoDAORepository(@Autowired val turnoRepository: TurnoRepository) : Turn
 
     override fun findAllByEstadoPendienteOEspera(peluquero: Peluquero): List<Turno> {
         return turnoRepository.findAllByEstadoPendienteOEspera(peluquero)
+    }
+
+    override fun findAllConPeluquero(peluquero: Peluquero, pageable: Pageable): Page<Turno> {
+        return turnoRepository.findAllByPeluquero(peluquero,pageable)
+    }
+
+    override fun findAllConPeluqueroYEstadoFinalizado(peluquero: Peluquero, pageable: Pageable): Page<Turno> {
+        return turnoRepository.findAllByPeluqueroAndEstadoTurno(peluquero, TurnoState.FINALIZADO, pageable)
+    }
+
+    override fun findALlConPeluqueroYEstadoPendientesOConfirmados(peluquero: Peluquero, pageable: Pageable): Page<Turno> {
+        return turnoRepository.findAllByPeluqueroAndEstadoTurnoConfirmadoOPendiente(peluquero,pageable)
     }
 }
