@@ -8,7 +8,7 @@ import java.time.LocalDateTime
 data class APIError(val message: String,
                     @JsonIgnore
                     val httpStatus: HttpStatus,
-                    val path: String,
+                    val path: String? = "",
                     val subErrors: List<String?> = listOf()) {
 
     val timestamp: LocalDateTime get() = LocalDateTime.now()
