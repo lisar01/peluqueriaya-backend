@@ -1,6 +1,5 @@
 package ar.edu.unq.peluqueriayabackend.service.impl
 
-import ar.edu.unq.peluqueriayabackend.controller.dtos.RolType
 import ar.edu.unq.peluqueriayabackend.controller.dtos.RolesDTO
 import ar.edu.unq.peluqueriayabackend.persistence.impl.repositories.ClienteRepository
 import ar.edu.unq.peluqueriayabackend.persistence.impl.repositories.PeluqueroRepository
