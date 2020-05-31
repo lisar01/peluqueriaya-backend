@@ -28,4 +28,6 @@ interface PeluqueroRepository : JpaRepository<Peluquero, Long> {
             @Param("tipos") tipos: List<PeluqueroType>?,
             @Param("tipoDeServicio") tipoDeServicio: ServicioType?,
             pageable: Pageable): Page<Peluquero>
+
+    fun existsByEmail(email: String): Boolean
 }

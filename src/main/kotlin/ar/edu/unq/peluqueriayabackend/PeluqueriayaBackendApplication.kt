@@ -34,6 +34,7 @@ class PeluqueriayaBackendApplication : WebMvcConfigurer {
 	override fun addCorsMappings(registry: CorsRegistry) {
 		registry.addMapping("/**")
 				.allowedOrigins("http://localhost:3000")
+				.allowCredentials(true)
 	}
 
 	// Corre el script .sql para crear la funcion del calculo de distancia
@@ -70,7 +71,7 @@ class PeluqueriayaBackendApplication : WebMvcConfigurer {
 		val clientePepe = Cliente.Builder().
 							withNombre("Pepe").
 							withApellido("Grillo").
-							withEmail("cassanojoseluis@gmail.com").
+							withEmail("lisar.3467@gmail.com").
 							withImgPerfil("https://vignette.wikia.nocookie.net/disney/images/f/f0/Profile_-_Jiminy_Cricket.jpeg/revision/latest?cb=20190312063605").
 							withUbicacion(Ubicacion("-34.721999", "-58.250447")).
 							withNroTelefono("1100001111").
@@ -84,7 +85,7 @@ class PeluqueriayaBackendApplication : WebMvcConfigurer {
 				withTipos(mutableSetOf(PeluqueroType.HOMBRE)).
 				withCorteMin(BigDecimal(250)).
 				withDistanciaMax(BigDecimal(6)).
-				withEmail("barbamail@pepe.com").
+				withEmail("lisar.3467@gmail.com").
 				withUbicacion(Ubicacion("-34.706416", "-58.278559")).
 				withEstado(PeluqueroState.DISPONIBLE).
 				build()
@@ -96,7 +97,7 @@ class PeluqueriayaBackendApplication : WebMvcConfigurer {
 				withDescripcion("La mejor peluquera de zona sur!").
 				withTipos(mutableSetOf(PeluqueroType.MUJER, PeluqueroType.KIDS)).
 				withCorteMin(BigDecimal(250)).withDistanciaMax(BigDecimal(7)).
-				withEmail("lapelu@gmail.com").
+		        withEmail("cassanojoseluis@gmail.com").
 				withUbicacion(Ubicacion("-34.725524", "-58.244012")).
 				withEstado(PeluqueroState.DISPONIBLE).
 				build()

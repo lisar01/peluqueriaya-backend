@@ -8,6 +8,7 @@ import ar.edu.unq.peluqueriayabackend.model.ServicioInfo
 import ar.edu.unq.peluqueriayabackend.model.Turno
 import ar.edu.unq.peluqueriayabackend.service.ClienteService
 import ar.edu.unq.peluqueriayabackend.service.PeluqueroService
+import ar.edu.unq.peluqueriayabackend.service.RolService
 import ar.edu.unq.peluqueriayabackend.service.TurnoService
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.data.domain.Page
@@ -20,6 +21,7 @@ import javax.validation.Valid
 @RequestMapping("/turno")
 @Validated
 class TurnoController(
+        val rolService: RolService,
         @Autowired val turnoService: TurnoService,
         @Autowired val clienteService: ClienteService,
         @Autowired val peluqueroService: PeluqueroService)
@@ -44,13 +46,8 @@ class TurnoController(
 
     @PostMapping("/pedir")
     fun pedirTurno(@Valid @RequestBody solicitudTurnoDTO: SolicitudTurnoDTO) : Turno {
-
-        val mayBeClient = clienteService.get(solicitudTurnoDTO.idCliente)
-
-        //TODO
-        // CHEQUEAR QUE EL CLIENTE AUTENTICADO SEA EL MISMO QUE EL CLIENTE
-        if (! mayBeClient.isPresent )
-            throw ClienteNoExisteException(solicitudTurnoDTO.idCliente)
+        val clienteId = rolService.getEmail()
+        val mayBeClient = clienteService.getByEmail(clienteId)
 
         val maybePeluquero = peluqueroService.get(solicitudTurnoDTO.idPeluquero)
 
