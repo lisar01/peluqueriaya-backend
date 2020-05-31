@@ -68,15 +68,25 @@ class PeluqueriayaBackendApplication : WebMvcConfigurer {
     fun createFakeData(peluqueroRepository: PeluqueroRepository, servicioRepository: ServicioRepository, clienteRepository: ClienteRepository) {
         println("|**!!WARNING!!**| Metodo createFakeData(..) en clase PeluqueriayaBackendApplication no comentado. Esto puede generar errores si los datos ya existen")
 
-		val clientePepe = Cliente.Builder().
-							withNombre("Pepe").
-							withApellido("Grillo").
+		val clienteLalo = Cliente.Builder().
+							withNombre("Lalo").
+							withApellido("Landa").
 							withEmail("lisar.3467@gmail.com").
 							withImgPerfil("https://vignette.wikia.nocookie.net/disney/images/f/f0/Profile_-_Jiminy_Cricket.jpeg/revision/latest?cb=20190312063605").
 							withUbicacion(Ubicacion("-34.721999", "-58.250447")).
 							withNroTelefono("1100001111").
 							build()
 
+		val clientePepe = Cliente.Builder().
+				withNombre("Pepe").
+				withApellido("Grillo").
+				withEmail("cassanojoseluis97@gmail.com").
+				withImgPerfil("https://www.impulsio.com.ar/wp-content/uploads/2014/06/Se%C3%B1or-X.jpg").
+				withUbicacion(Ubicacion("-34.721999", "-58.250447")).
+				withNroTelefono("1100001112").
+				build()
+
+		clienteRepository.save(clienteLalo)
 		clienteRepository.save(clientePepe)
 
         val peluquero1 = Peluquero.Builder().
@@ -109,7 +119,7 @@ class PeluqueriayaBackendApplication : WebMvcConfigurer {
 				withTipos(mutableSetOf(PeluqueroType.MUJER, PeluqueroType.KIDS)).
 				withCorteMin(BigDecimal(400)).
 				withDistanciaMax(BigDecimal(6)).
-				withEmail("pepe@yahoo.com").
+				withEmail("cassanojoseluis97@gmail.com").
 				withUbicacion(Ubicacion("-34.722186", "-58.256462")).
 				withEstado(PeluqueroState.DISPONIBLE).
 				build()

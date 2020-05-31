@@ -2,11 +2,13 @@ package ar.edu.unq.peluqueriayabackend.persistence.impl.repositories
 
 import ar.edu.unq.peluqueriayabackend.model.Peluquero
 import ar.edu.unq.peluqueriayabackend.model.Turno
+import ar.edu.unq.peluqueriayabackend.model.TurnoState
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
 import org.springframework.data.domain.Sort
 import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.data.jpa.repository.Query
+import org.springframework.data.repository.query.Param
 import org.springframework.stereotype.Repository
 import java.util.*
 
@@ -28,4 +30,16 @@ interface TurnoRepository : JpaRepository<Turno, Long> {
     @Query("SELECT t FROM Turno t WHERE t.peluquero = ?1 AND (t.estado = 0 OR t.estado = 4)")
     fun findAllByEstadoPendienteOEspera(peluquero: Peluquero): List<Turno>
 
+    fun findAllByPeluquero(peluquero: Peluquero, pageable: Pageable): Page<Turno>
+
+    @Query("SELECT t FROM Turno t WHERE t.peluquero = :paramPeluquero AND t.estado = :paramEstado")
+    fun findAllByPeluqueroAndEstadoTurno(
+            @Param("paramPeluquero") peluquero: Peluquero,
+            @Param("paramEstado") estado: TurnoState,
+            pageable: Pageable): Page<Turno>
+
+    @Query("SELECT t FROM Turno t WHERE t.peluquero = :paramPeluquero AND (t.estado = 0 OR t.estado = 1)")
+    fun findAllByPeluqueroAndEstadoTurnoConfirmadoOPendiente(
+            @Param("paramPeluquero") peluquero: Peluquero,
+            pageable: Pageable): Page<Turno>
 }

@@ -42,6 +42,10 @@ class PeluqueroServiceImpl(
         return peluqueroDAO.update(t)
     }
 
+    override fun getByEmail(emailPeluquero: String): Optional<Peluquero> {
+        return peluqueroDAO.getByEmail(emailPeluquero)
+    }
+
     //No va con @transactional porque no persiste nada, solo consulta datos
     override fun buscar(ubicacion: Ubicacion, filtro: Filtro?, pageable: Pageable): Page<Peluquero> {
                 return peluqueroDAO.findAllByUbicacionCercanaAndNombreLikeAndContainsTipoAndContainsTipoDeServicion(5.3,

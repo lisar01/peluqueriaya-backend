@@ -9,6 +9,7 @@ import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.data.jpa.repository.Query
 import org.springframework.data.repository.query.Param
 import org.springframework.stereotype.Repository
+import java.util.*
 
 const val peluqueroTieneEstadoDisponibleOOcupado = "(p.estado = 0 OR p.estado = 1)"
 const val esPeluqueroCercano = "distance(cast(p.ubicacion.latitude as double),cast(p.ubicacion.longitude as double), :latitud, :longitud) <= :distanciaMaxima"
@@ -30,4 +31,5 @@ interface PeluqueroRepository : JpaRepository<Peluquero, Long> {
             pageable: Pageable): Page<Peluquero>
 
     fun existsByEmail(email: String): Boolean
+    fun findByEmail(emailPeluquero: String): Optional<Peluquero>
 }

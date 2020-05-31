@@ -76,6 +76,10 @@ class Turno (
 
     fun getEstaEsperando():Boolean = estado.estaEsperando()
 
+    fun getClienteEmail():String = cliente.email
+
+    fun getClienteFullName():String = cliente.getFullName()
+
     data class Builder(
             var peluquero: Peluquero = Peluquero.Builder().withCorteMin(BigDecimal.ZERO).build(),
             var cliente: Cliente = Cliente.Builder().build(),
