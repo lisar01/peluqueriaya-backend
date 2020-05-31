@@ -33,13 +33,12 @@ class SecurityConfig(
         val tieneRolCliente = "authenticated and @rolServiceImpl.tieneRolCliente()"
         val tieneRolPeluquero = "authenticated and @rolServiceImpl.tieneRolPeluquero()"
 
+        //TODO poner las otras rutas
         http.cors(withDefaults()).authorizeRequests()
-                .mvcMatchers("/api/public").permitAll()
-                .mvcMatchers("/api/private").authenticated()
+                .mvcMatchers("/mapas/**","/servicio/tipos", "/peluquero/search", "/peluquero/{id}").permitAll()
                 .mvcMatchers("/roles").authenticated()
-                .mvcMatchers("/api/private-cliente").access(tieneRolCliente)
-                .mvcMatchers("/api/private-peluquero").access(tieneRolPeluquero)
-                .anyRequest().permitAll()
+                .mvcMatchers("/turno/pedir", "/turno/cancelar").access(tieneRolCliente)
+                .anyRequest().denyAll()
                 .and()
                 .oauth2ResourceServer().jwt()
     }

@@ -5,7 +5,6 @@ import javax.validation.constraints.NotNull
 
 data class SolicitudTurnoDTO (
         @NotNull val idPeluquero:Long,
-        @NotNull val idCliente:Long,
         @NotNull val ubicacion: Ubicacion,
         val serviciosSolicitadosId: MutableList<Long> = mutableListOf()
 )
