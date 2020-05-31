@@ -1,9 +1,9 @@
 package ar.edu.unq.peluqueriayabackend.controller
 
-import ar.edu.unq.peluqueriayabackend.controller.dtos.TurnoDTO
 import ar.edu.unq.peluqueriayabackend.controller.dtos.SolicitudTurnoDTO
-import ar.edu.unq.peluqueriayabackend.controller.dtos.ClienteTurnoDTO
 import ar.edu.unq.peluqueriayabackend.exception.*
+import ar.edu.unq.peluqueriayabackend.model.Cliente
+import ar.edu.unq.peluqueriayabackend.model.Peluquero
 import ar.edu.unq.peluqueriayabackend.model.ServicioInfo
 import ar.edu.unq.peluqueriayabackend.model.Turno
 import ar.edu.unq.peluqueriayabackend.service.ClienteService
@@ -15,6 +15,7 @@ import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
 import org.springframework.validation.annotation.Validated
 import org.springframework.web.bind.annotation.*
+import java.util.*
 import javax.validation.Valid
 
 @RestController
@@ -27,14 +28,11 @@ class TurnoController(
         @Autowired val peluqueroService: PeluqueroService)
 {
 
-    @GetMapping("/peluquero/{id}")
-    fun turnosDelPeluquero(@Valid @PathVariable("id") idPeluquero:Long, esHistorico: Boolean, pageable: Pageable) : Page<Turno> {
-        //TODO
-        // VALIDAR SI POSEE PERMISOS PARA ACCEDER A LOS TURNOS DEL PELUQUERO
-
-        val maybePeluquero = peluqueroService.get(idPeluquero)
+    @GetMapping("/peluquero")
+    fun turnosDelPeluquero(@Valid esHistorico: Boolean, pageable: Pageable) : Page<Turno> {
+        val maybePeluquero = getMaybePeluqueroByJWT()
         if(! maybePeluquero.isPresent)
-            throw PeluqueroNoExisteException(idPeluquero)
+            throw PeluqueroNoExisteException()
 
         //Si esHistorico retorna los turnos FINALIZADOS sino los turnos PENDIENTES o CONFIRMADOS
         return if(esHistorico){
@@ -46,13 +44,12 @@ class TurnoController(
 
     @PostMapping("/pedir")
     fun pedirTurno(@Valid @RequestBody solicitudTurnoDTO: SolicitudTurnoDTO) : Turno {
-        val clienteId = rolService.getEmail()
-        val mayBeClient = clienteService.getByEmail(clienteId)
+        val mayBeClient = getMaybeClienteByJWT()
 
         val maybePeluquero = peluqueroService.get(solicitudTurnoDTO.idPeluquero)
 
         if(! maybePeluquero.isPresent)
-            throw PeluqueroNoExisteException(solicitudTurnoDTO.idPeluquero)
+            throw PeluqueroNoExisteException()
 
         val serviciosSolicitadosInfo = maybePeluquero.get().servicios.filter {
            solicitudTurnoDTO.serviciosSolicitadosId.contains(it.id)
@@ -70,32 +67,41 @@ class TurnoController(
                 solicitudTurnoDTO.ubicacion)
     }
 
-    @PostMapping("/confirmar")
-    fun confirmarTurno(@Valid @RequestBody turnoDTO: TurnoDTO):Turno {
-
-        return turnoService.confirmarTurno(validateTurnoDTOYPeluquero(turnoDTO))
+    @PostMapping("/confirmar/{idTurno}")
+    fun confirmarTurno(@Valid @PathVariable("idTurno") idTurno: Long):Turno {
+        return turnoService.confirmarTurno(validarIdTurnoYPeluquero(idTurno))
     }
 
-    @PostMapping("/finalizar")
-    fun finalizarTurno(@Valid @RequestBody turnoDTO: TurnoDTO):Turno {
-        return turnoService.finalizarTurno(validateTurnoDTOYPeluquero(turnoDTO))
+    @PostMapping("/finalizar/{idTurno}")
+    fun finalizarTurno(@Valid @PathVariable("idTurno") idTurno: Long):Turno {
+        return turnoService.finalizarTurno(validarIdTurnoYPeluquero(idTurno))
     }
 
-    @PostMapping("/cancelar")
-    fun cancelarTurno(@Valid @RequestBody clienteTurnoDTO: ClienteTurnoDTO) : Turno {
-        return turnoService.cancelarTurno(validateUserCancelarTurnoDTO(clienteTurnoDTO))
+    @PostMapping("/cancelar/{idTurno}")
+    fun cancelarTurno(@Valid @PathVariable("idTurno") idTurno: Long) : Turno {
+        return turnoService.cancelarTurno(validarIdTurnoYCliente(idTurno))
     }
 
-    private fun validateUserCancelarTurnoDTO(clienteTurnoDTO: ClienteTurnoDTO) : Turno {
-        val maybeCliente = clienteService.get(clienteTurnoDTO.clienteId)
+    private fun getMaybePeluqueroByJWT(): Optional<Peluquero> {
+        val emailPeluquero = rolService.getEmail()
+        return peluqueroService.getByEmail(emailPeluquero)
+    }
+
+    private fun getMaybeClienteByJWT(): Optional<Cliente> {
+        val emailCliente = rolService.getEmail()
+        return clienteService.getByEmail(emailCliente)
+    }
+
+    private fun validarIdTurnoYCliente(idTurno: Long) : Turno {
+        val maybeCliente = getMaybeClienteByJWT()
         if(! maybeCliente.isPresent)
-            throw ClienteNoExisteException(clienteTurnoDTO.clienteId)
+            throw ClienteNoExisteException()
 
-        val maybeTurno = turnoService.get(clienteTurnoDTO.turnoId)
+        val maybeTurno = turnoService.get(idTurno)
         if(! maybeTurno.isPresent)
-            throw TurnoNoExisteException(clienteTurnoDTO.turnoId)
+            throw TurnoNoExisteException(idTurno)
 
-        if(maybeTurno.get().getClienteId() != clienteTurnoDTO.clienteId)
+        if(maybeTurno.get().getClienteId() != maybeCliente.get().id)
             throw Unauthorized("No tiene acceso a este recurso")
 
         if(! maybeTurno.get().getEstaEsperando())
@@ -104,16 +110,16 @@ class TurnoController(
         return maybeTurno.get()
     }
 
-    private fun validateTurnoDTOYPeluquero(turnoDTO:TurnoDTO) : Turno{
-        val maybePeluquero = peluqueroService.get(turnoDTO.peluqueroId)
+    private fun validarIdTurnoYPeluquero(idTurno: Long) : Turno{
+        val maybePeluquero = getMaybePeluqueroByJWT()
         if(! maybePeluquero.isPresent)
-            throw PeluqueroNoExisteException(turnoDTO.peluqueroId)
+            throw PeluqueroNoExisteException()
 
-        val maybeTurno = turnoService.get(turnoDTO.turnoId)
+        val maybeTurno = turnoService.get(idTurno)
         if(! maybeTurno.isPresent)
-            throw TurnoNoExisteException(turnoDTO.turnoId)
+            throw TurnoNoExisteException(idTurno)
 
-        if(maybeTurno.get().getPeluqueroId()!! != turnoDTO.peluqueroId)
+        if(maybeTurno.get().getPeluqueroId()!! != maybePeluquero.get().id)
             throw Unauthorized("No tiene acceso a este recurso")
 
         return maybeTurno.get()

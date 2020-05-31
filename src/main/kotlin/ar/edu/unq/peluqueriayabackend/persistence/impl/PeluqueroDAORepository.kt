@@ -38,4 +38,8 @@ class PeluqueroDAORepository(@Autowired val peluqueroRepository: PeluqueroReposi
     override fun findAllByUbicacionCercanaAndNombreLikeAndContainsTipoAndContainsTipoDeServicion(distanciaMaxima: Double, longitud: Double, latitud: Double, nombre: String?, tipos: List<PeluqueroType>?, tipoDeServicio: ServicioType?, pageable: Pageable): Page<Peluquero> {
         return peluqueroRepository.findAllByUbicacionCercanaAndNombreLikeAndContainsTipoAndContainsTipoDeServicion(distanciaMaxima, longitud, latitud, nombre, tipos, tipoDeServicio, pageable)
     }
+
+    override fun getByEmail(emailPeluquero: String): Optional<Peluquero> {
+        return peluqueroRepository.findByEmail(emailPeluquero)
+    }
 }
