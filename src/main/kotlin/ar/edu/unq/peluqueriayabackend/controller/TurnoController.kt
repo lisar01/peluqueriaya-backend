@@ -1,6 +1,7 @@
 package ar.edu.unq.peluqueriayabackend.controller
 
 import ar.edu.unq.peluqueriayabackend.controller.dtos.SolicitudTurnoDTO
+import ar.edu.unq.peluqueriayabackend.controller.dtos.TurnoDTO
 import ar.edu.unq.peluqueriayabackend.exception.*
 import ar.edu.unq.peluqueriayabackend.model.Cliente
 import ar.edu.unq.peluqueriayabackend.model.Peluquero
@@ -67,19 +68,19 @@ class TurnoController(
                 solicitudTurnoDTO.ubicacion)
     }
 
-    @PostMapping("/confirmar/{idTurno}")
-    fun confirmarTurno(@Valid @PathVariable("idTurno") idTurno: Long):Turno {
-        return turnoService.confirmarTurno(validarIdTurnoYPeluquero(idTurno))
+    @PostMapping("/confirmar")
+    fun confirmarTurno(@Valid @RequestBody turnoDTO: TurnoDTO):Turno {
+        return turnoService.confirmarTurno(validarIdTurnoYPeluquero(turnoDTO.idTurno))
     }
 
-    @PostMapping("/finalizar/{idTurno}")
-    fun finalizarTurno(@Valid @PathVariable("idTurno") idTurno: Long):Turno {
-        return turnoService.finalizarTurno(validarIdTurnoYPeluquero(idTurno))
+    @PostMapping("/finalizar")
+    fun finalizarTurno(@Valid @RequestBody turnoDTO: TurnoDTO):Turno {
+        return turnoService.finalizarTurno(validarIdTurnoYPeluquero(turnoDTO.idTurno))
     }
 
-    @PostMapping("/cancelar/{idTurno}")
-    fun cancelarTurno(@Valid @PathVariable("idTurno") idTurno: Long) : Turno {
-        return turnoService.cancelarTurno(validarIdTurnoYCliente(idTurno))
+    @PostMapping("/cancelar")
+    fun cancelarTurno(@Valid @RequestBody turnoDTO: TurnoDTO) : Turno {
+        return turnoService.cancelarTurno(validarIdTurnoYCliente(turnoDTO.idTurno))
     }
 
     private fun getMaybePeluqueroByJWT(): Optional<Peluquero> {
