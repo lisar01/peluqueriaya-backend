@@ -47,13 +47,12 @@ class SecurityConfig(
                         "/peluquero/search",
                         "/peluquero/{id}").permitAll()
                 .mvcMatchers("/roles", "/cliente", "/peluquero").authenticated()
-                .mvcMatchers("/turno/pedir", "/turno/cancelar/{idTurno}").access(tieneRolCliente)
+                .mvcMatchers("/turno/pedir", "/turno/cancelar").access(tieneRolCliente)
                 .mvcMatchers(
                         "/peluquero/desconectar",
                         "/peluquero/conectar",
                         "/turno/peluquero",
-                        "/turno/finalizar/{idTurno}",
-                        "/turno/confirmar/{idTurno}").access(tieneRolPeluquero)
+                        "/turno/finalizar","/turno/confirmar").access(tieneRolPeluquero)
                 .anyRequest().denyAll()
                 .and()
                 .oauth2ResourceServer().jwt()
