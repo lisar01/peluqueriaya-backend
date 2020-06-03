@@ -1,21 +1,33 @@
 package ar.edu.unq.peluqueriayabackend.model
 
+import com.fasterxml.jackson.annotation.JsonIgnore
 import org.hibernate.annotations.NaturalId
+import org.hibernate.validator.constraints.Length
+import org.hibernate.validator.constraints.URL
 import javax.persistence.Entity
 import javax.persistence.GeneratedValue
 import javax.persistence.Id
 import javax.persistence.Table
+import javax.validation.constraints.Email
+import javax.validation.constraints.Pattern
 
 @Suppress("JpaDataSourceORMInspection")
 @Entity
 @Table(name = "clientes")
 class Cliente(
+        @field:URL(message = "{imgPerfil.invalido}")
         var imgPerfil: String,
+        @field:Length(min = 2, max=30, message = "{nombre.largo}")
         var nombre:String,
+        @field:Length(min = 2, max=30, message = "{apellido.largo}")
         var apellido:String,
         @NaturalId
-        var email:String,
+        @field:JsonIgnore
+        var email:String?,
+        @field:Email(message = "{email.invalido}")
         var emailOpcional:String,
+        @field:Pattern(regexp = "^(?:(?:00)?549?)?0?(?:11|[2368]\\d)(?:(?=\\d{0,2}15)\\d{2})??\\d{8}$",
+                message = "{nroTelefono.invalido}")
         var nroTelefono:String,
         var ubicacion: Ubicacion,
         var estado: ClienteState = ClienteState.ACTIVO,
