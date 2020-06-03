@@ -35,11 +35,25 @@ class SecurityConfig(
 
         //TODO poner las otras rutas
         http.cors(withDefaults()).authorizeRequests()
-                .mvcMatchers("/swagger-ui.html/**", "/configuration/**","/swagger-resources/**", "/v2/api-docs","/webjars/**").permitAll()
-                .mvcMatchers("/mapas/**","/servicio/tipos", "/peluquero/search", "/peluquero/{id}").permitAll()
-                .mvcMatchers("/roles").authenticated()
+                .mvcMatchers(
+                        "/swagger-ui.html/**",
+                        "/configuration/**",
+                        "/swagger-resources/**",
+                        "/v2/api-docs",
+                        "/webjars/**").permitAll()
+                .mvcMatchers(
+                        "/mapas/**",
+                        "/servicio/tipos",
+                        "/peluquero/search",
+                        "/peluquero/{id}").permitAll()
+                .mvcMatchers("/roles", "/cliente", "/peluquero").authenticated()
                 .mvcMatchers("/turno/pedir", "/turno/cancelar/{idTurno}").access(tieneRolCliente)
-                .mvcMatchers("/peluquero/desconectar","/peluquero/conectar","/turno/peluquero","/turno/finalizar/{idTurno}","/turno/confirmar/{idTurno}").access(tieneRolPeluquero)
+                .mvcMatchers(
+                        "/peluquero/desconectar",
+                        "/peluquero/conectar",
+                        "/turno/peluquero",
+                        "/turno/finalizar/{idTurno}",
+                        "/turno/confirmar/{idTurno}").access(tieneRolPeluquero)
                 .anyRequest().denyAll()
                 .and()
                 .oauth2ResourceServer().jwt()

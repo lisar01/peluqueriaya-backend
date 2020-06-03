@@ -76,7 +76,7 @@ class Turno (
 
     fun getEstaEsperando():Boolean = estado.estaEsperando()
 
-    fun getClienteEmail():String = cliente.email
+    fun getClienteEmail():String = cliente.emailOpcional
 
     fun getClienteFullName():String = cliente.getFullName()
 
