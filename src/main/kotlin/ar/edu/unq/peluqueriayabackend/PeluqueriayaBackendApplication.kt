@@ -117,7 +117,7 @@ class PeluqueriayaBackendApplication : WebMvcConfigurer {
 				withNombre("Pepe el barbero").
 				withDescripcion("Soy pepe grillo el peluquero con los mejores cortes!").
 				withTipos(mutableSetOf(PeluqueroType.MUJER, PeluqueroType.KIDS)).
-				withCorteMin(BigDecimal(400)).
+				withCorteMin(BigDecimal(241)).
 				withDistanciaMax(BigDecimal(6)).
 				withEmail("cassanojoseluis97@gmail.com").
 				withUbicacion(Ubicacion("-34.722186", "-58.256462")).
@@ -130,7 +130,7 @@ class PeluqueriayaBackendApplication : WebMvcConfigurer {
 				withTipos(mutableSetOf(PeluqueroType.HOMBRE, PeluqueroType.KIDS)).
 				withCorteMin(BigDecimal(100)).
 				withDistanciaMax(BigDecimal(10)).
-				withEmail("lisar.3467@gmail.com").
+		        withEmail("laotralisa@gmail.com").
 				withUbicacion(Ubicacion("-38.005004", "-57.542606")).
 				withEstado(PeluqueroState.DISPONIBLE).
 				build()
@@ -163,7 +163,7 @@ class PeluqueriayaBackendApplication : WebMvcConfigurer {
 		withNombre("Ziso").
 		withDescripcion("Peluqueria Unisex, lo que quieras lo tenes!").
 		withTipos(mutableSetOf(PeluqueroType.HOMBRE, PeluqueroType.MUJER)).
-		withCorteMin(BigDecimal(9000)).
+		withCorteMin(BigDecimal(145)).
 		withDistanciaMax(BigDecimal(7.2)).
 		withEmail("zisoooo@gmail.com").
 		withUbicacion(Ubicacion("-34.722486", "-58.256462")).

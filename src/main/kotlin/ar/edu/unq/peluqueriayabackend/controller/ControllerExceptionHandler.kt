@@ -1,8 +1,10 @@
 package ar.edu.unq.peluqueriayabackend.controller
 
 import ar.edu.unq.peluqueriayabackend.exception.APIError
+import com.fasterxml.jackson.module.kotlin.MissingKotlinParameterException
 import org.springframework.http.HttpStatus
 import org.springframework.validation.BindException
+import org.springframework.web.bind.MethodArgumentNotValidException
 import org.springframework.web.bind.annotation.ExceptionHandler
 import org.springframework.web.bind.annotation.ResponseStatus
 import org.springframework.web.bind.annotation.RestControllerAdvice
@@ -32,6 +34,17 @@ class ControllerExceptionHandler {
     @ResponseStatus(HttpStatus.NOT_FOUND)
     fun handleNoHandlerFoundException(response: HttpServletResponse?, ex: NoHandlerFoundException): APIError {
         return APIError("La pagina solicitada no existe", HttpStatus.NOT_FOUND, ex.requestURL)
+    }
+
+    @ExceptionHandler(MissingKotlinParameterException::class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST, reason="Petición incompleta, faltan campos obligatorios")
+    fun handleMissingKotlinParameterException(e: MissingKotlinParameterException) {}
+
+    @ExceptionHandler(MethodArgumentNotValidException::class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    fun handlefunMethodArgumentNotValidException(ex: MethodArgumentNotValidException): APIError {
+        val subErrors = ex.bindingResult.fieldErrors.map { it.defaultMessage }
+        return APIError("Campos invalidos", HttpStatus.BAD_REQUEST, "", subErrors)
     }
 
 }
