@@ -94,7 +94,7 @@ class PeluqueriayaBackendApplication : WebMvcConfigurer {
 				withDescripcion("El mejor barbero de zona sur!").
 				withTipos(mutableSetOf(PeluqueroType.HOMBRE)).
 				withCorteMin(BigDecimal(250)).
-				withDistanciaMax(BigDecimal(6)).
+				withDistanciaMax(BigDecimal(1)).
 				withEmail("barbamdq@mdq.com").
 				withUbicacion(Ubicacion("-34.706416", "-58.278559")).
 				withEstado(PeluqueroState.DISPONIBLE).
