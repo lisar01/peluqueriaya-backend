@@ -49,6 +49,7 @@ class SecurityConfig(
                 .mvcMatchers("/roles", "/cliente", "/peluquero").authenticated()
                 .mvcMatchers("/turno/pedir", "/turno/cancelar").access(tieneRolCliente)
                 .mvcMatchers(
+                        "/peluquero",
                         "/peluquero/desconectar",
                         "/peluquero/conectar",
                         "/turno/peluquero",

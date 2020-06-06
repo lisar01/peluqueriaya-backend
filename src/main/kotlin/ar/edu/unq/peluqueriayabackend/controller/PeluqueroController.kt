@@ -39,6 +39,15 @@ class PeluqueroController(
         return maybePeluquero.get()
     }
 
+    @GetMapping
+    fun getPeluqueroLogged() : Peluquero {
+        val maybePeluquero = getMaybePeluqueroByJWT()
+        if(! maybePeluquero.isPresent)
+            throw PeluqueroNoExisteException()
+
+        return maybePeluquero.get()
+    }
+
     @PostMapping
     @ResponseStatus(HttpStatus.OK, reason = "Cuenta de peluquero creada exitosamente!")
     fun guardar(@Valid @RequestBody peluqueroDTO: PeluqueroDTO) {

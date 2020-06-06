@@ -30,6 +30,9 @@ class PeluqueriayaBackendApplication : WebMvcConfigurer {
 	override fun addResourceHandlers(registry: ResourceHandlerRegistry) {
 		registry.addResourceHandler("swagger-ui.html")
 				.addResourceLocations("classpath:/META-INF/resources/")
+
+		registry.addResourceHandler("/webjars/**")
+				.addResourceLocations("classpath:/META-INF/resources/webjars/")
 	}
 	override fun addCorsMappings(registry: CorsRegistry) {
 		registry.addMapping("/**")
@@ -94,7 +97,7 @@ class PeluqueriayaBackendApplication : WebMvcConfigurer {
 				withDescripcion("El mejor barbero de zona sur!").
 				withTipos(mutableSetOf(PeluqueroType.HOMBRE)).
 				withCorteMin(BigDecimal(250)).
-				withDistanciaMax(BigDecimal(6)).
+				withDistanciaMax(BigDecimal(1)).
 				withEmail("barbamdq@mdq.com").
 				withUbicacion(Ubicacion("-34.706416", "-58.278559")).
 				withEstado(PeluqueroState.DISPONIBLE).
