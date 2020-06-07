@@ -1,16 +1,14 @@
 package ar.edu.unq.peluqueriayabackend.controller
 
 import ar.edu.unq.peluqueriayabackend.controller.dtos.SolicitudTurnoDTO
+import ar.edu.unq.peluqueriayabackend.controller.dtos.TurnoConDireccionDTO
 import ar.edu.unq.peluqueriayabackend.controller.dtos.TurnoDTO
 import ar.edu.unq.peluqueriayabackend.exception.*
 import ar.edu.unq.peluqueriayabackend.model.Cliente
 import ar.edu.unq.peluqueriayabackend.model.Peluquero
 import ar.edu.unq.peluqueriayabackend.model.ServicioInfo
 import ar.edu.unq.peluqueriayabackend.model.Turno
-import ar.edu.unq.peluqueriayabackend.service.ClienteService
-import ar.edu.unq.peluqueriayabackend.service.PeluqueroService
-import ar.edu.unq.peluqueriayabackend.service.RolService
-import ar.edu.unq.peluqueriayabackend.service.TurnoService
+import ar.edu.unq.peluqueriayabackend.service.*
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
@@ -24,23 +22,27 @@ import javax.validation.Valid
 @Validated
 class TurnoController(
         val rolService: RolService,
+        val mapasService: MapasService,
         @Autowired val turnoService: TurnoService,
         @Autowired val clienteService: ClienteService,
         @Autowired val peluqueroService: PeluqueroService)
 {
 
     @GetMapping("/peluquero")
-    fun turnosDelPeluquero(@Valid esHistorico: Boolean, pageable: Pageable) : Page<Turno> {
+    fun turnosDelPeluquero(@Valid esHistorico: Boolean, pageable: Pageable) : Page<TurnoConDireccionDTO> {
         val maybePeluquero = getMaybePeluqueroByJWT()
         if(! maybePeluquero.isPresent)
             throw PeluqueroNoExisteException()
 
         //Si esHistorico retorna los turnos FINALIZADOS sino los turnos PENDIENTES o CONFIRMADOS
-        return if(esHistorico){
+        val turnos = if(esHistorico){
             turnoService.obtenerTurnosHistoricosDelPeluquero(maybePeluquero.get(),pageable)
         }else{
             turnoService.obtenerTurnosPendientesOConfirmadosDelPeluquero(maybePeluquero.get(),pageable)
         }
+
+        //Se agrega la direccion de cada turno
+        return turnos.map { turnoConDireccionDeLaUbicacion(it) }
     }
 
     @PostMapping("/pedir")
@@ -124,5 +126,11 @@ class TurnoController(
             throw Unauthorized("No tiene acceso a este recurso")
 
         return maybeTurno.get()
+    }
+
+    private fun turnoConDireccionDeLaUbicacion(turno:Turno) : TurnoConDireccionDTO {
+        val request = mapasService.obtenerUbicacionConCoords("${turno.ubicacionDelTurno.latitude},${turno.ubicacionDelTurno.longitude}").block()
+        val direccion = request!!.items[0].title
+        return TurnoConDireccionDTO.Builder().withTurno(turno).withDireccionDelTurno(direccion).build()
     }
 }
