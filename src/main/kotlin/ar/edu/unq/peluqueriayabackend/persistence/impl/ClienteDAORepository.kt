@@ -11,6 +11,8 @@ import java.util.*
 @Service
 class ClienteDAORepository(@Autowired val clienteRepository: ClienteRepository) : ClienteDAO {
 
+    override fun getByEmail(email: String): Optional<Cliente> = clienteRepository.findByEmail(email)
+
     override fun get(id: Long): Optional<Cliente> {
         return clienteRepository.findById(id)
     }

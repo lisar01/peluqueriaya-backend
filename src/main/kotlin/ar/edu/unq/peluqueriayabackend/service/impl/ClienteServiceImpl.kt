@@ -11,6 +11,9 @@ import javax.transaction.Transactional
 @Service
 class ClienteServiceImpl(@Autowired val clienteDAO: ClienteDAO) : ClienteService {
 
+    @Transactional
+    override fun getByEmail(email: String): Optional<Cliente> = clienteDAO.getByEmail(email)
+
     override fun get(id: Long): Optional<Cliente> {
         return clienteDAO.get(id)
     }
