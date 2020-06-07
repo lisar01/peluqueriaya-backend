@@ -62,7 +62,7 @@ class TurnoConDireccionDTO(
         fun build() : TurnoConDireccionDTO{
             return TurnoConDireccionDTO(peluquero, cliente,serviciosSolicitadosInfo, fechaInicio,
                 fechaCancelacion, fechaPendiente, fechaConfirmacion, fechaFin, estado, puntaje,
-                    corteMinInfo, ubicacionDelTurno, direccionDelTurno)
+                    corteMinInfo, ubicacionDelTurno, direccionDelTurno, id)
         }
 
         fun withTurno(turno: Turno) = apply {
@@ -78,6 +78,7 @@ class TurnoConDireccionDTO(
             puntaje = turno.puntaje
             corteMinInfo = turno.corteMinInfo
             ubicacionDelTurno = turno.ubicacionDelTurno
+            id = turno.id
         }
 
         fun withDireccionDelTurno(direccionDelTurno: String) = apply { this.direccionDelTurno = direccionDelTurno }
