@@ -14,5 +14,6 @@ interface TurnoDAO : GenericDAO<Turno> {
     fun findAllByEstadoPendienteOEspera(peluquero: Peluquero): List<Turno>
     fun findAllConPeluquero(peluquero: Peluquero, pageable: Pageable): Page<Turno>
     fun findAllConPeluqueroYEstadoFinalizado(peluquero: Peluquero, pageable: Pageable): Page<Turno>
-    fun findALlConPeluqueroYEstadoPendientesOConfirmados(peluquero: Peluquero, pageable: Pageable): Page<Turno>
+    fun findAllConPeluqueroYEstadoPendientesOConfirmados(peluquero: Peluquero, pageable: Pageable): Page<Turno>
+    fun obtenerPromedioPuntuacionDeLosTurnosConPeluquero(peluquero: Peluquero): Double
 }

@@ -42,4 +42,7 @@ interface TurnoRepository : JpaRepository<Turno, Long> {
     fun findAllByPeluqueroAndEstadoTurnoConfirmadoOPendiente(
             @Param("paramPeluquero") peluquero: Peluquero,
             pageable: Pageable): Page<Turno>
+
+    @Query("SELECT AVG(t.puntaje) FROM Turno t WHERE t.peluquero = :paramPeluquero AND t.estado = 2 AND t.puntaje > 0")
+    fun obtenerPromedioPuntuacionDeLosTurnosConPeluquero(@Param("paramPeluquero") peluquero: Peluquero): Double
 }
