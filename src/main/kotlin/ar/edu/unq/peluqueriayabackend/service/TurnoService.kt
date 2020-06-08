@@ -12,4 +12,5 @@ interface TurnoService : GenericService<Turno> {
     fun obtenerTodosLosTurnosDelPeluquero(peluquero: Peluquero, pageable: Pageable): Page<Turno>
     fun obtenerTurnosHistoricosDelPeluquero(peluquero: Peluquero, pageable: Pageable): Page<Turno>
     fun obtenerTurnosPendientesOConfirmadosDelPeluquero(peluquero: Peluquero, pageable: Pageable): Page<Turno>
+    fun puntuacionPromedioDelPeluquero(peluquero: Peluquero): Double
 }

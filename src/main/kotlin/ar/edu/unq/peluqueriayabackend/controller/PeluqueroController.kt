@@ -1,6 +1,7 @@
 package ar.edu.unq.peluqueriayabackend.controller
 
 import ar.edu.unq.peluqueriayabackend.controller.dtos.Filtro
+import ar.edu.unq.peluqueriayabackend.controller.dtos.PeluqueroConPuntuacionDTO
 import ar.edu.unq.peluqueriayabackend.controller.dtos.PeluqueroDTO
 import ar.edu.unq.peluqueriayabackend.controller.dtos.PeluqueroSimpleDTO
 import ar.edu.unq.peluqueriayabackend.exception.PeluqueroNoExisteException
@@ -9,6 +10,7 @@ import ar.edu.unq.peluqueriayabackend.model.Peluquero
 import ar.edu.unq.peluqueriayabackend.model.Ubicacion
 import ar.edu.unq.peluqueriayabackend.service.PeluqueroService
 import ar.edu.unq.peluqueriayabackend.service.RolService
+import ar.edu.unq.peluqueriayabackend.service.TurnoService
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
@@ -23,11 +25,15 @@ import javax.validation.Valid
 @Validated
 class PeluqueroController(
         val rolService: RolService,
+        @Autowired val turnoService: TurnoService,
         @Autowired val peluqueroService: PeluqueroService) {
 
     @GetMapping("/search")
-    fun buscar(@Valid ubicacion: Ubicacion, @Valid filtro: Filtro?, pageable: Pageable): Page<Peluquero> {
-        return peluqueroService.buscar(ubicacion, filtro, pageable)
+    fun buscar(@Valid ubicacion: Ubicacion, @Valid filtro: Filtro?, pageable: Pageable): Page<PeluqueroConPuntuacionDTO> {
+
+        val peluqueros = peluqueroService.buscar(ubicacion, filtro, pageable)
+
+        return peluqueros.map { obtenerPeluqueroConPuntuacionPromedio(it) }
     }
 
     @GetMapping("/{id}")
@@ -78,5 +84,21 @@ class PeluqueroController(
     private fun getMaybePeluqueroByJWT(): Optional<Peluquero> {
         val emailPeluquero = rolService.getEmail()
         return peluqueroService.getByEmail(emailPeluquero)
+    }
+
+    private fun obtenerPeluqueroConPuntuacionPromedio(peluquero:Peluquero):PeluqueroConPuntuacionDTO {
+
+        var puntuacionPromedio:Double = 0.toDouble()
+
+        try{
+            puntuacionPromedio = turnoService.puntuacionPromedioDelPeluquero(peluquero)
+        }catch (e:Exception){
+
+        }
+
+        return PeluqueroConPuntuacionDTO.Builder().
+            withPeluquero(peluquero).
+            withPuntuacionPromedio(puntuacionPromedio).
+            build()
     }
 }

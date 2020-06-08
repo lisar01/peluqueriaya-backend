@@ -72,7 +72,11 @@ class TurnoDAORepository(@Autowired val turnoRepository: TurnoRepository) : Turn
         return turnoRepository.findAllByPeluqueroAndEstadoTurno(peluquero, TurnoState.FINALIZADO, pageable)
     }
 
-    override fun findALlConPeluqueroYEstadoPendientesOConfirmados(peluquero: Peluquero, pageable: Pageable): Page<Turno> {
+    override fun findAllConPeluqueroYEstadoPendientesOConfirmados(peluquero: Peluquero, pageable: Pageable): Page<Turno> {
         return turnoRepository.findAllByPeluqueroAndEstadoTurnoConfirmadoOPendiente(peluquero,pageable)
+    }
+
+    override fun obtenerPromedioPuntuacionDeLosTurnosConPeluquero(peluquero: Peluquero): Double {
+        return turnoRepository.obtenerPromedioPuntuacionDeLosTurnosConPeluquero(peluquero)
     }
 }

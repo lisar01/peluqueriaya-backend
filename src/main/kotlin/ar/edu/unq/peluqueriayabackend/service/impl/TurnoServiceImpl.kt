@@ -149,7 +149,11 @@ class TurnoServiceImpl(
     }
 
     override fun obtenerTurnosPendientesOConfirmadosDelPeluquero(peluquero: Peluquero, pageable: Pageable): Page<Turno> {
-        return turnoDAO.findALlConPeluqueroYEstadoPendientesOConfirmados(peluquero,pageable)
+        return turnoDAO.findAllConPeluqueroYEstadoPendientesOConfirmados(peluquero,pageable)
+    }
+
+    override fun puntuacionPromedioDelPeluquero(peluquero: Peluquero): Double {
+        return turnoDAO.obtenerPromedioPuntuacionDeLosTurnosConPeluquero(peluquero)
     }
 
     private fun distanciaEnRangoDelPeluqueroEstaExcedida(ubicacion: Ubicacion, peluquero:Peluquero):Boolean {
