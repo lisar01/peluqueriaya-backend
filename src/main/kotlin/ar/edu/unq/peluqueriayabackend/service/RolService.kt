@@ -1,5 +1,6 @@
 package ar.edu.unq.peluqueriayabackend.service
 
+import ar.edu.unq.peluqueriayabackend.controller.dtos.PerfilesDTO
 import ar.edu.unq.peluqueriayabackend.controller.dtos.RolesDTO
 
 
@@ -8,4 +9,5 @@ interface RolService {
     fun tieneRolCliente(): Boolean
     fun tieneRolPeluquero(): Boolean
     fun getRolesByEmail(email: String): RolesDTO
+    fun getPerfiles(email: String): PerfilesDTO
 }
