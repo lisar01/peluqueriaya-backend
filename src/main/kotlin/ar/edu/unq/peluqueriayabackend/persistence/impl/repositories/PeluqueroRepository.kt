@@ -1,5 +1,6 @@
 package ar.edu.unq.peluqueriayabackend.persistence.impl.repositories
 
+import ar.edu.unq.peluqueriayabackend.controller.dtos.PeluqueroPerfilDTO
 import ar.edu.unq.peluqueriayabackend.model.Peluquero
 import ar.edu.unq.peluqueriayabackend.model.PeluqueroType
 import ar.edu.unq.peluqueriayabackend.model.ServicioType
@@ -32,5 +33,6 @@ interface PeluqueroRepository : JpaRepository<Peluquero, Long> {
             pageable: Pageable): Page<Peluquero>
 
     fun existsByEmail(email: String): Boolean
-    fun findByEmail(emailPeluquero: String): Optional<Peluquero>
+    fun findByEmail(email: String): Optional<Peluquero>
+    fun queryByEmail(email: String): PeluqueroPerfilDTO?
 }

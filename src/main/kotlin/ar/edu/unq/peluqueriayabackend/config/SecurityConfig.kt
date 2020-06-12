@@ -46,7 +46,7 @@ class SecurityConfig(
                         "/servicio/tipos",
                         "/peluquero/search",
                         "/peluquero/{id}").permitAll()
-                .mvcMatchers("/roles", "/cliente", "/peluquero").authenticated()
+                .mvcMatchers("/roles", "/cliente", "/peluquero", "/perfil").authenticated()
                 .mvcMatchers("/turno/pedir", "/turno/cancelar").access(tieneRolCliente)
                 .mvcMatchers(
                         "/peluquero",
