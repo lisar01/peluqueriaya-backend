@@ -75,7 +75,7 @@ class PeluqueriayaBackendApplication : WebMvcConfigurer {
 							withNombre("Lalo").
 							withApellido("Landa").
 							withEmail("lisar.3467@gmail.com").
-							withImgPerfil("https://vignette.wikia.nocookie.net/disney/images/f/f0/Profile_-_Jiminy_Cricket.jpeg/revision/latest?cb=20190312063605").
+							withImgPerfil("https://vignette.wikia.nocookie.net/disney/images/f/f0/Profile_-_Jiminy_Cricket.jpeg").
 							withUbicacion(Ubicacion("-34.721999", "-58.250447")).
 							withNroTelefono("1100001111").
 							build()
@@ -139,7 +139,7 @@ class PeluqueriayaBackendApplication : WebMvcConfigurer {
 				build()
 
         var peluquero5MDQ = Peluquero.Builder().
-				withLogo("https://d1yjjnpx0p53s8.cloudfront.net/styles/logo-thumbnail/s3/0024/5278/brand.gif?itok=pw1PLx5N").
+				withLogo("https://d1yjjnpx0p53s8.cloudfront.net/styles/logo-thumbnail/s3/0024/5278/brand.gif").
 				withNombre("La pelu de mardel").
 				withDescripcion("La mejor pelu de mar del plata, el mejor alisado... despreocupate!").
 				withTipos(mutableSetOf(PeluqueroType.MUJER)).withCorteMin(BigDecimal(300)).
