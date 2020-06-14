@@ -37,21 +37,21 @@ class PeluqueroController(
     }
 
     @GetMapping("/{id}")
-    fun getPeluquero(@PathVariable("id") @Valid idPeluquero : Long): Peluquero {
+    fun getPeluquero(@PathVariable("id") @Valid idPeluquero : Long): PeluqueroConPuntuacionDTO {
         val maybePeluquero = peluqueroService.get(idPeluquero)
         if(!maybePeluquero.isPresent)
             throw PeluqueroNoExisteException()
 
-        return maybePeluquero.get()
+        return obtenerPeluqueroConPuntuacionPromedio(maybePeluquero.get())
     }
 
     @GetMapping
-    fun getPeluqueroLogged() : Peluquero {
+    fun getPeluqueroLogged() : PeluqueroConPuntuacionDTO {
         val maybePeluquero = getMaybePeluqueroByJWT()
         if(! maybePeluquero.isPresent)
             throw PeluqueroNoExisteException()
 
-        return maybePeluquero.get()
+        return obtenerPeluqueroConPuntuacionPromedio(maybePeluquero.get())
     }
 
     @PostMapping
