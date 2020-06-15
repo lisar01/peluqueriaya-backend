@@ -156,6 +156,14 @@ class TurnoServiceImpl(
         return turnoDAO.obtenerPromedioPuntuacionDeLosTurnosConPeluquero(peluquero)
     }
 
+    override fun obtenerTurnosHistoricosDelCliente(cliente: Cliente, pageable: Pageable): Page<Turno> {
+        return turnoDAO.findAllConClienteYEstadoFinalizadoOCancelado(cliente,pageable)
+    }
+
+    override fun obtenerTurnosEnEsperaOPendientesOConfirmadosDelCliente(cliente: Cliente, pageable: Pageable): Page<Turno> {
+        return turnoDAO.findAllConClienteYEstadoEnEsperaOPendienteOConfirmado(cliente, pageable)
+    }
+
     private fun distanciaEnRangoDelPeluqueroEstaExcedida(ubicacion: Ubicacion, peluquero:Peluquero):Boolean {
         //Por defecto la ubicacion cercana
         var distanciaToleranciaPeluquero = peluquero.distanciaMax

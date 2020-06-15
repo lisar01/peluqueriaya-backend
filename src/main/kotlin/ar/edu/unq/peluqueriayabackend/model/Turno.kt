@@ -80,6 +80,12 @@ class Turno (
 
     fun getClienteFullName():String = cliente.getFullName()
 
+    fun getPeluqueroName():String = peluquero.nombre
+
+    fun getPeluqueroEmailOpcional():String = peluquero.emailOpcional
+
+    fun getPeluqueroLogo():String = peluquero.logo
+
     data class Builder(
             var peluquero: Peluquero = Peluquero.Builder().withCorteMin(BigDecimal.ZERO).build(),
             var cliente: Cliente = Cliente.Builder().build(),

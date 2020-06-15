@@ -43,6 +43,12 @@ class TurnoConDireccionDTO(
 
     fun getClienteFullName():String = cliente.getFullName()
 
+    fun getPeluqueroName():String = peluquero.nombre
+
+    fun getPeluqueroEmailOpcional():String = peluquero.emailOpcional
+
+    fun getPeluqueroLogo():String = peluquero.logo
+
     class Builder(
             var peluquero: Peluquero = Peluquero.Builder().build(),
             var cliente: Cliente = Cliente.Builder().build(),

@@ -1,9 +1,6 @@
 package ar.edu.unq.peluqueriayabackend.persistence.impl
 
-import ar.edu.unq.peluqueriayabackend.model.Peluquero
-import ar.edu.unq.peluqueriayabackend.model.PeluqueroState
-import ar.edu.unq.peluqueriayabackend.model.Turno
-import ar.edu.unq.peluqueriayabackend.model.TurnoState
+import ar.edu.unq.peluqueriayabackend.model.*
 import ar.edu.unq.peluqueriayabackend.persistence.TurnoDAO
 import ar.edu.unq.peluqueriayabackend.persistence.impl.repositories.TurnoRepository
 import org.springframework.beans.factory.annotation.Autowired
@@ -78,5 +75,13 @@ class TurnoDAORepository(@Autowired val turnoRepository: TurnoRepository) : Turn
 
     override fun obtenerPromedioPuntuacionDeLosTurnosConPeluquero(peluquero: Peluquero): Double {
         return turnoRepository.obtenerPromedioPuntuacionDeLosTurnosConPeluquero(peluquero)
+    }
+
+    override fun findAllConClienteYEstadoFinalizadoOCancelado(cliente: Cliente, pageable: Pageable): Page<Turno> {
+        return turnoRepository.findAllConClienteYEstadoFinalizadoOCancelado(cliente, pageable)
+    }
+
+    override fun findAllConClienteYEstadoEnEsperaOPendienteOConfirmado(cliente: Cliente, pageable: Pageable): Page<Turno> {
+        return turnoRepository.findAllConClienteYEstadoEnEsperaOPendienteOConfirmado(cliente, pageable)
     }
 }
