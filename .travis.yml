@@ -7,6 +7,12 @@ dist: trusty
 sudo:
   required
 
+env:
+  global:
+    - HEREMAPS_API_KEY=fakeAPIKEY
+    - EMAIL_USERNAME=fakeEmail00001001@gmail.com
+    - EMAIL_PASSWORD=fakePassword
+
 cache:
   directories:
     - $HOME/.m2
