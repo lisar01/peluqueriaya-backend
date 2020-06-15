@@ -74,7 +74,7 @@ class PeluqueriayaBackendApplication : WebMvcConfigurer {
 		val clienteLalo = Cliente.Builder().
 							withNombre("Lalo").
 							withApellido("Landa").
-							withEmail("lisar.3467@gmail.com").
+							withEmail("barbamdq@mdq.com").
 							withImgPerfil("https://vignette.wikia.nocookie.net/disney/images/f/f0/Profile_-_Jiminy_Cricket.jpeg").
 							withUbicacion(Ubicacion("-34.721999", "-58.250447")).
 							withNroTelefono("1100001111").
@@ -98,7 +98,7 @@ class PeluqueriayaBackendApplication : WebMvcConfigurer {
 				withTipos(mutableSetOf(PeluqueroType.HOMBRE)).
 				withCorteMin(BigDecimal(250)).
 				withDistanciaMax(BigDecimal(1)).
-				withEmail("barbamdq@mdq.com").
+				withEmail("lisar.3467@gmail.com").
 				withUbicacion(Ubicacion("-34.706416", "-58.278559")).
 				withEstado(PeluqueroState.DISPONIBLE).
 				build()
