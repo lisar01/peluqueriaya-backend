@@ -112,6 +112,9 @@ class TurnoServiceImpl(
 
         val turnoFinalizado = turnoDAO.update(turno)
 
+        //Notificar al usuario que el turno ha finalizado
+        peluqueriaYaEmailSender.enviarMailDeFinalizacionTurno(turnoFinalizado)
+
         //Buscar SI EXISTE el primer turno en espera (mas antiguo) y ponerlo directo en pendiente
         val turnoMasAntiguoEnEspera = turnoDAO.findTurnoEnEsperaMasAntiguoDelPeluquero(turno.peluquero)
 
@@ -162,6 +165,12 @@ class TurnoServiceImpl(
 
     override fun obtenerTurnosEnEsperaOPendientesOConfirmadosDelCliente(cliente: Cliente, pageable: Pageable): Page<Turno> {
         return turnoDAO.findAllConClienteYEstadoEnEsperaOPendienteOConfirmado(cliente, pageable)
+    }
+
+    @Transactional
+    override fun calificarTurno(turno: Turno, puntaje: Int): Turno {
+        turno.puntuar(puntaje)
+        return turnoDAO.update(turno)
     }
 
     private fun distanciaEnRangoDelPeluqueroEstaExcedida(ubicacion: Ubicacion, peluquero:Peluquero):Boolean {

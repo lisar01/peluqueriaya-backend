@@ -34,4 +34,14 @@ class PeluqueriaYaEmailSender(@Autowired val emailServiceAPI: EmailServiceAPI) {
         "Hola, su turno fue ingresado en la cola de espera del peluquero porque este posee completa su casilla de turnos. "+
         "Es muy probable que su turno demore mucho, si quiere puede cancelar el turno en su perfil de turnos. Saludos! :D")
     }
+
+    fun enviarMailDeFinalizacionTurno(turno: Turno) {
+        emailServiceAPI.sendEmail(turno.cliente.emailOpcional,
+            "El turno ha finalizado, ya puede calificar el servicio",
+        "Hola, el turno ha sido marcado como finalizado por el peluquero. " +
+                "Puede calificar su turno en nuestra pagina en la sección \"Mis turnos\">\"Turnos Historicos\" "+
+                "para ofrecer un feedback del servicio contratado. " +
+                "En caso de haber existido algun tipo de problema, contactenos al email peluqueria-ya-soporte@gmail.com. "+
+                "Saludos y muchas gracias por usar nuestro servicio! :D")
+    }
 }
