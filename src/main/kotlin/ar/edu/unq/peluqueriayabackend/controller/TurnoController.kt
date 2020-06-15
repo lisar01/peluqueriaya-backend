@@ -45,6 +45,24 @@ class TurnoController(
         return turnos.map { turnoConDireccionDeLaUbicacion(it) }
     }
 
+    @GetMapping("/cliente")
+    fun turnosDelCliente(@Valid esHistorico: Boolean, pageable: Pageable) : Page<TurnoConDireccionDTO> {
+        val maybeCliente = getMaybeClienteByJWT()
+        if(! maybeCliente.isPresent)
+            throw ClienteNoExisteException()
+
+        //Si esHistorico retorna los turnos FINALIZADOS o CANCELADOS
+        // sino los turnos PENDIENTES o CONFIRMADOS o EN ESPERA
+        val turnos = if(esHistorico){
+            turnoService.obtenerTurnosHistoricosDelCliente(maybeCliente.get(),pageable)
+        }else{
+            turnoService.obtenerTurnosEnEsperaOPendientesOConfirmadosDelCliente(maybeCliente.get(),pageable)
+        }
+
+        //Se agrega la direccion de cada turno
+        return turnos.map { turnoConDireccionDeLaUbicacion(it) }
+    }
+
     @PostMapping("/pedir")
     fun pedirTurno(@Valid @RequestBody solicitudTurnoDTO: SolicitudTurnoDTO) : Turno {
         val mayBeClient = getMaybeClienteByJWT()

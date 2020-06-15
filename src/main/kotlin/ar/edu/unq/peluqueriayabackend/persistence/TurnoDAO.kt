@@ -1,5 +1,6 @@
 package ar.edu.unq.peluqueriayabackend.persistence
 
+import ar.edu.unq.peluqueriayabackend.model.Cliente
 import ar.edu.unq.peluqueriayabackend.model.Peluquero
 import ar.edu.unq.peluqueriayabackend.model.Turno
 import org.springframework.data.domain.Page
@@ -16,4 +17,6 @@ interface TurnoDAO : GenericDAO<Turno> {
     fun findAllConPeluqueroYEstadoFinalizado(peluquero: Peluquero, pageable: Pageable): Page<Turno>
     fun findAllConPeluqueroYEstadoPendientesOConfirmados(peluquero: Peluquero, pageable: Pageable): Page<Turno>
     fun obtenerPromedioPuntuacionDeLosTurnosConPeluquero(peluquero: Peluquero): Double
+    fun findAllConClienteYEstadoFinalizadoOCancelado(cliente: Cliente, pageable: Pageable): Page<Turno>
+    fun findAllConClienteYEstadoEnEsperaOPendienteOConfirmado(cliente: Cliente, pageable: Pageable): Page<Turno>
 }
