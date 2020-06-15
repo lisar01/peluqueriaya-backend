@@ -1,5 +1,6 @@
 package ar.edu.unq.peluqueriayabackend.controller
 
+import ar.edu.unq.peluqueriayabackend.controller.dtos.CalificacionTurnoDTO
 import ar.edu.unq.peluqueriayabackend.controller.dtos.SolicitudTurnoDTO
 import ar.edu.unq.peluqueriayabackend.controller.dtos.TurnoConDireccionDTO
 import ar.edu.unq.peluqueriayabackend.controller.dtos.TurnoDTO
@@ -100,7 +101,23 @@ class TurnoController(
 
     @PostMapping("/cancelar")
     fun cancelarTurno(@Valid @RequestBody turnoDTO: TurnoDTO) : Turno {
-        return turnoService.cancelarTurno(validarIdTurnoYCliente(turnoDTO.idTurno))
+        val turno = validarIdTurnoYCliente(turnoDTO.idTurno)
+        if(! turno.getEstaEsperando())
+            throw TurnoNoPuedeSerCancelado()
+        return turnoService.cancelarTurno(turno)
+    }
+
+    @PostMapping("/calificar")
+    fun calificarTurno(@Valid @RequestBody calificacionTurnoDTO: CalificacionTurnoDTO):Turno {
+        val turno = validarIdTurnoYCliente(calificacionTurnoDTO.idTurno)
+
+        if(!turno.getEstaFinalizado())
+            throw TurnoNoSePuedeCalificar()
+
+        if(turno.puntaje > 0)
+            throw TurnoYaCalificadoException()
+
+        return turnoService.calificarTurno(turno, calificacionTurnoDTO.puntaje)
     }
 
     private fun getMaybePeluqueroByJWT(): Optional<Peluquero> {
@@ -124,9 +141,6 @@ class TurnoController(
 
         if(maybeTurno.get().getClienteId() != maybeCliente.get().id)
             throw Unauthorized("No tiene acceso a este recurso")
-
-        if(! maybeTurno.get().getEstaEsperando())
-            throw TurnoNoPuedeSerCancelado()
 
         return maybeTurno.get()
     }

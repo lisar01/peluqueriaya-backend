@@ -49,7 +49,11 @@ class SecurityConfig(
                         "/peluquero/{id}").permitAll()
                 .mvcMatchers(HttpMethod.POST, "/peluquero", "/cliente").authenticated()
                 .mvcMatchers("/roles", "/perfil").authenticated()
-                .mvcMatchers("/turno/pedir", "/turno/cancelar","/turno/cliente").access(tieneRolCliente)
+                .mvcMatchers(
+                        "/turno/pedir",
+                        "/turno/cancelar",
+                        "/turno/cliente",
+                        "/turno/calificar").access(tieneRolCliente)
                 .mvcMatchers(
                         "/servicio",
                         "/peluquero/desconectar",
