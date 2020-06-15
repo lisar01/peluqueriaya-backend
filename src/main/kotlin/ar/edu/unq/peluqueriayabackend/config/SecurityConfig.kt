@@ -2,6 +2,7 @@ package ar.edu.unq.peluqueriayabackend.config
 
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.context.annotation.Bean
+import org.springframework.http.HttpMethod
 import org.springframework.security.config.Customizer.withDefaults
 import org.springframework.security.config.annotation.web.builders.HttpSecurity
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity
@@ -46,14 +47,17 @@ class SecurityConfig(
                         "/servicio/tipos",
                         "/peluquero/search",
                         "/peluquero/{id}").permitAll()
-                .mvcMatchers("/roles", "/cliente", "/peluquero", "/perfil").authenticated()
+                .mvcMatchers(HttpMethod.POST, "/peluquero", "/cliente").authenticated()
+                .mvcMatchers("/roles", "/perfil").authenticated()
                 .mvcMatchers("/turno/pedir", "/turno/cancelar").access(tieneRolCliente)
                 .mvcMatchers(
-                        "/peluquero",
+                        "/servicio",
                         "/peluquero/desconectar",
                         "/peluquero/conectar",
                         "/turno/peluquero",
-                        "/turno/finalizar","/turno/confirmar").access(tieneRolPeluquero)
+                        "/turno/finalizar",
+                        "/turno/confirmar").access(tieneRolPeluquero)
+                .mvcMatchers(HttpMethod.GET, "/peluquero").access(tieneRolPeluquero)
                 .anyRequest().denyAll()
                 .and()
                 .oauth2ResourceServer().jwt()
