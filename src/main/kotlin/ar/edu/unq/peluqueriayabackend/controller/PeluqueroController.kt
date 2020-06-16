@@ -3,10 +3,10 @@ package ar.edu.unq.peluqueriayabackend.controller
 import ar.edu.unq.peluqueriayabackend.controller.dtos.Filtro
 import ar.edu.unq.peluqueriayabackend.controller.dtos.PeluqueroConPuntuacionDTO
 import ar.edu.unq.peluqueriayabackend.controller.dtos.PeluqueroDTO
-import ar.edu.unq.peluqueriayabackend.controller.dtos.PeluqueroSimpleDTO
 import ar.edu.unq.peluqueriayabackend.exception.PeluqueroNoExisteException
 import ar.edu.unq.peluqueriayabackend.exception.PeluqueroYaExisteException
 import ar.edu.unq.peluqueriayabackend.model.Peluquero
+import ar.edu.unq.peluqueriayabackend.model.Servicio
 import ar.edu.unq.peluqueriayabackend.model.Ubicacion
 import ar.edu.unq.peluqueriayabackend.service.PeluqueroService
 import ar.edu.unq.peluqueriayabackend.service.RolService
@@ -52,6 +52,11 @@ class PeluqueroController(
             throw PeluqueroNoExisteException()
 
         return obtenerPeluqueroConPuntuacionPromedio(maybePeluquero.get())
+    }
+
+    @GetMapping("/servicios")
+    fun getServicios(): List<Servicio> {
+        return peluqueroService.getServiciosByEmail(rolService.getEmail())
     }
 
     @PostMapping

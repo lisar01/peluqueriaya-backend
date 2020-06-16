@@ -9,7 +9,7 @@ import javax.validation.constraints.Min
 import javax.validation.constraints.Size
 
 data class ServicioDTO(
-        @field:Size(min = 2, max=30, message = "{nombre.largo}")
+        @field:Size(min = 10, max=60, message = "{nombre.size}")
         var nombre: String,
         @field:Size(min = 1, message = "{tiposServicio.min}")
         var tipos: MutableSet<ServicioType>,
