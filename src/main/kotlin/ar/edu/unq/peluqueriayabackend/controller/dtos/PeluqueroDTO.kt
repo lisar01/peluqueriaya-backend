@@ -11,7 +11,7 @@ import javax.validation.constraints.Min
 import javax.validation.constraints.Size
 
 data class PeluqueroDTO(
-        @field:Size(min = 2, max=30, message = "{nombre.largo}")
+        @field:Size(min = 10, max=60, message = "{nombre.size}")
         val nombre: String,
         @field:URL(message = "{logo.invalido}")
         val logo: String,
