@@ -1,7 +1,6 @@
 package ar.edu.unq.peluqueriayabackend.controller
 
 import ar.edu.unq.peluqueriayabackend.controller.dtos.ServicioDTO
-import ar.edu.unq.peluqueriayabackend.model.Servicio
 import ar.edu.unq.peluqueriayabackend.model.ServicioType
 import ar.edu.unq.peluqueriayabackend.service.RolService
 import ar.edu.unq.peluqueriayabackend.service.ServicioService

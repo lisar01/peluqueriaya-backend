@@ -5,5 +5,6 @@ import ar.edu.unq.peluqueriayabackend.model.Servicio
 
 interface ServicioDAO : GenericDAO<Servicio> {
     fun serviciosDelPeluquero(peluquero: Peluquero): Collection<Servicio>
+    fun findByPeluqueroEmail(email: String): List<Servicio>
 
 }
