@@ -59,6 +59,7 @@ class SecurityConfig(
                         "/peluquero/desconectar",
                         "/peluquero/conectar",
                         "/peluquero/servicios",
+                        "/peluquero/editar",
                         "/turno/peluquero",
                         "/turno/finalizar",
                         "/turno/confirmar").access(tieneRolPeluquero)
