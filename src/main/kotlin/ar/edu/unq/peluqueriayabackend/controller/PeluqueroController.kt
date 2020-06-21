@@ -3,6 +3,7 @@ package ar.edu.unq.peluqueriayabackend.controller
 import ar.edu.unq.peluqueriayabackend.controller.dtos.Filtro
 import ar.edu.unq.peluqueriayabackend.controller.dtos.PeluqueroConPuntuacionDTO
 import ar.edu.unq.peluqueriayabackend.controller.dtos.PeluqueroDTO
+import ar.edu.unq.peluqueriayabackend.controller.dtos.PeluqueroEditarDatosDTO
 import ar.edu.unq.peluqueriayabackend.exception.PeluqueroNoExisteException
 import ar.edu.unq.peluqueriayabackend.exception.PeluqueroYaExisteException
 import ar.edu.unq.peluqueriayabackend.model.Peluquero
@@ -66,6 +67,16 @@ class PeluqueroController(
             throw PeluqueroYaExisteException()
         }
         peluqueroService.save(peluqueroDTO.toPeluquero(rolService.getEmail()))
+    }
+
+    @PostMapping("/editar")
+    @ResponseStatus(HttpStatus.OK, reason = "Datos de peluquero editados exitosamente!")
+    fun editarDatos(@Valid @RequestBody peluqueroEditarDatosDTO: PeluqueroEditarDatosDTO){
+        val maybePeluquero = getMaybePeluqueroByJWT()
+        if(!maybePeluquero.isPresent)
+            throw PeluqueroNoExisteException()
+
+        peluqueroService.update(peluqueroEditarDatosDTO.editarDatosPeluquero(maybePeluquero.get()))
     }
 
     //La idea de este desconectar no es el logout del usuario sino que deje de recibir turnos o aparecer en la busqueda de peluqueros
