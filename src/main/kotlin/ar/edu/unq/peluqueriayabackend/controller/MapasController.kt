@@ -17,16 +17,16 @@ import javax.validation.constraints.Size
 class MapasController(val mapasService: MapasService) {
 
     @GetMapping("/reversegeocoding")
-    fun obtenerUbicacionConCoords(@RequestParam
+    fun obtenerDireccionConCoords(@RequestParam
                                   @NotBlank(message = "{latitud.vacio}")
                                   @Pattern(regexp = "-?[1-9][0-9]*(\\.[0-9]+)?", message="{latitud.invalida}")
                                   latitude: String,
                                   @RequestParam
                                   @NotBlank(message = "{longitud.vacio}")
                                   @Pattern(regexp = "-?[1-9][0-9]*(\\.[0-9]+)?", message="{longitud.invalida}")
-                                  longitude: String): Mono<Items> {
+                                  longitude: String): String {
         val coords = "$latitude,$longitude"
-        return mapasService.obtenerUbicacionConCoords(coords)
+        return mapasService.obtenerUbicacionConCoords(coords).block()!!.items[0].title
     }
 
     @GetMapping("/geocoding")

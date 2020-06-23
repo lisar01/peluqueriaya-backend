@@ -123,7 +123,7 @@ class PeluqueriayaBackendApplication : WebMvcConfigurer {
 				withCorteMin(BigDecimal(241)).
 				withDistanciaMax(BigDecimal(6)).
 				withEmail("cassanojoseluis97@gmail.com").
-				withUbicacion(Ubicacion("-34.722186", "-58.256462")).
+				withUbicacion(Ubicacion("-34.72993", "-58.24491")).
 				withEstado(PeluqueroState.DISPONIBLE).
 				build()
 
