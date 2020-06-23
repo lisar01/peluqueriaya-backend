@@ -84,7 +84,7 @@ class PeluqueriayaBackendApplication : WebMvcConfigurer {
 				withNombre("Pepe").
 				withApellido("Grillo").
 				withEmail("cassanojoseluis97@gmail.com").
-				withImgPerfil("https://www.impulsio.com.ar/wp-content/uploads/2014/06/Se%C3%B1or-X.jpg").
+				withImgPerfil("https://pbs.twimg.com/profile_images/958172060206841856/xNhKM5Sn.png").
 				withUbicacion(Ubicacion("-34.721999", "-58.250447")).
 				withNroTelefono("1100001112").
 				build()
