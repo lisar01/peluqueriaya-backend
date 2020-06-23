@@ -50,6 +50,7 @@ class SecurityConfig(
                 .mvcMatchers(HttpMethod.POST, "/peluquero", "/cliente").authenticated()
                 .mvcMatchers("/roles", "/perfil").authenticated()
                 .mvcMatchers(
+                        "/cliente/editar",
                         "/turno/pedir",
                         "/turno/cancelar",
                         "/turno/cliente",
