@@ -12,7 +12,9 @@ import javax.validation.Valid
 @RestController
 @RequestMapping("/servicio")
 @Validated
-class ServicioController(val servicioService: ServicioService, val rolService: RolService) {
+class ServicioController(
+        val servicioService: ServicioService,
+        val rolService: RolService) {
 
     @GetMapping("/tipos")
     fun obtenerTodosLosTiposDeServicio(): Array<ServicioType> = ServicioType.values()
@@ -22,5 +24,8 @@ class ServicioController(val servicioService: ServicioService, val rolService: R
     fun guardar(@Valid @RequestBody servicioDTO: ServicioDTO) {
         servicioService.guardar(servicioDTO, rolService.getEmail())
     }
+
+    @DeleteMapping
+    fun borrar(@RequestParam id: Long): Long = servicioService.borrar(id, rolService.getEmail())
 
 }

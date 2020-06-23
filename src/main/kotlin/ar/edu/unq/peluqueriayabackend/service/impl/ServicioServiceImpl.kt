@@ -1,6 +1,7 @@
 package ar.edu.unq.peluqueriayabackend.service.impl
 
 import ar.edu.unq.peluqueriayabackend.controller.dtos.ServicioDTO
+import ar.edu.unq.peluqueriayabackend.exception.ServicioNoExisteException
 import ar.edu.unq.peluqueriayabackend.model.Peluquero
 import ar.edu.unq.peluqueriayabackend.model.Servicio
 import ar.edu.unq.peluqueriayabackend.persistence.PeluqueroDAO
@@ -38,5 +39,17 @@ class ServicioServiceImpl(val servicioDAO:ServicioDAO, val peluqueroDAO: Peluque
     @Transactional
     override fun guardar(servicioDTO: ServicioDTO, email: String) {
         servicioDAO.save(servicioDTO.toServicio(peluqueroDAO.getByEmail(email).get()))
+    }
+
+    @Transactional
+    override fun borrar(id: Long, emailPeluquero: String): Long {
+        val peluquero = peluqueroDAO.getByEmail(emailPeluquero).get()
+        if (peluquero.eliminarServicio(id)) {
+            peluqueroDAO.save(peluquero)
+            return id
+        }
+        else {
+            throw ServicioNoExisteException()
+        }
     }
 }
