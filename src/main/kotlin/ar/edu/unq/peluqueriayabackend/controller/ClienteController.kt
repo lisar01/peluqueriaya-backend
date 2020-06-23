@@ -1,5 +1,6 @@
 package ar.edu.unq.peluqueriayabackend.controller
 
+import ar.edu.unq.peluqueriayabackend.controller.dtos.ClienteEditarDatosDTO
 import ar.edu.unq.peluqueriayabackend.exception.ClienteNoExisteException
 import ar.edu.unq.peluqueriayabackend.exception.ClienteYaExisteException
 import ar.edu.unq.peluqueriayabackend.model.Cliente
@@ -33,6 +34,16 @@ class ClienteController(val clienteService: ClienteService, val rolService: RolS
             throw ClienteNoExisteException()
 
         return maybeCliente.get()
+    }
+
+    @PostMapping("/editar")
+    @ResponseStatus(HttpStatus.OK, reason = "Los datos han sido editados exitosamente!")
+    fun editarDatos(@Valid @RequestBody clienteEditarDatosDTO: ClienteEditarDatosDTO){
+        val maybeCliente = getMaybeClienteByJWT()
+        if(!maybeCliente.isPresent)
+            throw ClienteNoExisteException()
+
+        clienteService.update(clienteEditarDatosDTO.editarDatosCliente(maybeCliente.get()))
     }
 
     private fun getMaybeClienteByJWT(): Optional<Cliente> {
