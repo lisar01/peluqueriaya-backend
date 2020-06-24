@@ -92,7 +92,7 @@ class Peluquero(
             var distanciaMax: BigDecimal = BigDecimal(0),
             var email: String = "",
             var emailOpcional:String= "",
-            var ubicacion:Ubicacion = Ubicacion("",""),
+            var ubicacion:Ubicacion = Ubicacion("","0","0"),
             var estado: PeluqueroState = PeluqueroState.DISPONIBLE,
             var descripcion: String = "",
             var tipos: MutableSet<PeluqueroType> = mutableSetOf(),

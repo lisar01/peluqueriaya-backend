@@ -43,7 +43,7 @@ class Cliente(
             var email:String = "",
             var emailOpcional:String= "",
             var nroTelefono:String = "",
-            var ubicacion: Ubicacion = Ubicacion("0","0"),
+            var ubicacion: Ubicacion = Ubicacion("","0","0"),
             var estado: ClienteState = ClienteState.ACTIVO
     ){
         fun build():Cliente {
