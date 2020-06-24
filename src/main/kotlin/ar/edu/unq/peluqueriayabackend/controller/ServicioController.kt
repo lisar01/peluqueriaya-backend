@@ -12,9 +12,7 @@ import javax.validation.Valid
 @RestController
 @RequestMapping("/servicio")
 @Validated
-class ServicioController(
-        val servicioService: ServicioService,
-        val rolService: RolService) {
+class ServicioController(val servicioService: ServicioService, val rolService: RolService) {
 
     @GetMapping("/tipos")
     fun obtenerTodosLosTiposDeServicio(): Array<ServicioType> = ServicioType.values()

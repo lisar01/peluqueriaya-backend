@@ -32,9 +32,6 @@ class TurnoController(
     @GetMapping("/peluquero")
     fun turnosDelPeluquero(@Valid esHistorico: Boolean, pageable: Pageable) : Page<TurnoConDireccionDTO> {
         val maybePeluquero = getMaybePeluqueroByJWT()
-        if(! maybePeluquero.isPresent)
-            throw PeluqueroNoExisteException()
-
         //Si esHistorico retorna los turnos FINALIZADOS sino los turnos PENDIENTES o CONFIRMADOS
         val turnos = if(esHistorico){
             turnoService.obtenerTurnosHistoricosDelPeluquero(maybePeluquero.get(),pageable)
@@ -49,8 +46,6 @@ class TurnoController(
     @GetMapping("/cliente")
     fun turnosDelCliente(@Valid esHistorico: Boolean, pageable: Pageable) : Page<TurnoConDireccionDTO> {
         val maybeCliente = getMaybeClienteByJWT()
-        if(! maybeCliente.isPresent)
-            throw ClienteNoExisteException()
 
         //Si esHistorico retorna los turnos FINALIZADOS o CANCELADOS
         // sino los turnos PENDIENTES o CONFIRMADOS o EN ESPERA
@@ -91,17 +86,17 @@ class TurnoController(
 
     @PostMapping("/confirmar")
     fun confirmarTurno(@Valid @RequestBody turnoDTO: TurnoDTO):Turno {
-        return turnoService.confirmarTurno(validarIdTurnoYPeluquero(turnoDTO.idTurno))
+        return turnoService.confirmarTurno(this.validarIdTurno(turnoDTO.idTurno))
     }
 
     @PostMapping("/finalizar")
     fun finalizarTurno(@Valid @RequestBody turnoDTO: TurnoDTO):Turno {
-        return turnoService.finalizarTurno(validarIdTurnoYPeluquero(turnoDTO.idTurno))
+        return turnoService.finalizarTurno(this.validarIdTurno(turnoDTO.idTurno))
     }
 
     @PostMapping("/cancelar")
     fun cancelarTurno(@Valid @RequestBody turnoDTO: TurnoDTO) : Turno {
-        val turno = validarIdTurnoYCliente(turnoDTO.idTurno)
+        val turno = this.validarIdTurno(turnoDTO.idTurno)
         if(! turno.getEstaEsperando())
             throw TurnoNoPuedeSerCancelado()
         return turnoService.cancelarTurno(turno)
@@ -109,7 +104,7 @@ class TurnoController(
 
     @PostMapping("/calificar")
     fun calificarTurno(@Valid @RequestBody calificacionTurnoDTO: CalificacionTurnoDTO):Turno {
-        val turno = validarIdTurnoYCliente(calificacionTurnoDTO.idTurno)
+        val turno = this.validarIdTurno(calificacionTurnoDTO.idTurno)
 
         if(!turno.getEstaFinalizado())
             throw TurnoNoSePuedeCalificar()
@@ -130,31 +125,12 @@ class TurnoController(
         return clienteService.getByEmail(emailCliente)
     }
 
-    private fun validarIdTurnoYCliente(idTurno: Long) : Turno {
-        val maybeCliente = getMaybeClienteByJWT()
-        if(! maybeCliente.isPresent)
-            throw ClienteNoExisteException()
-
+    private fun validarIdTurno(idTurno: Long) : Turno {
         val maybeTurno = turnoService.get(idTurno)
         if(! maybeTurno.isPresent)
             throw TurnoNoExisteException(idTurno)
 
-        if(maybeTurno.get().getClienteId() != maybeCliente.get().id)
-            throw Unauthorized("No tiene acceso a este recurso")
-
-        return maybeTurno.get()
-    }
-
-    private fun validarIdTurnoYPeluquero(idTurno: Long) : Turno{
-        val maybePeluquero = getMaybePeluqueroByJWT()
-        if(! maybePeluquero.isPresent)
-            throw PeluqueroNoExisteException()
-
-        val maybeTurno = turnoService.get(idTurno)
-        if(! maybeTurno.isPresent)
-            throw TurnoNoExisteException(idTurno)
-
-        if(maybeTurno.get().getPeluqueroId()!! != maybePeluquero.get().id)
+        if(maybeTurno.get().getClienteId() != getMaybeClienteByJWT().get().id)
             throw Unauthorized("No tiene acceso a este recurso")
 
         return maybeTurno.get()

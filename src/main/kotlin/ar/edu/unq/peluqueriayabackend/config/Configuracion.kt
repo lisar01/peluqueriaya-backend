@@ -36,7 +36,6 @@ class Configuracion {
         return executor
     }
 
-
     @Bean
     fun customerAPI(): Docket {
         return Docket(DocumentationType.SWAGGER_2)

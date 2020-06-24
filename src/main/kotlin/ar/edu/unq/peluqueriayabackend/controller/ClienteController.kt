@@ -27,13 +27,7 @@ class ClienteController(val clienteService: ClienteService, val rolService: RolS
     }
 
     @GetMapping
-    fun getClienteLogged() : Cliente {
-        val maybeCliente = getMaybeClienteByJWT()
-        if(! maybeCliente.isPresent)
-            throw ClienteNoExisteException()
-
-        return maybeCliente.get()
-    }
+    fun getClienteLogged() : Cliente = getMaybeClienteByJWT().get()
 
     private fun getMaybeClienteByJWT(): Optional<Cliente> {
         val emailCliente = rolService.getEmail()
