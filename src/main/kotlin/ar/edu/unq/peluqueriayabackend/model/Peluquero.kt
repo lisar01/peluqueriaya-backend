@@ -1,5 +1,6 @@
 package ar.edu.unq.peluqueriayabackend.model
 
+import com.fasterxml.jackson.annotation.JsonIgnore
 import org.hibernate.annotations.NaturalId
 import java.math.BigDecimal
 import java.time.LocalDateTime
@@ -14,6 +15,7 @@ class Peluquero(
         var corteMin: BigDecimal,
         var distanciaMax: BigDecimal = BigDecimal(0),
         @NaturalId
+        @field:JsonIgnore
         var email: String,
         var emailOpcional:String,
         var ubicacion:Ubicacion,
