@@ -1,7 +1,6 @@
 package ar.edu.unq.peluqueriayabackend.controller
 
-import ar.edu.unq.peluqueriayabackend.controller.dtos.Items
-import ar.edu.unq.peluqueriayabackend.controller.dtos.UbicacionDTO
+import ar.edu.unq.peluqueriayabackend.model.Ubicacion
 import ar.edu.unq.peluqueriayabackend.service.MapasService
 import org.springframework.validation.annotation.Validated
 import org.springframework.web.bind.annotation.*
@@ -33,7 +32,7 @@ class MapasController(val mapasService: MapasService) {
     fun obtenerUbicacionConDireccion(@RequestParam
                                      @NotBlank(message = "{direccion.vacio}")
                                      @Size(min = 10, message = "{direccion.minimo}")
-                                     direccion: String): Mono<List<UbicacionDTO>> {
+                                     direccion: String): Mono<List<Ubicacion>> {
         return mapasService.obtenerUbicacionConDireccion(direccion)
     }
 
