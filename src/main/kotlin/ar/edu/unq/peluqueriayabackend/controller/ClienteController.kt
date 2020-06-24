@@ -28,13 +28,7 @@ class ClienteController(val clienteService: ClienteService, val rolService: RolS
     }
 
     @GetMapping
-    fun getClienteLogged() : Cliente {
-        val maybeCliente = getMaybeClienteByJWT()
-        if(! maybeCliente.isPresent)
-            throw ClienteNoExisteException()
-
-        return maybeCliente.get()
-    }
+    fun getClienteLogged() : Cliente = getMaybeClienteByJWT().get()
 
     @PostMapping("/editar")
     @ResponseStatus(HttpStatus.OK, reason = "Los datos han sido editados exitosamente!")

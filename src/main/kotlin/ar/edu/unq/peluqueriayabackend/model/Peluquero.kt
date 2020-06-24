@@ -75,9 +75,7 @@ class Peluquero(
         servicios.add(servicio)
     }
 
-    fun eliminarServicio(servicio : Servicio) {
-        servicios.remove(servicio)
-    }
+    fun eliminarServicio(id: Long): Boolean = servicios.removeIf {  it.id == id  }
 
     fun agregarTipo(tipo:PeluqueroType) {
         tipos.add(tipo)

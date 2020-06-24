@@ -23,4 +23,7 @@ class ServicioController(val servicioService: ServicioService, val rolService: R
         servicioService.guardar(servicioDTO, rolService.getEmail())
     }
 
+    @DeleteMapping
+    fun borrar(@RequestParam id: Long): Long = servicioService.borrar(id, rolService.getEmail())
+
 }

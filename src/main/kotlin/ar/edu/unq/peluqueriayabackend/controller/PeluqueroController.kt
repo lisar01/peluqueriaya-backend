@@ -47,13 +47,7 @@ class PeluqueroController(
     }
 
     @GetMapping
-    fun getPeluqueroLogged() : PeluqueroConPuntuacionDTO {
-        val maybePeluquero = getMaybePeluqueroByJWT()
-        if(! maybePeluquero.isPresent)
-            throw PeluqueroNoExisteException()
-
-        return obtenerPeluqueroConPuntuacionPromedio(maybePeluquero.get())
-    }
+    fun getPeluqueroLogged() : PeluqueroConPuntuacionDTO = obtenerPeluqueroConPuntuacionPromedio(getMaybePeluqueroByJWT().get())
 
     @GetMapping("/servicios")
     fun getServicios(): List<Servicio> {
@@ -72,30 +66,16 @@ class PeluqueroController(
     @PostMapping("/editar")
     @ResponseStatus(HttpStatus.OK, reason = "Datos de peluquero editados exitosamente!")
     fun editarDatos(@Valid @RequestBody peluqueroEditarDatosDTO: PeluqueroEditarDatosDTO){
-        val maybePeluquero = getMaybePeluqueroByJWT()
-        if(!maybePeluquero.isPresent)
-            throw PeluqueroNoExisteException()
-
-        peluqueroService.update(peluqueroEditarDatosDTO.editarDatosPeluquero(maybePeluquero.get()))
+        peluqueroService.update(peluqueroEditarDatosDTO.editarDatosPeluquero(getMaybePeluqueroByJWT().get()))
     }
 
     //La idea de este desconectar no es el logout del usuario sino que deje de recibir turnos o aparecer en la busqueda de peluqueros
     @PostMapping("/desconectar")
-    fun desconectarPeluquero() : Peluquero {
-        val maybePeluquero = getMaybePeluqueroByJWT()
-        if(!maybePeluquero.isPresent)
-            throw PeluqueroNoExisteException()
-        return peluqueroService.desconectar(maybePeluquero.get())
-    }
+    fun desconectarPeluquero() : Peluquero = peluqueroService.desconectar(getMaybePeluqueroByJWT().get())
 
     //La idea de este conectar no es el login del usuario sino que pueda recibir turnos o aparecer en la busqueda de peluqueros
     @PostMapping("/conectar")
-    fun conectarPeluquero():Peluquero {
-        val maybePeluquero = getMaybePeluqueroByJWT()
-        if(!maybePeluquero.isPresent)
-            throw PeluqueroNoExisteException()
-        return peluqueroService.conectar(maybePeluquero.get())
-    }
+    fun conectarPeluquero():Peluquero = peluqueroService.conectar(getMaybePeluqueroByJWT().get())
 
     private fun getMaybePeluqueroByJWT(): Optional<Peluquero> {
         val emailPeluquero = rolService.getEmail()

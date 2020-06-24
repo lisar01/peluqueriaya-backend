@@ -8,4 +8,5 @@ import ar.edu.unq.peluqueriayabackend.model.Servicio
 interface ServicioService: GenericService<Servicio> {
     fun serviciosDelPeluquero(peluquero:Peluquero):Collection<Servicio>
     fun guardar(servicioDTO: ServicioDTO, email: String)
+    fun borrar(id: Long, emailPeluquero: String): Long
 }
