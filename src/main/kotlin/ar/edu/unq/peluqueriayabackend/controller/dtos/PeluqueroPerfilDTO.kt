@@ -16,4 +16,6 @@ interface PeluqueroPerfilDTO {
     var estado: PeluqueroState
     var descripcion: String
     var tipos: MutableSet<PeluqueroType>
+    fun getEstaDisponible() : Boolean
+    fun getEstaDesconectado() : Boolean
 }
