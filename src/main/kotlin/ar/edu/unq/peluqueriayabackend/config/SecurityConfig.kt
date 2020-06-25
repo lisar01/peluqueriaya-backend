@@ -48,7 +48,7 @@ class SecurityConfig(
                         "/peluquero/search",
                         "/peluquero/{id}").permitAll()
                 .mvcMatchers(HttpMethod.POST, "/peluquero", "/cliente").authenticated()
-                .mvcMatchers("/roles", "/perfil").authenticated()
+                .mvcMatchers("/perfil", "/puntuacion").authenticated()
                 .mvcMatchers(
                         "/cliente/editar",
                         "/turno/pedir",

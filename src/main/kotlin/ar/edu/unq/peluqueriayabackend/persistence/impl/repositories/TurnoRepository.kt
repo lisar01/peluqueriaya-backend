@@ -46,6 +46,9 @@ interface TurnoRepository : JpaRepository<Turno, Long> {
     @Query("SELECT AVG(t.puntaje) FROM Turno t WHERE t.peluquero = :paramPeluquero AND t.estado = 2 AND t.puntaje > 0")
     fun obtenerPromedioPuntuacionDeLosTurnosConPeluquero(@Param("paramPeluquero") peluquero: Peluquero): Double
 
+    @Query("SELECT AVG(t.puntaje) FROM Turno t WHERE t.peluquero.email = :emailPeluquero AND t.estado = 2 AND t.puntaje > 0")
+    fun getPuntuacionDePeluquero(@Param("emailPeluquero") email: String): Double?
+
     @Query("SELECT t FROM Turno t WHERE t.cliente = :paramCliente AND (t.estado = 2 OR t.estado = 3)")
     fun findAllConClienteYEstadoFinalizadoOCancelado(
             @Param("paramCliente") cliente: Cliente,

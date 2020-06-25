@@ -5,17 +5,22 @@ import ar.edu.unq.peluqueriayabackend.model.PeluqueroType
 import ar.edu.unq.peluqueriayabackend.model.Ubicacion
 import java.math.BigDecimal
 
-interface PeluqueroPerfilDTO {
-    var id: Long?
-    var logo: String
-    var nombre: String
-    var corteMin: BigDecimal
-    var distanciaMax: BigDecimal
-    var emailOpcional: String
-    var ubicacion: Ubicacion
-    var estado: PeluqueroState
-    var descripcion: String
-    var tipos: MutableSet<PeluqueroType>
-    fun getEstaDisponible() : Boolean
-    fun getEstaDesconectado() : Boolean
+class PeluqueroPerfilDTO(
+        peluqueroPerfilSinPuntuacionDTO: PeluqueroPerfilSinPuntuacionDTO,
+        val puntuacion: Double?) {
+
+    val id: Long? = peluqueroPerfilSinPuntuacionDTO.id
+    val logo: String = peluqueroPerfilSinPuntuacionDTO.logo
+    val nombre: String = peluqueroPerfilSinPuntuacionDTO.nombre
+    val corteMin: BigDecimal = peluqueroPerfilSinPuntuacionDTO.corteMin
+    val distanciaMax: BigDecimal = peluqueroPerfilSinPuntuacionDTO.distanciaMax
+    val emailOpcional: String = peluqueroPerfilSinPuntuacionDTO.emailOpcional
+    val ubicacion: Ubicacion = peluqueroPerfilSinPuntuacionDTO.ubicacion
+    val estado: PeluqueroState = peluqueroPerfilSinPuntuacionDTO.estado
+    val descripcion: String = peluqueroPerfilSinPuntuacionDTO.descripcion
+    val tipos: MutableSet<PeluqueroType> = peluqueroPerfilSinPuntuacionDTO.tipos
+    val estaDisponible: Boolean = peluqueroPerfilSinPuntuacionDTO.getEstaDisponible()
+    val estaDesconectado: Boolean = peluqueroPerfilSinPuntuacionDTO.getEstaDesconectado()
+
 }
+
