@@ -6,6 +6,7 @@ import ar.edu.unq.peluqueriayabackend.model.Ubicacion
 import java.math.BigDecimal
 
 interface PeluqueroPerfilDTO {
+    var id: Long?
     var logo: String
     var nombre: String
     var corteMin: BigDecimal

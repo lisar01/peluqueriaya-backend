@@ -63,10 +63,10 @@ class PeluqueroController(
         peluqueroService.save(peluqueroDTO.toPeluquero(rolService.getEmail()))
     }
 
-    @PostMapping("/editar")
-    @ResponseStatus(HttpStatus.OK, reason = "Datos de peluquero editados exitosamente!")
-    fun editarDatos(@Valid @RequestBody peluqueroEditarDatosDTO: PeluqueroEditarDatosDTO){
-        peluqueroService.update(peluqueroEditarDatosDTO.editarDatosPeluquero(getMaybePeluqueroByJWT().get()))
+    @PutMapping
+    fun editar(@Valid @RequestBody peluqueroEditarDatosDTO: PeluqueroEditarDatosDTO): Peluquero {
+        val peluqueroAModificar = getMaybePeluqueroByJWT().get()
+        return peluqueroService.update(peluqueroEditarDatosDTO.editarDatosPeluquero(peluqueroAModificar))
     }
 
     //La idea de este desconectar no es el logout del usuario sino que deje de recibir turnos o aparecer en la busqueda de peluqueros

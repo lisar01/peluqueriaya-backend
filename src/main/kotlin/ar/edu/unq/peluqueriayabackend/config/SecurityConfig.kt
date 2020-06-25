@@ -65,6 +65,7 @@ class SecurityConfig(
                         "/turno/finalizar",
                         "/turno/confirmar").access(tieneRolPeluquero)
                 .mvcMatchers(HttpMethod.GET, "/peluquero").access(tieneRolPeluquero)
+                .mvcMatchers(HttpMethod.PUT, "/peluquero").access(tieneRolPeluquero)
                 .mvcMatchers(HttpMethod.GET, "/cliente").access(tieneRolCliente)
                 .mvcMatchers(HttpMethod.PUT, "/cliente").access(tieneRolCliente)
                 .anyRequest().denyAll()
