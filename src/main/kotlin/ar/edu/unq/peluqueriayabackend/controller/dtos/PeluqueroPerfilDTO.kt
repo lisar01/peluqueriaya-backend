@@ -10,8 +10,7 @@ interface PeluqueroPerfilDTO {
     var nombre: String
     var corteMin: BigDecimal
     var distanciaMax: BigDecimal
-    var email: String
-    var emailOpcional:String
+    var emailOpcional: String
     var ubicacion: Ubicacion
     var estado: PeluqueroState
     var descripcion: String
