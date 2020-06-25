@@ -75,9 +75,9 @@ class PeluqueriayaBackendApplication : WebMvcConfigurer {
 		val clienteLalo = Cliente.Builder().
 							withNombre("Lalo").
 							withApellido("Landa").
-							withEmail("barbamdq@mdq.com").
+							withEmail("lisar.3467@gmail.com").
 							withImgPerfil("https://vignette.wikia.nocookie.net/disney/images/f/f0/Profile_-_Jiminy_Cricket.jpeg").
-							withUbicacion(Ubicacion("-34.721999", "-58.250447")).
+							withUbicacion(Ubicacion("Pasaje La Primavera 3442, 7605 Mar del Plata, Argentina", "-37.93692", "-57.55096")).
 							withNroTelefono("1100001111").
 							build()
 
@@ -86,7 +86,7 @@ class PeluqueriayaBackendApplication : WebMvcConfigurer {
 				withApellido("Grillo").
 				withEmail("cassanojoseluis97@gmail.com").
 				withImgPerfil("https://pbs.twimg.com/profile_images/958172060206841856/xNhKM5Sn.png").
-				withUbicacion(Ubicacion("-34.721999", "-58.250447")).
+				withUbicacion(Ubicacion("Humberto 1ro 464, 1878 Quilmes, Argentina", "-34.721999", "-58.250447")).
 				withNroTelefono("1100001112").
 				build()
 
@@ -100,23 +100,23 @@ class PeluqueriayaBackendApplication : WebMvcConfigurer {
 				withCorteMin(BigDecimal(250)).
 				withDistanciaMax(BigDecimal(1)).
 				withEmail("barba_peluqueria@hotmail.com").
-				withUbicacion(Ubicacion("-34.706416", "-58.278559")).
+				withUbicacion(Ubicacion("Calle 1 600, 1876 Bernal, Argentina", "-34.706416", "-58.278559")).
 				withEstado(PeluqueroState.DISPONIBLE).
 				build()
 
         //Sin logo
-        var peluquero2 = Peluquero.Builder().
+		var peluquero2 = Peluquero.Builder().
 				withLogo("https://i.pinimg.com/236x/3f/50/87/3f50871f2a2f132399894dfb4f9c73cf.jpg").
 				withNombre("La pelu").
 				withDescripcion("La mejor peluquera de zona sur!").
 				withTipos(mutableSetOf(PeluqueroType.MUJER, PeluqueroType.KIDS)).
 				withCorteMin(BigDecimal(250)).withDistanciaMax(BigDecimal(7)).
 		        withEmail("cassanojoseluis@gmail.com").
-				withUbicacion(Ubicacion("-34.725524", "-58.244012")).
+				withUbicacion(Ubicacion("Rivadavia 430, 1878 Quilmes, Argentina", "-34.71974", "-58.25303")).
 				withEstado(PeluqueroState.DISPONIBLE).
 				build()
 
-        var peluquero3 = Peluquero.Builder().
+		var peluquero3 = Peluquero.Builder().
 				withLogo("https://image.shutterstock.com/image-vector/barber-shop-logo-260nw-672396868.jpg").
 				withNombre("Pepe el barbero").
 				withDescripcion("Soy pepe grillo el peluquero con los mejores cortes!").
@@ -124,29 +124,29 @@ class PeluqueriayaBackendApplication : WebMvcConfigurer {
 				withCorteMin(BigDecimal(241)).
 				withDistanciaMax(BigDecimal(6)).
 				withEmail("cassanojoseluis97@gmail.com").
-				withUbicacion(Ubicacion("-34.72993", "-58.24491")).
+				withUbicacion(Ubicacion("Primera Junta 454, 1878 Quilmes, Argentina", "-34.72993", "-58.24491")).
 				withEstado(PeluqueroState.DISPONIBLE).
 				build()
 
-        val peluquero4MDQ = Peluquero.Builder().
+		val peluquero4MDQ = Peluquero.Builder().
 				withNombre("El barba de mardel").
 				withDescripcion("Soy el mejor barbero de Mar del Plata, despues de la playa cortate conmigo!").
 				withTipos(mutableSetOf(PeluqueroType.HOMBRE, PeluqueroType.KIDS)).
 				withCorteMin(BigDecimal(100)).
 				withDistanciaMax(BigDecimal(10)).
 		        withEmail("laotralisa@gmail.com").
-				withUbicacion(Ubicacion("-38.005004", "-57.542606")).
+				withUbicacion(Ubicacion("Avenida Juan B. Justo 200, 7603 Mar del Plata, Argentina", "-38.039", "-57.54488")).
 				withEstado(PeluqueroState.DISPONIBLE).
 				build()
 
-        var peluquero5MDQ = Peluquero.Builder().
+		var peluquero5MDQ = Peluquero.Builder().
 				withLogo("https://d1yjjnpx0p53s8.cloudfront.net/styles/logo-thumbnail/s3/0024/5278/brand.gif").
 				withNombre("La pelu de mardel").
 				withDescripcion("La mejor pelu de mar del plata, el mejor alisado... despreocupate!").
 				withTipos(mutableSetOf(PeluqueroType.MUJER)).withCorteMin(BigDecimal(300)).
 				withDistanciaMax(BigDecimal(6)).
 				withEmail("lisar.3467@gmail.com").
-				withUbicacion(Ubicacion("-38.003655", "-57.554497")).
+				withUbicacion(Ubicacion("Hipólito Yrigoyen 2409, 7600 Mar del Plata, Argentina", "-38.003655", "-57.554497")).
 				withEstado(PeluqueroState.DISPONIBLE).
 				build()
 
@@ -158,7 +158,7 @@ class PeluqueriayaBackendApplication : WebMvcConfigurer {
 		withCorteMin(BigDecimal(200)).
 		withDistanciaMax(BigDecimal(6)).
 		withEmail("lopibito@gmail.com").
-		withUbicacion(Ubicacion("-34.722486", "-58.256462")).
+		withUbicacion(Ubicacion("Leandro N. Alem 214, 1876 Bernal, Argentina", "-34.70998", "-58.28785")).
 		withEstado(PeluqueroState.DISPONIBLE).
 		build()
 
@@ -170,7 +170,7 @@ class PeluqueriayaBackendApplication : WebMvcConfigurer {
 		withCorteMin(BigDecimal(145)).
 		withDistanciaMax(BigDecimal(7.2)).
 		withEmail("zisoooo@gmail.com").
-		withUbicacion(Ubicacion("-34.722486", "-58.256462")).
+		withUbicacion(Ubicacion("Leandro N. Alem 214, 1878 Quilmes, Argentina","-34.72269", "-58.2565")).
 		withEstado(PeluqueroState.DISPONIBLE).
 		build()
 
@@ -182,7 +182,7 @@ class PeluqueriayaBackendApplication : WebMvcConfigurer {
 		withCorteMin(BigDecimal(80.5)).
 		withDistanciaMax(BigDecimal(6)).
 		withEmail("el-rapador777@gmail.com").
-		withUbicacion(Ubicacion("-34.722486", "-58.256462")).
+		withUbicacion(Ubicacion("Leandro N. Alem 322, 1878 Quilmes, Argentina", "-34.72156", "-58.25456")).
 		withEstado(PeluqueroState.DISPONIBLE).
 		build()
 
@@ -194,7 +194,7 @@ class PeluqueriayaBackendApplication : WebMvcConfigurer {
 		withCorteMin(BigDecimal(150.50)).
 		withDistanciaMax(BigDecimal(6)).
 		withEmail("pilot213123213@gmail.com").
-		withUbicacion(Ubicacion("-34.722486", "-58.256462")).
+		withUbicacion(Ubicacion("Calle 11 246, 1878 Quilmes, Argentina", "-34.72006", "-58.25786")).
 		withEstado(PeluqueroState.DISPONIBLE).
 		build()
 
@@ -206,7 +206,7 @@ class PeluqueriayaBackendApplication : WebMvcConfigurer {
 		withCorteMin(BigDecimal(250)).
 		withDistanciaMax(BigDecimal(7)).
 		withEmail("manopla-de-tijera889@gmail.com").
-		withUbicacion(Ubicacion("-34.722486", "-58.256462")).
+		withUbicacion(Ubicacion("Calle 52 370, 1878 Quilmes, Argentina", "-34.71944", "-58.26177")).
 		withEstado(PeluqueroState.DISPONIBLE).
 		build()
 

@@ -1,7 +1,7 @@
 package ar.edu.unq.peluqueriayabackend.service.impl
 
 import ar.edu.unq.peluqueriayabackend.controller.dtos.Items
-import ar.edu.unq.peluqueriayabackend.controller.dtos.UbicacionDTO
+import ar.edu.unq.peluqueriayabackend.model.Ubicacion
 import ar.edu.unq.peluqueriayabackend.service.MapasService
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.stereotype.Service
@@ -25,7 +25,7 @@ class MapasServiceImpl(
                 .bodyToMono()
     }
 
-    override fun obtenerUbicacionConDireccion(direccion: String): Mono<List<UbicacionDTO>> {
+    override fun obtenerUbicacionConDireccion(direccion: String): Mono<List<Ubicacion>> {
         return geocodClient.get()
                 .uri{it.queryParam("apiKey", apiKey)
                         .queryParam("q", direccion)
@@ -37,7 +37,7 @@ class MapasServiceImpl(
                 .bodyToMono<Items>()
                 .map { it.items
                         .filter { item ->  item.resultType == "houseNumber" }
-                        .map { item ->  item.getUbicacionDTO() }
+                        .map { item ->  item.aUbicacion() }
                 }
     }
 

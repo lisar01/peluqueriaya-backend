@@ -61,7 +61,7 @@ class TurnoConDireccionDTO(
             var estado: TurnoState = TurnoState.ESPERANDO,
             var puntaje: Int = 0,
             var corteMinInfo: BigDecimal = BigDecimal.ZERO,
-            var ubicacionDelTurno: Ubicacion = Ubicacion("",""),
+            var ubicacionDelTurno: Ubicacion = Ubicacion("","",""),
             var direccionDelTurno:String = "",
             var id: Long? = null
     ){

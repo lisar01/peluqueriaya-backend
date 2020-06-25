@@ -98,7 +98,7 @@ class Turno (
             var estado: TurnoState = TurnoState.ESPERANDO,
             var puntaje: Int = 0,
             var corteMinInfo: BigDecimal = BigDecimal.ZERO,
-            var ubicacionDelTurno: Ubicacion = Ubicacion("","")
+            var ubicacionDelTurno: Ubicacion = Ubicacion("","","")
     ){
         fun build():Turno {
             return Turno(peluquero,cliente,serviciosSolicitados,

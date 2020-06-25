@@ -51,7 +51,7 @@ class PeluqueroServiceImpl(
     @Transactional
     override fun getServiciosByEmail(email: String): List<Servicio> = servicioDAO.findByPeluqueroEmail(email)
 
-    //No va con @transactional porque no persiste nada, solo consulta datos
+    @Transactional
     override fun buscar(ubicacion: Ubicacion, filtro: Filtro?, pageable: Pageable): Page<Peluquero> {
                 return peluqueroDAO.findAllByUbicacionCercanaAndNombreLikeAndContainsTipoAndContainsTipoDeServicion(5.3,
                 ubicacion.getLongitudeAsDouble(), ubicacion.getLatitudeAsDouble(),

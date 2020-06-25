@@ -56,10 +56,10 @@ class GeoDistanceServiceImplTest {
         val geoDistance = GeoDistanceServiceImpl()
 
         //UNQ (Universidad Nacional de Quilmes)
-        val unq = Ubicacion("-34.706416","-58.278559")
+        val unq = Ubicacion("", "-34.706416","-58.278559")
 
         //Mar del Plata (mdq)
-        val mdq = Ubicacion("-38.005004","-57.542606")
+        val mdq = Ubicacion("", "-38.005004","-57.542606")
 
         Assertions.assertEquals(geoDistance.distanciaUbicacionesEnKM(unq,mdq),372.66)
 
