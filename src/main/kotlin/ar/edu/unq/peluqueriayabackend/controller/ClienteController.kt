@@ -26,7 +26,7 @@ class ClienteController(val clienteService: ClienteService, val rolService: RolS
     }
 
     @PutMapping
-    fun editarDatos(@Valid @RequestBody clienteEditarDatosDTO: ClienteEditarDatosDTO): Cliente {
+    fun editar(@Valid @RequestBody clienteEditarDatosDTO: ClienteEditarDatosDTO): Cliente {
         val clienteAModificar = clienteService.getByEmail(rolService.getEmail()).get()
         return clienteService.update(clienteEditarDatosDTO.editarDatosCliente(clienteAModificar))
     }
