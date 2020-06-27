@@ -1,5 +1,6 @@
 package ar.edu.unq.peluqueriayabackend.controller
 
+import ar.edu.unq.peluqueriayabackend.controller.dtos.ClienteEditarDatosDTO
 import ar.edu.unq.peluqueriayabackend.exception.ClienteYaExisteException
 import ar.edu.unq.peluqueriayabackend.model.Cliente
 import ar.edu.unq.peluqueriayabackend.service.ClienteService
@@ -22,6 +23,12 @@ class ClienteController(val clienteService: ClienteService, val rolService: RolS
             throw ClienteYaExisteException()
         }
         clienteService.save(cliente)
+    }
+
+    @PutMapping
+    fun editar(@Valid @RequestBody clienteEditarDatosDTO: ClienteEditarDatosDTO): Cliente {
+        val clienteAModificar = clienteService.getByEmail(rolService.getEmail()).get()
+        return clienteService.update(clienteEditarDatosDTO.editarDatosCliente(clienteAModificar))
     }
 
 }

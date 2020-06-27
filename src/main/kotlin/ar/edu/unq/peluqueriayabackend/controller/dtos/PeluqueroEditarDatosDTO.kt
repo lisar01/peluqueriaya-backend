@@ -10,36 +10,34 @@ import javax.validation.constraints.Max
 import javax.validation.constraints.Min
 import javax.validation.constraints.Size
 
-data class PeluqueroDTO(
+class PeluqueroEditarDatosDTO(
         @field:Size(min = 10, max=60, message = "{nombre.size}")
-        val nombre: String,
+        val nombre: String?,
         @field:URL(message = "{logo.invalido}")
-        val logo: String,
+        val logo: String?,
         @field:Email(message = "{email.invalido}")
-        val emailOpcional: String,
+        val emailOpcional: String?,
         @field:Size(min = 20, max=200, message = "{descripcion.largo}")
-        val descripcion: String,
-        val ubicacion: Ubicacion,
+        val descripcion: String?,
         @field:Size(min = 1, message = "{tipos.min}")
-        val tipos: Set<PeluqueroType>,
+        val tipos: MutableSet<PeluqueroType>?,
         @field:Min(value = 1, message = "{distanciaMax.largo}")
         @field:Max(value = 25, message = "{distanciaMax.largo}")
-        val distanciaMax: BigDecimal? = 20.toBigDecimal(),
+        val distanciaMax: BigDecimal?,
         @field:Min(value = 70, message = "{corteMin.largo}")
         @field:Max(value = 300, message = "{corteMin.largo}")
-        val corteMin: BigDecimal? = 70.toBigDecimal()) {
-
-        fun toPeluquero(email: String): Peluquero =
-                Peluquero.Builder()
-                        .withNombre(nombre)
-                        .withLogo(logo)
-                        .withEmail(email)
-                        .withEmailOpcional(emailOpcional)
-                        .withDescripcion(descripcion)
-                        .withDistanciaMax(distanciaMax!!)
-                        .withCorteMin(corteMin!!)
-                        .withUbicacion(ubicacion)
-                        .withTipos(tipos.toMutableSet())
-                        .build()
-
+        val corteMin: BigDecimal?,
+        val ubicacion: Ubicacion?
+) {
+    fun editarDatosPeluquero(peluquero: Peluquero) : Peluquero {
+        peluquero.nombre = nombre?:peluquero.nombre
+        peluquero.descripcion = descripcion?:peluquero.descripcion
+        peluquero.emailOpcional = emailOpcional?:peluquero.emailOpcional
+        peluquero.logo = logo?:peluquero.logo
+        peluquero.corteMin = corteMin?:peluquero.corteMin
+        peluquero.distanciaMax = distanciaMax?:peluquero.distanciaMax
+        peluquero.tipos = tipos?:peluquero.tipos
+        peluquero.ubicacion = ubicacion?:peluquero.ubicacion
+        return peluquero
+    }
 }

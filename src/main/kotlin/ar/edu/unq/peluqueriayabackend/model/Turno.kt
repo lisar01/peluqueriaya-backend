@@ -80,6 +80,12 @@ class Turno (
 
     fun getClienteFullName():String = cliente.getFullName()
 
+    fun getPeluqueroName():String = peluquero.nombre
+
+    fun getPeluqueroEmailOpcional():String = peluquero.emailOpcional
+
+    fun getPeluqueroLogo():String = peluquero.logo
+
     data class Builder(
             var peluquero: Peluquero = Peluquero.Builder().withCorteMin(BigDecimal.ZERO).build(),
             var cliente: Cliente = Cliente.Builder().build(),
@@ -92,7 +98,7 @@ class Turno (
             var estado: TurnoState = TurnoState.ESPERANDO,
             var puntaje: Int = 0,
             var corteMinInfo: BigDecimal = BigDecimal.ZERO,
-            var ubicacionDelTurno: Ubicacion = Ubicacion("","")
+            var ubicacionDelTurno: Ubicacion = Ubicacion("","","")
     ){
         fun build():Turno {
             return Turno(peluquero,cliente,serviciosSolicitados,

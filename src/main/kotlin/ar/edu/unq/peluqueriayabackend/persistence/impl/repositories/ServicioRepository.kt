@@ -9,4 +9,5 @@ import org.springframework.stereotype.Repository
 interface ServicioRepository : JpaRepository<Servicio, Long> {
 
     fun findAllByPeluquero(peluquero: Peluquero): Collection<Servicio>
+    fun findByPeluqueroEmail(email: String): List<Servicio>
 }

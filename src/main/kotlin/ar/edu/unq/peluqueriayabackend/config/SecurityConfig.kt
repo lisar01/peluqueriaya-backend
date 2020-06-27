@@ -2,6 +2,7 @@ package ar.edu.unq.peluqueriayabackend.config
 
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.context.annotation.Bean
+import org.springframework.http.HttpMethod
 import org.springframework.security.config.Customizer.withDefaults
 import org.springframework.security.config.annotation.web.builders.HttpSecurity
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity
@@ -46,14 +47,27 @@ class SecurityConfig(
                         "/servicio/tipos",
                         "/peluquero/search",
                         "/peluquero/{id}").permitAll()
-                .mvcMatchers("/roles", "/cliente", "/peluquero").authenticated()
-                .mvcMatchers("/turno/pedir", "/turno/cancelar").access(tieneRolCliente)
+                .mvcMatchers(HttpMethod.POST, "/peluquero", "/cliente").authenticated()
+                .mvcMatchers("/perfil", "/puntuacion").authenticated()
                 .mvcMatchers(
-                        "/peluquero",
+                        "/cliente/editar",
+                        "/turno/pedir",
+                        "/turno/cancelar",
+                        "/turno/cliente",
+                        "/turno/calificar").access(tieneRolCliente)
+                .mvcMatchers(
+                        "/servicio",
                         "/peluquero/desconectar",
                         "/peluquero/conectar",
+                        "/peluquero/servicios",
+                        "/peluquero/editar",
                         "/turno/peluquero",
-                        "/turno/finalizar","/turno/confirmar").access(tieneRolPeluquero)
+                        "/turno/finalizar",
+                        "/turno/confirmar").access(tieneRolPeluquero)
+                .mvcMatchers(HttpMethod.GET, "/peluquero").access(tieneRolPeluquero)
+                .mvcMatchers(HttpMethod.PUT, "/peluquero").access(tieneRolPeluquero)
+                .mvcMatchers(HttpMethod.GET, "/cliente").access(tieneRolCliente)
+                .mvcMatchers(HttpMethod.PUT, "/cliente").access(tieneRolCliente)
                 .anyRequest().denyAll()
                 .and()
                 .oauth2ResourceServer().jwt()

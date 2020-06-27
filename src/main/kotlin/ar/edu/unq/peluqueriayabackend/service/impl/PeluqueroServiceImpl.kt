@@ -3,9 +3,11 @@ package ar.edu.unq.peluqueriayabackend.service.impl
 import ar.edu.unq.peluqueriayabackend.controller.dtos.Filtro
 import ar.edu.unq.peluqueriayabackend.exception.PeluqueroNoSePuedeDesconectar
 import ar.edu.unq.peluqueriayabackend.model.Peluquero
+import ar.edu.unq.peluqueriayabackend.model.Servicio
 import ar.edu.unq.peluqueriayabackend.model.Turno
 import ar.edu.unq.peluqueriayabackend.model.Ubicacion
 import ar.edu.unq.peluqueriayabackend.persistence.PeluqueroDAO
+import ar.edu.unq.peluqueriayabackend.persistence.ServicioDAO
 import ar.edu.unq.peluqueriayabackend.persistence.TurnoDAO
 import ar.edu.unq.peluqueriayabackend.service.PeluqueroService
 import ar.edu.unq.peluqueriayabackend.service.emailSender.impl.PeluqueriaYaEmailSender
@@ -20,8 +22,8 @@ import javax.transaction.Transactional
 class PeluqueroServiceImpl(
         @Autowired val peluqueroDAO: PeluqueroDAO,
         @Autowired val turnoDAO: TurnoDAO,
-        @Autowired val peluqueriaYaEmailSender: PeluqueriaYaEmailSender
-
+        @Autowired val peluqueriaYaEmailSender: PeluqueriaYaEmailSender,
+        val servicioDAO: ServicioDAO
 ): PeluqueroService {
 
     override fun get(id: Long): Optional<Peluquero> {
@@ -46,7 +48,10 @@ class PeluqueroServiceImpl(
         return peluqueroDAO.getByEmail(emailPeluquero)
     }
 
-    //No va con @transactional porque no persiste nada, solo consulta datos
+    @Transactional
+    override fun getServiciosByEmail(email: String): List<Servicio> = servicioDAO.findByPeluqueroEmail(email)
+
+    @Transactional
     override fun buscar(ubicacion: Ubicacion, filtro: Filtro?, pageable: Pageable): Page<Peluquero> {
                 return peluqueroDAO.findAllByUbicacionCercanaAndNombreLikeAndContainsTipoAndContainsTipoDeServicion(5.3,
                 ubicacion.getLongitudeAsDouble(), ubicacion.getLatitudeAsDouble(),

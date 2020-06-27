@@ -43,7 +43,9 @@ class PeluqueroTest {
         val serviciosP2 = mutableListOf<Servicio>()
 
         val servicio1 = Servicio.Builder().build()
+        servicio1.id = 1
         val servicio2 = Servicio.Builder().build()
+        servicio2.id = 2
         val servicio3 = Servicio.Builder().build()
         serviciosP1.add(servicio1)
         serviciosP1.add(servicio2)
@@ -56,9 +58,9 @@ class PeluqueroTest {
         val peluquero1 = Peluquero.Builder().withServicios(serviciosP1).build()
         val peluquero2 = Peluquero.Builder().withServicios(serviciosP2).build()
 
-        peluquero1.eliminarServicio(servicio1)
+        peluquero1.eliminarServicio(servicio1.id!!)
 
-        peluquero2.eliminarServicio(servicio2)
+        peluquero2.eliminarServicio(servicio2.id!!)
 
         assertEquals(peluquero1.servicios.size,2)
         assertEquals(peluquero2.servicios.size,2)

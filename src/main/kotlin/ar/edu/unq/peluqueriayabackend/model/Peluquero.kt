@@ -1,5 +1,6 @@
 package ar.edu.unq.peluqueriayabackend.model
 
+import com.fasterxml.jackson.annotation.JsonIgnore
 import org.hibernate.annotations.NaturalId
 import java.math.BigDecimal
 import java.time.LocalDateTime
@@ -14,6 +15,7 @@ class Peluquero(
         var corteMin: BigDecimal,
         var distanciaMax: BigDecimal = BigDecimal(0),
         @NaturalId
+        @field:JsonIgnore
         var email: String,
         var emailOpcional:String,
         var ubicacion:Ubicacion,
@@ -75,9 +77,7 @@ class Peluquero(
         servicios.add(servicio)
     }
 
-    fun eliminarServicio(servicio : Servicio) {
-        servicios.remove(servicio)
-    }
+    fun eliminarServicio(id: Long): Boolean = servicios.removeIf {  it.id == id  }
 
     fun agregarTipo(tipo:PeluqueroType) {
         tipos.add(tipo)
@@ -94,7 +94,7 @@ class Peluquero(
             var distanciaMax: BigDecimal = BigDecimal(0),
             var email: String = "",
             var emailOpcional:String= "",
-            var ubicacion:Ubicacion = Ubicacion("",""),
+            var ubicacion:Ubicacion = Ubicacion("","0","0"),
             var estado: PeluqueroState = PeluqueroState.DISPONIBLE,
             var descripcion: String = "",
             var tipos: MutableSet<PeluqueroType> = mutableSetOf(),

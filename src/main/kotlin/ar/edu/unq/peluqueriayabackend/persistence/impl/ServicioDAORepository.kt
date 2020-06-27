@@ -33,4 +33,8 @@ class ServicioDAORepository(val servicioRepository: ServicioRepository) : Servic
     override fun serviciosDelPeluquero(peluquero: Peluquero): Collection<Servicio> {
         return servicioRepository.findAllByPeluquero(peluquero)
     }
+
+    override fun findByPeluqueroEmail(email: String): List<Servicio> {
+        return servicioRepository.findByPeluqueroEmail(email)
+    }
 }

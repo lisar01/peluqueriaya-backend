@@ -1,16 +1,15 @@
 package ar.edu.unq.peluqueriayabackend.persistence.impl.repositories
 
+import ar.edu.unq.peluqueriayabackend.model.Cliente
 import ar.edu.unq.peluqueriayabackend.model.Peluquero
 import ar.edu.unq.peluqueriayabackend.model.Turno
 import ar.edu.unq.peluqueriayabackend.model.TurnoState
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
-import org.springframework.data.domain.Sort
 import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.data.jpa.repository.Query
 import org.springframework.data.repository.query.Param
 import org.springframework.stereotype.Repository
-import java.util.*
 
 @Repository
 interface TurnoRepository : JpaRepository<Turno, Long> {
@@ -41,5 +40,24 @@ interface TurnoRepository : JpaRepository<Turno, Long> {
     @Query("SELECT t FROM Turno t WHERE t.peluquero = :paramPeluquero AND (t.estado = 0 OR t.estado = 1)")
     fun findAllByPeluqueroAndEstadoTurnoConfirmadoOPendiente(
             @Param("paramPeluquero") peluquero: Peluquero,
-            pageable: Pageable): Page<Turno>
+            pageable: Pageable
+    ): Page<Turno>
+
+    @Query("SELECT AVG(t.puntaje) FROM Turno t WHERE t.peluquero = :paramPeluquero AND t.estado = 2 AND t.puntaje > 0")
+    fun obtenerPromedioPuntuacionDeLosTurnosConPeluquero(@Param("paramPeluquero") peluquero: Peluquero): Double
+
+    @Query("SELECT AVG(t.puntaje) FROM Turno t WHERE t.peluquero.email = :emailPeluquero AND t.estado = 2 AND t.puntaje > 0")
+    fun getPuntuacionDePeluquero(@Param("emailPeluquero") email: String): Double?
+
+    @Query("SELECT t FROM Turno t WHERE t.cliente = :paramCliente AND (t.estado = 2 OR t.estado = 3)")
+    fun findAllConClienteYEstadoFinalizadoOCancelado(
+            @Param("paramCliente") cliente: Cliente,
+            pageable: Pageable
+    ): Page<Turno>
+
+    @Query("SELECT t FROM Turno t WHERE t.cliente = :paramCliente AND (t.estado = 0 OR t.estado = 1 OR t.estado = 4)")
+    fun findAllConClienteYEstadoEnEsperaOPendienteOConfirmado(
+            @Param("paramCliente") cliente: Cliente,
+            pageable: Pageable
+    ): Page<Turno>
 }
