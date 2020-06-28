@@ -23,7 +23,6 @@ import javax.validation.Valid
 @Validated
 class TurnoController(
         val rolService: RolService,
-        val mapasService: MapasService,
         @Autowired val turnoService: TurnoService,
         @Autowired val clienteService: ClienteService,
         @Autowired val peluqueroService: PeluqueroService)
@@ -38,9 +37,7 @@ class TurnoController(
         }else{
             turnoService.obtenerTurnosPendientesOConfirmadosDelPeluquero(maybePeluquero.get(),pageable)
         }
-
-        //Se agrega la direccion de cada turno
-        return turnos.map { turnoConDireccionDeLaUbicacion(it) }
+        return turnos.map { convertTurnoToTurnoConDireccionDTO(it) }
     }
 
     @GetMapping("/cliente")
@@ -54,9 +51,7 @@ class TurnoController(
         }else{
             turnoService.obtenerTurnosEnEsperaOPendientesOConfirmadosDelCliente(maybeCliente.get(),pageable)
         }
-
-        //Se agrega la direccion de cada turno
-        return turnos.map { turnoConDireccionDeLaUbicacion(it) }
+        return turnos.map { convertTurnoToTurnoConDireccionDTO(it) }
     }
 
     @PostMapping("/pedir")
@@ -136,9 +131,7 @@ class TurnoController(
         return maybeTurno.get()
     }
 
-    private fun turnoConDireccionDeLaUbicacion(turno:Turno) : TurnoConDireccionDTO {
-        val request = mapasService.obtenerUbicacionConCoords("${turno.ubicacionDelTurno.latitude},${turno.ubicacionDelTurno.longitude}").block()
-        val direccion = request!!.items[0].title
-        return TurnoConDireccionDTO.Builder().withTurno(turno).withDireccionDelTurno(direccion).build()
+    private fun convertTurnoToTurnoConDireccionDTO(turno:Turno) : TurnoConDireccionDTO {
+        return TurnoConDireccionDTO.Builder().withTurno(turno).build()
     }
 }

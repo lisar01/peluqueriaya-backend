@@ -84,10 +84,9 @@ class TurnoConDireccionDTO(
             puntaje = turno.puntaje
             corteMinInfo = turno.corteMinInfo
             ubicacionDelTurno = turno.ubicacionDelTurno
+            direccionDelTurno = turno.ubicacionDelTurno.direccion
             id = turno.id
         }
-
-        fun withDireccionDelTurno(direccionDelTurno: String) = apply { this.direccionDelTurno = direccionDelTurno }
 
     }
 }
