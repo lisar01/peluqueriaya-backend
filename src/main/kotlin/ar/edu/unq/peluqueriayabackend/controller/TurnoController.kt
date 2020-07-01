@@ -43,7 +43,6 @@ class TurnoController(
     @GetMapping("/cliente")
     fun turnosDelCliente(@Valid esHistorico: Boolean, pageable: Pageable) : Page<TurnoConDireccionDTO> {
         val maybeCliente = getMaybeClienteByJWT()
-
         //Si esHistorico retorna los turnos FINALIZADOS o CANCELADOS
         // sino los turnos PENDIENTES o CONFIRMADOS o EN ESPERA
         val turnos = if(esHistorico){
