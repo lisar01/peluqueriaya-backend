@@ -1,7 +1,8 @@
 package ar.edu.unq.peluqueriayabackend.service.impl
 
-import ar.edu.unq.peluqueriayabackend.controller.dtos.PeluqueroPerfilDTO
+import ar.edu.unq.peluqueriayabackend.controller.dtos.peluquero.PeluqueroPerfilDTO
 import ar.edu.unq.peluqueriayabackend.controller.dtos.PerfilesDTO
+import ar.edu.unq.peluqueriayabackend.controller.dtos.peluquero.PeluqueroMapper
 import ar.edu.unq.peluqueriayabackend.persistence.impl.repositories.ClienteRepository
 import ar.edu.unq.peluqueriayabackend.persistence.impl.repositories.PeluqueroRepository
 import ar.edu.unq.peluqueriayabackend.persistence.impl.repositories.TurnoRepository
@@ -34,7 +35,7 @@ class RolServiceImpl(
     @Transactional
     override fun getPerfiles(email: String): PerfilesDTO {
         val peluqueroPerfilDTO = peluqueroRepository.queryByEmail(email)?.let {
-            PeluqueroPerfilDTO(it, turnoRepository.getPuntuacionDePeluquero(email))
+            PeluqueroMapper.peluqueroSinPuntacionADto(turnoRepository.getPuntuacionDePeluquero(email), it)
         }
         return PerfilesDTO(clienteRepository.findByEmail(email), peluqueroPerfilDTO)
     }

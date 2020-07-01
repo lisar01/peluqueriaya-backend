@@ -1,4 +1,4 @@
-package ar.edu.unq.peluqueriayabackend.controller.dtos
+package ar.edu.unq.peluqueriayabackend.controller.dtos.peluquero
 
 import ar.edu.unq.peluqueriayabackend.model.*
 import java.math.BigDecimal
@@ -53,7 +53,7 @@ class PeluqueroConPuntuacionDTO(
             var puntuacionPromedio: Double = 0.toDouble()
     ){
 
-        fun build(): PeluqueroConPuntuacionDTO{
+        fun build(): PeluqueroConPuntuacionDTO {
             return PeluqueroConPuntuacionDTO(logo, nombre, corteMin,
                     distanciaMax, email, emailOpcional, ubicacion,
                     estado, descripcion, tipos, servicios, ultimoLogin,
