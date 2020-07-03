@@ -67,11 +67,15 @@ class PeluqueroController(
 
     //La idea de este desconectar no es el logout del usuario sino que deje de recibir turnos o aparecer en la busqueda de peluqueros
     @PostMapping("/desconectar")
-    fun desconectarPeluquero(): Peluquero = peluqueroService.desconectar(getMaybePeluqueroByJWT().get())
+    fun desconectarPeluquero() {
+        peluqueroService.desconectar(getMaybePeluqueroByJWT().get())
+    }
 
     //La idea de este conectar no es el login del usuario sino que pueda recibir turnos o aparecer en la busqueda de peluqueros
     @PostMapping("/conectar")
-    fun conectarPeluquero(): Peluquero = peluqueroService.conectar(getMaybePeluqueroByJWT().get())
+    fun conectarPeluquero() {
+        peluqueroService.conectar(getMaybePeluqueroByJWT().get())
+    }
 
     private fun getMaybePeluqueroByJWT(): Optional<Peluquero> {
         val emailPeluquero = rolService.getEmail()
