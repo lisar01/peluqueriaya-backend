@@ -42,6 +42,7 @@ object PeluqueroMapper {
                     peluqueroSinPuntuacion.descripcion,
                     peluqueroSinPuntuacion.tipos,
                     peluqueroSinPuntuacion.getEstaDesconectado(),
+                    peluqueroSinPuntuacion.getEstaDisponible(),
                     puntuacion)
 
     fun peluqueroADto(peluquero: Peluquero): PeluqueroPerfilDTO =
@@ -55,6 +56,7 @@ object PeluqueroMapper {
                     peluquero.ubicacion,
                     peluquero.descripcion,
                     peluquero.tipos,
-                    peluquero.getEstaDesconectado())
+                    peluquero.getEstaDesconectado(),
+                    peluquero.getEstaDisponible())
 
 }

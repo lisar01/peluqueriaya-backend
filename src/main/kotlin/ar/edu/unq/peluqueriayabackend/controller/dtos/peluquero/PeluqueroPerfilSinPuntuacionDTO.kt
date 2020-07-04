@@ -15,4 +15,5 @@ interface PeluqueroPerfilSinPuntuacionDTO {
     var descripcion: String
     var tipos: MutableSet<PeluqueroType>
     fun getEstaDesconectado(): Boolean
+    fun getEstaDisponible(): Boolean
 }

@@ -59,7 +59,7 @@ class PeluqueroServiceImpl(
     }
 
     @Transactional
-    override fun desconectar(peluquero: Peluquero) : Peluquero {
+    override fun desconectar(peluquero: Peluquero) {
         peluquero.desconectar()
 
         if(!peluquero.getEstaDesconectado())
@@ -74,12 +74,12 @@ class PeluqueroServiceImpl(
             peluqueriaYaEmailSender.enviarMailAlClienteQueSeCanceloElTurno(it)
         }
 
-        return peluqueroDAO.save(peluquero)
+        peluqueroDAO.save(peluquero)
     }
 
     @Transactional
-    override fun conectar(peluquero: Peluquero): Peluquero {
+    override fun conectar(peluquero: Peluquero) {
         peluquero.conectar()
-        return peluqueroDAO.save(peluquero)
+        peluqueroDAO.save(peluquero)
     }
 }

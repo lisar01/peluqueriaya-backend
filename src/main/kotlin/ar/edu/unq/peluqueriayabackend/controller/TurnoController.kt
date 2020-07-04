@@ -84,8 +84,8 @@ class TurnoController(
     }
 
     @PostMapping("/finalizar")
-    fun finalizarTurno(@Valid @RequestBody turnoDTO: TurnoDTO):Turno {
-        return turnoService.finalizarTurno(this.validarIdTurno(turnoDTO.idTurno))
+    fun finalizarTurno(@Valid @RequestBody turnoDTO: TurnoDTO): Boolean {
+        return turnoService.finalizarTurno(this.validarIdTurno(turnoDTO.idTurno)).peluquero.getEstaDisponible()
     }
 
     @PostMapping("/cancelar")

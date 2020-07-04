@@ -15,5 +15,6 @@ class PeluqueroPerfilDTO(
         val descripcion: String,
         val tipos: MutableSet<PeluqueroType>,
         val estaDesconectado: Boolean,
+        val estaDisponible: Boolean,
         val puntuacion: Double? = null)
 
