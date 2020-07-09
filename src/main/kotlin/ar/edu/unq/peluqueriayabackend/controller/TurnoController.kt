@@ -80,17 +80,17 @@ class TurnoController(
 
     @PostMapping("/confirmar")
     fun confirmarTurno(@Valid @RequestBody turnoDTO: TurnoDTO):Turno {
-        return turnoService.confirmarTurno(this.validarIdTurno(turnoDTO.idTurno))
+        return turnoService.confirmarTurno(this.validarIdTurnoPeluquero(turnoDTO.idTurno))
     }
 
     @PostMapping("/finalizar")
     fun finalizarTurno(@Valid @RequestBody turnoDTO: TurnoDTO): Boolean {
-        return turnoService.finalizarTurno(this.validarIdTurno(turnoDTO.idTurno)).peluquero.getEstaDisponible()
+        return turnoService.finalizarTurno(this.validarIdTurnoPeluquero(turnoDTO.idTurno)).peluquero.getEstaDisponible()
     }
 
     @PostMapping("/cancelar")
     fun cancelarTurno(@Valid @RequestBody turnoDTO: TurnoDTO) : Turno {
-        val turno = this.validarIdTurno(turnoDTO.idTurno)
+        val turno = this.validarIdTurnoCliente(turnoDTO.idTurno)
         if(! turno.getEstaEsperando())
             throw TurnoNoPuedeSerCancelado()
         return turnoService.cancelarTurno(turno)
@@ -98,7 +98,7 @@ class TurnoController(
 
     @PostMapping("/calificar")
     fun calificarTurno(@Valid @RequestBody calificacionTurnoDTO: CalificacionTurnoDTO):Turno {
-        val turno = this.validarIdTurno(calificacionTurnoDTO.idTurno)
+        val turno = this.validarIdTurnoCliente(calificacionTurnoDTO.idTurno)
 
         if(!turno.getEstaFinalizado())
             throw TurnoNoSePuedeCalificar()
@@ -119,12 +119,24 @@ class TurnoController(
         return clienteService.getByEmail(emailCliente)
     }
 
-    private fun validarIdTurno(idTurno: Long) : Turno {
+    private fun validarIdTurnoCliente(idTurno: Long) : Turno {
         val maybeTurno = turnoService.get(idTurno)
         if(! maybeTurno.isPresent)
             throw TurnoNoExisteException(idTurno)
 
         if(maybeTurno.get().getClienteId() != getMaybeClienteByJWT().get().id)
+            throw Unauthorized("No tiene acceso a este recurso")
+
+        return maybeTurno.get()
+    }
+
+    private fun validarIdTurnoPeluquero(idTurno: Long) : Turno {
+        val maybePeluquero = getMaybePeluqueroByJWT()
+        val maybeTurno = turnoService.get(idTurno)
+        if(! maybeTurno.isPresent)
+            throw TurnoNoExisteException(idTurno)
+
+        if(maybeTurno.get().getPeluqueroId()!! != maybePeluquero.get().id)
             throw Unauthorized("No tiene acceso a este recurso")
 
         return maybeTurno.get()
