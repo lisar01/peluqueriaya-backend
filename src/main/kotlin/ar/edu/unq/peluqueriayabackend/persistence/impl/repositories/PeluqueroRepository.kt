@@ -1,6 +1,6 @@
 package ar.edu.unq.peluqueriayabackend.persistence.impl.repositories
 
-import ar.edu.unq.peluqueriayabackend.controller.dtos.PeluqueroPerfilSinPuntuacionDTO
+import ar.edu.unq.peluqueriayabackend.controller.dtos.peluquero.PeluqueroPerfilSinPuntuacionDTO
 import ar.edu.unq.peluqueriayabackend.model.Peluquero
 import ar.edu.unq.peluqueriayabackend.model.PeluqueroType
 import ar.edu.unq.peluqueriayabackend.model.ServicioType

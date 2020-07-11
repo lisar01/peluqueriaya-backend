@@ -11,8 +11,8 @@ import java.util.*
 
 interface PeluqueroService:GenericService<Peluquero> {
     fun buscar(ubicacion: Ubicacion, filtro: Filtro?, pageable: Pageable): Page<Peluquero>
-    fun desconectar(peluquero: Peluquero):Peluquero
-    fun conectar(peluquero: Peluquero): Peluquero
+    fun desconectar(peluquero: Peluquero)
+    fun conectar(peluquero: Peluquero)
     fun getByEmail(emailPeluquero: String): Optional<Peluquero>
     fun getServiciosByEmail(email: String): List<Servicio>
 }

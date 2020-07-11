@@ -157,7 +157,7 @@ class PeluqueriayaBackendApplication : WebMvcConfigurer {
 		withTipos(mutableSetOf(PeluqueroType.HOMBRE, PeluqueroType.KIDS)).
 		withCorteMin(BigDecimal(200)).
 		withDistanciaMax(BigDecimal(6)).
-		withEmail("lopibito@gmail.com").
+		withEmail("viendasapp@gmail.com").
 		withUbicacion(Ubicacion("Leandro N. Alem 214, 1876 Bernal, Argentina", "-34.70998", "-58.28785")).
 		withEstado(PeluqueroState.DISPONIBLE).
 		build()
@@ -169,7 +169,7 @@ class PeluqueriayaBackendApplication : WebMvcConfigurer {
 		withTipos(mutableSetOf(PeluqueroType.HOMBRE, PeluqueroType.MUJER)).
 		withCorteMin(BigDecimal(145)).
 		withDistanciaMax(BigDecimal(7.2)).
-		withEmail("zisoooo@gmail.com").
+		withEmail("ViandasYaGHC1@gmail.com").
 		withUbicacion(Ubicacion("Leandro N. Alem 214, 1878 Quilmes, Argentina","-34.72269", "-58.2565")).
 		withEstado(PeluqueroState.DISPONIBLE).
 		build()

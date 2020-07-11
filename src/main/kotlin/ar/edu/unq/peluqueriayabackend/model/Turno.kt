@@ -86,6 +86,10 @@ class Turno (
 
     fun getPeluqueroLogo():String = peluquero.logo
 
+    fun getClienteNroTelefono():String = cliente.nroTelefono
+
+    fun getClienteImgPerfil():String = cliente.imgPerfil
+
     data class Builder(
             var peluquero: Peluquero = Peluquero.Builder().withCorteMin(BigDecimal.ZERO).build(),
             var cliente: Cliente = Cliente.Builder().build(),

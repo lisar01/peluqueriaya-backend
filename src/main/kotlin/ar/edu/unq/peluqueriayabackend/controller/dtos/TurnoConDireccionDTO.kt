@@ -49,6 +49,10 @@ class TurnoConDireccionDTO(
 
     fun getPeluqueroLogo():String = peluquero.logo
 
+    fun getClienteNroTelefono():String = cliente.nroTelefono
+
+    fun getClienteImgPerfil():String = cliente.imgPerfil
+
     class Builder(
             var peluquero: Peluquero = Peluquero.Builder().build(),
             var cliente: Cliente = Cliente.Builder().build(),
@@ -84,10 +88,9 @@ class TurnoConDireccionDTO(
             puntaje = turno.puntaje
             corteMinInfo = turno.corteMinInfo
             ubicacionDelTurno = turno.ubicacionDelTurno
+            direccionDelTurno = turno.ubicacionDelTurno.direccion
             id = turno.id
         }
-
-        fun withDireccionDelTurno(direccionDelTurno: String) = apply { this.direccionDelTurno = direccionDelTurno }
 
     }
 }

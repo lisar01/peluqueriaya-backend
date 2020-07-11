@@ -19,7 +19,7 @@ class Peluquero(
         var email: String,
         var emailOpcional:String,
         var ubicacion:Ubicacion,
-        var estado: PeluqueroState,
+        var estado: PeluqueroState = PeluqueroState.DISPONIBLE,
         var descripcion: String,
         @ElementCollection
         var tipos: MutableSet<PeluqueroType> = mutableSetOf(),

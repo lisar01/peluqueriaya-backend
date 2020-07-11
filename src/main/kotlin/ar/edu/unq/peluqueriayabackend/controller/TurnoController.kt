@@ -23,7 +23,6 @@ import javax.validation.Valid
 @Validated
 class TurnoController(
         val rolService: RolService,
-        val mapasService: MapasService,
         @Autowired val turnoService: TurnoService,
         @Autowired val clienteService: ClienteService,
         @Autowired val peluqueroService: PeluqueroService)
@@ -38,15 +37,12 @@ class TurnoController(
         }else{
             turnoService.obtenerTurnosPendientesOConfirmadosDelPeluquero(maybePeluquero.get(),pageable)
         }
-
-        //Se agrega la direccion de cada turno
-        return turnos.map { turnoConDireccionDeLaUbicacion(it) }
+        return turnos.map { convertTurnoToTurnoConDireccionDTO(it) }
     }
 
     @GetMapping("/cliente")
     fun turnosDelCliente(@Valid esHistorico: Boolean, pageable: Pageable) : Page<TurnoConDireccionDTO> {
         val maybeCliente = getMaybeClienteByJWT()
-
         //Si esHistorico retorna los turnos FINALIZADOS o CANCELADOS
         // sino los turnos PENDIENTES o CONFIRMADOS o EN ESPERA
         val turnos = if(esHistorico){
@@ -54,9 +50,7 @@ class TurnoController(
         }else{
             turnoService.obtenerTurnosEnEsperaOPendientesOConfirmadosDelCliente(maybeCliente.get(),pageable)
         }
-
-        //Se agrega la direccion de cada turno
-        return turnos.map { turnoConDireccionDeLaUbicacion(it) }
+        return turnos.map { convertTurnoToTurnoConDireccionDTO(it) }
     }
 
     @PostMapping("/pedir")
@@ -86,17 +80,17 @@ class TurnoController(
 
     @PostMapping("/confirmar")
     fun confirmarTurno(@Valid @RequestBody turnoDTO: TurnoDTO):Turno {
-        return turnoService.confirmarTurno(this.validarIdTurno(turnoDTO.idTurno))
+        return turnoService.confirmarTurno(this.validarIdTurnoPeluquero(turnoDTO.idTurno))
     }
 
     @PostMapping("/finalizar")
-    fun finalizarTurno(@Valid @RequestBody turnoDTO: TurnoDTO):Turno {
-        return turnoService.finalizarTurno(this.validarIdTurno(turnoDTO.idTurno))
+    fun finalizarTurno(@Valid @RequestBody turnoDTO: TurnoDTO): Boolean {
+        return turnoService.finalizarTurno(this.validarIdTurnoPeluquero(turnoDTO.idTurno)).peluquero.getEstaDisponible()
     }
 
     @PostMapping("/cancelar")
     fun cancelarTurno(@Valid @RequestBody turnoDTO: TurnoDTO) : Turno {
-        val turno = this.validarIdTurno(turnoDTO.idTurno)
+        val turno = this.validarIdTurnoCliente(turnoDTO.idTurno)
         if(! turno.getEstaEsperando())
             throw TurnoNoPuedeSerCancelado()
         return turnoService.cancelarTurno(turno)
@@ -104,7 +98,7 @@ class TurnoController(
 
     @PostMapping("/calificar")
     fun calificarTurno(@Valid @RequestBody calificacionTurnoDTO: CalificacionTurnoDTO):Turno {
-        val turno = this.validarIdTurno(calificacionTurnoDTO.idTurno)
+        val turno = this.validarIdTurnoCliente(calificacionTurnoDTO.idTurno)
 
         if(!turno.getEstaFinalizado())
             throw TurnoNoSePuedeCalificar()
@@ -125,7 +119,7 @@ class TurnoController(
         return clienteService.getByEmail(emailCliente)
     }
 
-    private fun validarIdTurno(idTurno: Long) : Turno {
+    private fun validarIdTurnoCliente(idTurno: Long) : Turno {
         val maybeTurno = turnoService.get(idTurno)
         if(! maybeTurno.isPresent)
             throw TurnoNoExisteException(idTurno)
@@ -136,9 +130,19 @@ class TurnoController(
         return maybeTurno.get()
     }
 
-    private fun turnoConDireccionDeLaUbicacion(turno:Turno) : TurnoConDireccionDTO {
-        val request = mapasService.obtenerUbicacionConCoords("${turno.ubicacionDelTurno.latitude},${turno.ubicacionDelTurno.longitude}").block()
-        val direccion = request!!.items[0].title
-        return TurnoConDireccionDTO.Builder().withTurno(turno).withDireccionDelTurno(direccion).build()
+    private fun validarIdTurnoPeluquero(idTurno: Long) : Turno {
+        val maybePeluquero = getMaybePeluqueroByJWT()
+        val maybeTurno = turnoService.get(idTurno)
+        if(! maybeTurno.isPresent)
+            throw TurnoNoExisteException(idTurno)
+
+        if(maybeTurno.get().getPeluqueroId()!! != maybePeluquero.get().id)
+            throw Unauthorized("No tiene acceso a este recurso")
+
+        return maybeTurno.get()
+    }
+
+    private fun convertTurnoToTurnoConDireccionDTO(turno:Turno) : TurnoConDireccionDTO {
+        return TurnoConDireccionDTO.Builder().withTurno(turno).build()
     }
 }

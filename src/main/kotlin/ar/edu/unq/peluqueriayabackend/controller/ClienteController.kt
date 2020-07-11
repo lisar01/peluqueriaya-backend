@@ -16,13 +16,12 @@ import javax.validation.Valid
 class ClienteController(val clienteService: ClienteService, val rolService: RolService) {
 
     @PostMapping
-    @ResponseStatus(HttpStatus.OK, reason = "Cuenta creada exitosamente!")
-    fun guardar(@Valid @RequestBody cliente: Cliente) {
+    fun guardar(@Valid @RequestBody cliente: Cliente): Cliente {
         cliente.email = rolService.getEmail()
         if (rolService.tieneRolCliente()) {
             throw ClienteYaExisteException()
         }
-        clienteService.save(cliente)
+        return clienteService.save(cliente)
     }
 
     @PutMapping
